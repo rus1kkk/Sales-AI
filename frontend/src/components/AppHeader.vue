@@ -4,11 +4,11 @@
       <router-link to="/" class="header-title">SALES AI</router-link>
       <nav>
         <router-link to="/" class="nav-link">ГЛАВНАЯ</router-link>
-        <router-link to="/generate" class="nav-link">ГЕНЕРИРОВАТЬ</router-link>
-        <router-link to="" class="nav-link">ПОДПИСКА</router-link>
-        <router-link to="" class="nav-link">ИСТОРИЯ</router-link>
+        <router-link to="/generate" class="nav-link">ГЕНЕРАЦИЯ</router-link>
+        <router-link to="/subscription" class="nav-link">ПОДПИСКА</router-link>
+        <router-link to="/history" class="nav-link disabled">ИСТОРИЯ</router-link>
       </nav>
-      <button class="login-btn">ВХОД</button>
+      <router-link to="" class="login-btn">ВХОД</router-link>
     </div>
   </header>
 </template>
@@ -50,24 +50,33 @@ nav {
   font-size: 20px;
 }
 
-.nav-link:hover {
+.nav-link:hover,
+.nav-link.router-link-active,
+.login-btn:hover {
+  color: var(--actient-color);
+}
+
+.nav-link.disabled {
+  color: var(--muted-color);
+  cursor: default;
+  pointer-events: none;
 }
 
 .login-btn {
-  background-color: var(--btn-background-color);
-  color: var(--btn-text-color);
-  border: none;
-  font-size: 20px;
-  font-weight: 600;
-  border-radius: 18px;
+  color: var(--standart-color);
+  font-size: 24px;
+  font-weight: 500;
   cursor: pointer;
+  text-decoration: none;
+
+  /*background-color: var(--btn-background-color);
+  color: var(--btn-text-color);
+  border-radius: 18px;
+  border: none;
   height: 45px;
   width: 114px;
   display: flex;
   align-items: center;
-  justify-content: center;
-}
-
-.login-btn:hover {
+  justify-content: center;*/
 }
 </style>
