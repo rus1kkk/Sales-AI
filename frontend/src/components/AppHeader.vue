@@ -25,6 +25,7 @@ export default {
 </script>
 
 <style scoped>
+
 .header-content {
   display: flex;
   justify-content: space-between;
@@ -38,6 +39,7 @@ export default {
   font-weight: 400;
   text-decoration: none;
 }
+
 nav {
   display: flex;
   gap: 25px;
@@ -68,15 +70,6 @@ nav {
   font-weight: 500;
   cursor: pointer;
   text-decoration: none;
-
-  /*background-color: var(--btn-background-color);
-  color: var(--btn-text-color);
-  border-radius: 18px;
-  border: none;
-  height: 45px;
-  width: 114px;
-  display: flex;
-  align-items: center;
-  justify-content: center;*/
 }
+
 </style>
