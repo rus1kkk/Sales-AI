@@ -15,6 +15,7 @@
 
 <script>
 import { RouterLink } from 'vue-router'
+import '../assets/styles/AppHeader.css'
 
 export default {
   name: 'AppHeader',
@@ -23,53 +24,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-
-.header-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 32px 80px;
-}
-
-.header-title {
-  font-size: 32px;
-  color: var(--actient-color);
-  font-weight: 400;
-  text-decoration: none;
-}
-
-nav {
-  display: flex;
-  gap: 25px;
-  align-items: center;
-  font-weight: 500;
-}
-.nav-link {
-  color: var(--standart-color);
-  text-decoration: none;
-  font-size: 20px;
-}
-
-.nav-link:hover,
-.nav-link.router-link-active,
-.login-btn:hover {
-  color: var(--actient-color);
-}
-
-.nav-link.disabled {
-  color: var(--muted-color);
-  cursor: default;
-  pointer-events: none;
-}
-
-.login-btn {
-  color: var(--standart-color);
-  font-size: 24px;
-  font-weight: 500;
-  cursor: pointer;
-  text-decoration: none;
-}
-
-</style>
