@@ -13,3 +13,15 @@ body {
   --btn-background-color: #d9d9d9;
   --white-color: #ffffff;
 }
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  overflow-x: hidden;
+}
