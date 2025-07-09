@@ -1,13 +1,14 @@
 
 <template>
   <div id="app">
-    <div class="star-background">
-      
+    <!-- <div class="star-background"> -->
+      <BackgroundStars></BackgroundStars>
       <img v-if="$route.name === 'MainPage'" class="custom-shape" :src="mainFigure" alt="Main Figure">
       <img v-if="$route.name === 'GeneratePage'" class="custom-shape" :src="generateFigure" alt="Generate Figure">
-    </div>
+    <!-- </div> -->
     <AppHeader />
     <router-view />
+    
   </div>
 </template>
 
@@ -15,9 +16,12 @@
 import AppHeader from './components/AppHeader.vue'
 import mainFigure from '@/assets/images/figure2.png'
 import generateFigure from '@/assets/images/figure3.png'
+import BackgroundStars from './components/BackgroundStars.vue'
 
 export default {
-  components: { AppHeader },
+  components: { AppHeader,
+        BackgroundStars, 
+      },
   data() {
     return {
       mainFigure,
