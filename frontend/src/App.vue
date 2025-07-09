@@ -13,7 +13,7 @@
       :src="generateFigure_1"
       alt="Generate Figure"
     />
-        <img
+    <img
       v-if="$route.name === 'GeneratePage'"
       class="custom-shape-additional"
       :src="generateFigure_2"
@@ -91,7 +91,6 @@ export default {
   left: -27vw;
   top: -12vh;
 }
-
 
 @keyframes float {
   0% {

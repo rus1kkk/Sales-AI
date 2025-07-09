@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import MainPage from '../views/MainPage.vue'
 import GeneratePage from '../views/GeneratePage.vue'
+import SubscriptionPage from '../views/SubscriptionPage.vue'
 
 const routes = [
   {
@@ -12,6 +13,11 @@ const routes = [
     path: '/generate',
     name: 'GeneratePage',
     component: GeneratePage,
+  },
+  {
+    path: '/subscription',
+    name: 'SubscriptionPage',
+    component: SubscriptionPage,
   },
 ]
 

@@ -19,8 +19,8 @@
     </div>
     <div class="input-prompt-block-info fade-up" style="animation-delay: 0.6s">
       <h3>
-        <span>Sales AI</span> может допускать ошибки. Проверьте и отредактируйте
-        презентацию или купите подписку.
+        <span>Sales AI</span> может допускать ошибки. Проверьте и отредактируйте презентацию или
+        купите подписку.
       </h3>
       <a href="#"> См. подписки.</a>
     </div>
@@ -28,40 +28,36 @@
 </template>
 
 <script setup>
-import promptSendingIcon from "@/assets/images/prompt_sending_icon.svg";
+import promptSendingIcon from '@/assets/images/prompt_sending_icon.svg'
 
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, onMounted, onUnmounted } from 'vue'
 
-const textarea = ref(null);
+const textarea = ref(null)
 
 const autoResize = () => {
   if (textarea.value) {
-    textarea.value.rows = 1;
-    const lineHeight =
-      parseFloat(getComputedStyle(textarea.value).lineHeight) || 24;
-    const lines = Math.min(
-      Math.ceil(textarea.value.scrollHeight / lineHeight),
-      15
-    );
-    textarea.value.rows = lines;
+    textarea.value.rows = 1
+    const lineHeight = parseFloat(getComputedStyle(textarea.value).lineHeight) || 24
+    const lines = Math.min(Math.ceil(textarea.value.scrollHeight / lineHeight), 15)
+    textarea.value.rows = lines
   }
-};
+}
 
 onMounted(() => {
-  autoResize();
+  autoResize()
 
   const observer = new ResizeObserver(() => {
-    autoResize();
-  });
+    autoResize()
+  })
 
   if (textarea.value) {
-    observer.observe(textarea.value);
+    observer.observe(textarea.value)
   }
 
   onUnmounted(() => {
-    observer.disconnect();
-  });
-});
+    observer.disconnect()
+  })
+})
 </script>
 
 <style scoped>
@@ -80,7 +76,6 @@ onMounted(() => {
   opacity: 0;
   animation: fadeUp 0.8s ease-out forwards;
 }
-
 
 .input-prompt-block > button {
   all: unset;
