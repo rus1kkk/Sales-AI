@@ -1,14 +1,20 @@
-
 <template>
   <div id="app">
-    <!-- <div class="star-background"> -->
-      <BackgroundStars></BackgroundStars>
-      <img v-if="$route.name === 'MainPage'" class="custom-shape" :src="mainFigure" alt="Main Figure">
-      <img v-if="$route.name === 'GeneratePage'" class="custom-shape" :src="generateFigure" alt="Generate Figure">
-    <!-- </div> -->
+    <BackgroundStars></BackgroundStars>
+    <img
+      v-if="$route.name === 'MainPage'"
+      class="custom-shape"
+      :src="mainFigure"
+      alt="Main Figure"
+    />
+    <img
+      v-if="$route.name === 'GeneratePage'"
+      class="custom-shape"
+      :src="generateFigure"
+      alt="Generate Figure"
+    />
     <AppHeader />
     <router-view />
-    
   </div>
 </template>
 
@@ -19,9 +25,7 @@ import generateFigure from '@/assets/images/figure3.png'
 import BackgroundStars from './components/BackgroundStars.vue'
 
 export default {
-  components: { AppHeader,
-        BackgroundStars, 
-      },
+  components: { AppHeader, BackgroundStars },
   data() {
     return {
       mainFigure,
@@ -33,16 +37,16 @@ export default {
   mounted() {
     // Задержка для плавного появления
     setTimeout(() => {
-      this.showMainFigure = this.$route.name === 'MainPage';
-      this.showGenerateFigure = this.$route.name === 'GeneratePage';
-    }, 100); 
+      this.showMainFigure = this.$route.name === 'MainPage'
+      this.showGenerateFigure = this.$route.name === 'GeneratePage'
+    }, 100)
   },
   watch: {
     '$route.name'(newName) {
-      this.showMainFigure = newName === 'MainPage';
-      this.showGenerateFigure = newName === 'GeneratePage';
-    }
-  }
+      this.showMainFigure = newName === 'MainPage'
+      this.showGenerateFigure = newName === 'GeneratePage'
+    },
+  },
 }
 </script>
 
@@ -57,40 +61,43 @@ export default {
   min-height: 100vh;
 }
 
-.star-background {
-  position: fixed;
-  top: 0;
-  left: 0;
+.custom-shape {
+  position: absolute;
+  right: -27vw;
+  top: -22vw;
   width: 100vw;
-  height: 100vh;
-  background-image: url('src/assets/images/stars.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
+  height: auto;
+  animation:
+    float 20s infinite ease-in-out,
+    fadeIn 1s ease-in forwards;
+  opacity: 0;
   z-index: -1;
 }
 
-.custom-shape {
-  position: absolute;
-  right: -27vw;  
-  top: -22vw;
-  width: 100vw; 
-  height: auto; 
-  animation: float 20s infinite ease-in-out, fadeIn 1s ease-in forwards;
-  opacity: 0;
-  z-index: -1; 
-}
-
 @keyframes float {
-  0% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
-  50% { transform: translate(-7vw, -1vw) rotate(5deg); opacity: 0.5; }
-  100% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 1;
+  }
+  50% {
+    transform: translate(-7vw, -1vw) rotate(5deg);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 1;
+  }
 }
 
 @keyframes fadeIn {
-  0% { opacity: 0; }
-  50% { opacity: 0.5; }
-  100% { opacity: 1; }
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 </style>

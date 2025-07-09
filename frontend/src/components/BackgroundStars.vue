@@ -12,24 +12,22 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from "vue";
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 
-const stars = ref([]);
-const bigStars = ref([]);
+const stars = ref([])
+const bigStars = ref([])
 
 function generateStars() {
-  const screenWidth = window.innerWidth;
-  const minStars = 60;
-  const maxStars = 200;
-  const count = Math.floor(
-    minStars + (screenWidth / 1920) * (maxStars - minStars)
-  );
+  const screenWidth = window.innerWidth
+  const minStars = 60
+  const maxStars = 200
+  const count = Math.floor(minStars + (screenWidth / 1920) * (maxStars - minStars))
 
   return Array.from({ length: count }, () => {
-    const baseSize = Math.random() * 4 + 2;
-    const scale = Math.min(Math.max(screenWidth / 1920, 0.5), 0.5);
-    const coreSize = baseSize * scale;
-    const glowSize = coreSize * 4;
+    const baseSize = Math.random() * 4 + 2
+    const scale = Math.min(Math.max(screenWidth / 1920, 0.5), 0.5)
+    const coreSize = baseSize * scale
+    const glowSize = coreSize * 4
 
     return {
       top: `${Math.floor(Math.random() * window.innerHeight)}px`,
@@ -37,21 +35,21 @@ function generateStars() {
       size: `${coreSize}px`,
       glowSize: `${glowSize}px`,
       duration: `${2 + Math.random() * 3}s`,
-    };
-  });
+    }
+  })
 }
 
 function generateBigStars() {
-  const screenWidth = window.innerWidth;
-  const minBigStars = 4;
-  const maxBigStars = 10;
-  const estimatedCount = minBigStars + (screenWidth / 1920) * (maxBigStars - minBigStars);
-  const count = Math.min(Math.floor(estimatedCount), maxBigStars);
+  const screenWidth = window.innerWidth
+  const minBigStars = 4
+  const maxBigStars = 10
+  const estimatedCount = minBigStars + (screenWidth / 1920) * (maxBigStars - minBigStars)
+  const count = Math.min(Math.floor(estimatedCount), maxBigStars)
 
   return Array.from({ length: count }, () => {
-    const sizeScale = Math.min(Math.max(screenWidth / 1920, 0.6), 0.5);
-    const baseSize = (Math.random() * 6 + 6) * sizeScale;
-    const glowSize = baseSize * 5;
+    const sizeScale = Math.min(Math.max(screenWidth / 1920, 0.6), 0.5)
+    const baseSize = (Math.random() * 6 + 6) * sizeScale
+    const glowSize = baseSize * 5
 
     return {
       top: `${Math.floor(Math.random() * window.innerHeight)}px`,
@@ -60,23 +58,23 @@ function generateBigStars() {
       glowSize: `${glowSize}px`,
       duration: `${3 + Math.random() * 3}s`,
       delay: `${Math.random() * 4}s`,
-    };
-  });
+    }
+  })
 }
 
 function updateStars() {
-  stars.value = generateStars();
-  bigStars.value = generateBigStars();
+  stars.value = generateStars()
+  bigStars.value = generateBigStars()
 }
 
 onMounted(() => {
-  updateStars();
-  window.addEventListener("resize", updateStars);
-});
+  updateStars()
+  window.addEventListener('resize', updateStars)
+})
 
 onBeforeUnmount(() => {
-  window.removeEventListener("resize", updateStars);
-});
+  window.removeEventListener('resize', updateStars)
+})
 
 function styleFor(star) {
   return {
@@ -84,10 +82,10 @@ function styleFor(star) {
     left: star.left,
     width: star.glowSize,
     height: star.glowSize,
-    transform: "translate(-50%, -50%)",
+    transform: 'translate(-50%, -50%)',
     animationDuration: star.duration,
-    "--delay": star.delay || "0s",
-  };
+    '--delay': star.delay || '0s',
+  }
 }
 
 function coreStyle(star) {
@@ -96,8 +94,8 @@ function coreStyle(star) {
     left: star.left,
     width: star.size,
     height: star.size,
-    transform: "translate(-50%, -50%)",
-  };
+    transform: 'translate(-50%, -50%)',
+  }
 }
 </script>
 
@@ -119,7 +117,9 @@ function coreStyle(star) {
     rgba(0, 170, 255, 0.1) 100%
   );
   filter: blur(4px);
-  box-shadow: 0 0 30px rgba(0, 170, 255, 0.1), 0 0 40px rgba(255, 255, 255, 0.1),
+  box-shadow:
+    0 0 30px rgba(0, 170, 255, 0.1),
+    0 0 40px rgba(255, 255, 255, 0.1),
     0 0 50px rgba(86, 121, 139, 0.075);
 }
 
