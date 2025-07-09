@@ -66,12 +66,12 @@ export default {
   right: -27vw;
   top: -22vw;
   width: 100vw;
-  height: auto;
   animation:
     float 20s infinite ease-in-out,
     fadeIn 1s ease-in forwards;
   opacity: 0;
   z-index: -1;
+  background-size: cover;
 }
 
 @keyframes float {
@@ -79,10 +79,12 @@ export default {
     transform: translate(0, 0) rotate(0deg);
     opacity: 1;
   }
+
   50% {
     transform: translate(-7vw, -1vw) rotate(5deg);
     opacity: 0.5;
   }
+
   100% {
     transform: translate(0, 0) rotate(0deg);
     opacity: 1;
@@ -93,9 +95,11 @@ export default {
   0% {
     opacity: 0;
   }
+
   50% {
     opacity: 0.5;
   }
+
   100% {
     opacity: 1;
   }

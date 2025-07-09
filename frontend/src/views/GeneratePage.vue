@@ -1,11 +1,23 @@
+<script setup>
+import InputPrompt from '../components/InputPrompt.vue'
+</script>
+
 <template>
-  <div>
-    <p>Это страница с нейронкой.</p>
-  </div>
+    <InputPrompt></InputPrompt>
 </template>
 
-<script>
-export default {
-  name: 'GeneratePage',
+<style scoped>
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Montserrat', sans-serif;
 }
-</script>
+
+.container {
+  position: relative;
+  width: 100vw;
+  height: 90vh;
+  overflow: hidden;
+}
+</style>
+
