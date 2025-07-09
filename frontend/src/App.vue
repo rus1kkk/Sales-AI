@@ -10,8 +10,14 @@
     <img
       v-if="$route.name === 'GeneratePage'"
       class="custom-shape"
-      :src="generateFigure"
+      :src="generateFigure_1"
       alt="Generate Figure"
+    />
+        <img
+      v-if="$route.name === 'GeneratePage'"
+      class="custom-shape-additional"
+      :src="generateFigure_2"
+      alt="Generate Figure 2"
     />
     <AppHeader />
     <router-view />
@@ -21,7 +27,8 @@
 <script>
 import AppHeader from './components/AppHeader.vue'
 import mainFigure from '@/assets/images/figure2.png'
-import generateFigure from '@/assets/images/figure3.png'
+import generateFigure_1 from '@/assets/images/figure3.png'
+import generateFigure_2 from '@/assets/images/figure4.png'
 import BackgroundStars from './components/BackgroundStars.vue'
 
 export default {
@@ -29,7 +36,8 @@ export default {
   data() {
     return {
       mainFigure,
-      generateFigure,
+      generateFigure_1,
+      generateFigure_2,
       showMainFigure: false,
       showGenerateFigure: false,
     }
@@ -58,13 +66,13 @@ export default {
   margin: 0;
   padding: 0;
   position: relative;
+  overflow: hidden;
   min-height: 100vh;
 }
 
-.custom-shape {
+.custom-shape,
+.custom-shape-additional {
   position: absolute;
-  right: -27vw;
-  top: -22vw;
   width: 100vw;
   animation:
     float 20s infinite ease-in-out,
@@ -73,6 +81,17 @@ export default {
   z-index: -1;
   background-size: cover;
 }
+
+.custom-shape {
+  right: -27vw;
+  top: -22vw;
+}
+
+.custom-shape-additional {
+  left: -27vw;
+  top: -12vh;
+}
+
 
 @keyframes float {
   0% {

@@ -1,7 +1,7 @@
 <template>
   <section class="input-prompt-section">
-    <h1>Какая задача будет сегодня?</h1>
-    <div class="input-prompt-block">
+    <h1 class="fade-up" style="animation-delay: 0.2s">Какая задача будет сегодня?</h1>
+    <div class="input-prompt-block fade-up" style="animation-delay: 0.4s">
       <div class="input-prompt-block-text">
         <textarea
           ref="textarea"
@@ -17,7 +17,7 @@
         <img :src="promptSendingIcon" alt="./img/Pr" />
       </button>
     </div>
-    <div class="input-prompt-block-info">
+    <div class="input-prompt-block-info fade-up" style="animation-delay: 0.6s">
       <h3>
         <span>Sales AI</span> может допускать ошибки. Проверьте и отредактируйте
         презентацию или купите подписку.
@@ -65,6 +65,23 @@ onMounted(() => {
 </script>
 
 <style scoped>
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(-40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-up {
+  opacity: 0;
+  animation: fadeUp 0.8s ease-out forwards;
+}
+
+
 .input-prompt-block > button {
   all: unset;
   cursor: pointer;
@@ -86,6 +103,7 @@ onMounted(() => {
   font-weight: 400;
   line-height: 120%;
   text-align: center;
+  color: var(--white-color);
 }
 
 .input-prompt-section {
@@ -103,7 +121,7 @@ onMounted(() => {
 .name-model-block {
   display: inline-block;
   align-self: flex-start;
-  color: rgba(26, 28, 44, 1);
+  color: #1a1c2c;
   background-color: rgba(255, 255, 255, 0.32);
   padding: 8px 16px 8px 16px;
   border-radius: 60px;
@@ -184,6 +202,6 @@ input-prompt-block > img {
 }
 
 .input-prompt-block-info h3 span {
-  color: rgba(113, 171, 235, 1);
+  color: var(--actient-color);
 }
 </style>
