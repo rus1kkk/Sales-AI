@@ -2,16 +2,18 @@
   <div class="user-profile">
     <div class="top-block">
       <ProfileCard />
+      <PurchaseHistory />
     </div>
   </div>
 </template>
 
 <script>
 import ProfileCard from '../components/Profile/ProfileCard.vue'
+import PurchaseHistory from '@/components/Profile/PurchaseHistory.vue'
 
 export default {
   name: 'ProfileView',
-  components: { ProfileCard },
+  components: { ProfileCard, PurchaseHistory },
 }
 </script>
 
@@ -19,9 +21,10 @@ export default {
 .user-profile {
   margin: 0 auto;
   display: flex;
+  flex-wrap: wrap;
   font-family: Montserrat;
   color: #fff;
-  background-color: rgb(34, 33, 36);
+  gap: 24px;
 }
 .top-block {
   display: inline-flex;
