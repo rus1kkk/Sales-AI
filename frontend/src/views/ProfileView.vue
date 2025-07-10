@@ -4,16 +4,18 @@
       <ProfileCard />
       <PurchaseHistory />
     </div>
+    <PaymentMethod />
   </div>
 </template>
 
 <script>
 import ProfileCard from '../components/Profile/ProfileCard.vue'
 import PurchaseHistory from '@/components/Profile/PurchaseHistory.vue'
+import PaymentMethod from '@/components/Profile/PaymentMethod.vue';
 
 export default {
   name: 'ProfileView',
-  components: { ProfileCard, PurchaseHistory },
+  components: { ProfileCard, PurchaseHistory, PaymentMethod },
 }
 </script>
 
