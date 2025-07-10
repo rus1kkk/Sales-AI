@@ -3,7 +3,7 @@ import InputPrompt from '../components/InputPrompt.vue'
 </script>
 
 <template>
-    <InputPrompt></InputPrompt>
+  <InputPrompt></InputPrompt>
 </template>
 
 <style scoped>
@@ -20,4 +20,3 @@ import InputPrompt from '../components/InputPrompt.vue'
   overflow: hidden;
 }
 </style>
-

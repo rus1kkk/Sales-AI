@@ -1,0 +1,182 @@
+@import url('./main.css');
+
+.pricing-card {
+  display: flex;
+  height: 640px;
+  max-width: 506px;
+  min-width: 423px;
+  padding: 36px 46px;
+  flex-direction: column;
+  align-items: center;
+  flex: 1 0 0;
+  border-radius: 60px;
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0px 0px 68px 0px rgba(255, 255, 255, 0.05) inset;
+  backdrop-filter: blur(7.5px);
+}
+.pricing-card:hover {
+  /*
+  border-radius: 60px;
+  background: rgba(255, 255, 255, 0.20);
+  box-shadow: 0px 0px 39.5px 13px #71ABEB, 0px 4px 4px 0px rgba(255, 255, 255, 0.15), 0px 0px 68px 0px rgba(255, 255, 255, 0.05) inset;
+  backdrop-filter: blur(7.5px);*/
+}
+
+.header {
+  display: flex;
+  height: 90px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+  flex-shrink: 0;
+  align-self: stretch;
+}
+
+.title {
+  color: var(--white-color);
+  text-align: center;
+
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 120%; /* 38.4px */
+  letter-spacing: 2.56px;
+  align-self: stretch;
+  margin: 0;
+}
+
+.subtitle {
+  color: var(--muted-color);
+  /* Основной текст */
+
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 120%; /* 19.2px */
+  align-self: stretch;
+  margin: 0;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1 0 0;
+  align-self: stretch;
+}
+
+.features {
+  display: flex;
+  height: 170px;
+  padding: 26px 0px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+  align-self: stretch;
+}
+
+.feature-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  align-self: stretch;
+}
+
+.feature-item:last-child {
+  margin-bottom: 0;
+}
+
+.check-icon {
+  display: flex;
+  width: 43px;
+  height: 30px;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.feature-text {
+  flex: 1 0 0;
+  align-self: stretch;
+  color: var(--white-color);
+
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 120%; /* 21.6px */
+}
+
+.price-section-card {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.price-section-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  min-width: 0; /* позволить сжатие */
+}
+
+.price {
+  color: var(--white-color);
+
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 120%;
+}
+
+.price-description {
+  color: var(--white-color);
+
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 120%;
+}
+
+.price-action {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--white-color);
+  text-align: center;
+
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 120%;
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-skip-ink: auto;
+  text-decoration-thickness: auto;
+  text-underline-offset: auto;
+  text-underline-position: from-font;
+  flex-shrink: 0;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.price-action:hover,
+.price-action:active {
+  color: var(--actient-color);
+}
+
+.price-action:hover svg path,
+.price-action:active svg path {
+  stroke: var(--actient-color);
+}
+
+.price-action:disabled {
+  color: var(--muted-color);
+}
+
+.price-action:disabled svg path {
+  stroke: var(--muted-color);
+}
