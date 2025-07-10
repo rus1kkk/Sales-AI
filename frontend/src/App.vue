@@ -3,19 +3,19 @@
     <BackgroundStars></BackgroundStars>
     <img
       v-if="$route.name === 'MainPage'"
-      class="custom-shape"
+      class="custom-shape top-right"
       :src="mainFigure"
       alt="Main Figure"
     />
     <img
       v-if="$route.name === 'GeneratePage'"
-      class="custom-shape"
+      class="custom-shape top-right"
       :src="generateFigure_1"
       alt="Generate Figure"
     />
-        <img
+    <img
       v-if="$route.name === 'GeneratePage'"
-      class="custom-shape-additional"
+      class="custom-shape bottom-left"
       :src="generateFigure_2"
       alt="Generate Figure 2"
     />
@@ -47,7 +47,7 @@ export default {
     setTimeout(() => {
       this.showMainFigure = this.$route.name === 'MainPage'
       this.showGenerateFigure = this.$route.name === 'GeneratePage'
-    }, 100)
+    }, 80)
   },
   watch: {
     '$route.name'(newName) {
@@ -70,46 +70,60 @@ export default {
   min-height: 100vh;
 }
 
-.custom-shape,
-.custom-shape-additional {
+.custom-shape {
   position: absolute;
   width: 100vw;
-  animation:
-    float 20s infinite ease-in-out,
-    fadeIn 1s ease-in forwards;
   opacity: 0;
   z-index: -1;
   background-size: cover;
 }
 
-.custom-shape {
+.top-right{
   right: -27vw;
   top: -22vw;
+  animation:
+  fadeIn 1s ease-in forwards,
+  float 20s infinite ease-in-out;
 }
 
-.custom-shape-additional {
+.bottom-left {
   left: -27vw;
-  top: -12vh;
+  bottom: -30vw;
+  animation:
+  fadeIn 1s ease-in forwards,
+  float-mirrored 20s infinite ease-in-out;
 }
-
 
 @keyframes float {
   0% {
     transform: translate(0, 0) rotate(0deg);
-    opacity: 1;
+    opacity: 0.7;
   }
 
   50% {
     transform: translate(-7vw, -1vw) rotate(5deg);
-    opacity: 0.5;
+    opacity: 1;
   }
 
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 0.7;
+  }
+}
+@keyframes float-mirrored {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 1;
+  }
+  50% {
+    transform: translate(7vw, -1vw) rotate(15deg);
+    opacity: 0.7;
+  }
   100% {
     transform: translate(0, 0) rotate(0deg);
     opacity: 1;
   }
 }
-
 @keyframes fadeIn {
   0% {
     opacity: 0;
@@ -120,7 +134,7 @@ export default {
   }
 
   100% {
-    opacity: 1;
+    opacity: 0.7;
   }
 }
 </style>
