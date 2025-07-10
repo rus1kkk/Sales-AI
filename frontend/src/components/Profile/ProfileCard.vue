@@ -1,0 +1,42 @@
+<template>
+  <div class="profile-card">
+    <div class="left-part">
+      <UserPhoto />
+      <button class="default-btn">Выход</button>
+    </div>
+    <UserInfo />
+  </div>
+</template>
+
+<script>
+import UserPhoto from './UserPhoto.vue'
+import UserInfo from './UserInfo.vue'
+
+export default {
+  name: 'ProfileCard',
+  components: { UserPhoto, UserInfo },
+}
+</script>
+
+<style scoped>
+.profile-card {
+  display: flex;
+  padding: 36px;
+  justify-content: center;
+  align-items: center;
+  gap: 48px;
+  border-radius: 60px;
+  background:
+    linear-gradient(0deg, rgba(14, 0, 0, 0.2) 0%, rgba(14, 0, 0, 0.2) 100%),
+    rgba(255, 255, 255, 0.2);
+  box-shadow: 0px 0px 68px 0px rgba(255, 255, 255, 0.05) inset;
+  backdrop-filter: blur(7.5px);
+}
+.left-part {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+}
+</style>

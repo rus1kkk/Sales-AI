@@ -1,7 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
+
 import MainPage from '../views/MainPage.vue'
 import GeneratePage from '../views/GeneratePage.vue'
 import SubscriptionPage from '../views/SubscriptionPage.vue'
+import ProfileView from '../views/ProfileView.vue'
 
 const routes = [
   {
@@ -18,6 +20,11 @@ const routes = [
     path: '/subscription',
     name: 'SubscriptionPage',
     component: SubscriptionPage,
+  },
+  {
+    path: '/profile',
+    name: 'profile',
+    component: ProfileView,
   },
 ]
 
