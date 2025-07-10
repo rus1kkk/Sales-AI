@@ -2,7 +2,7 @@
   <div class="content-banner">
     <h1>
       Начни Создавать Вместе с
-      <span class="sales-ai-text">Sales AI</span>
+      <span class="sales-ai-text">{{ title }}</span>
     </h1>
     <div class="arrow">
       <img src="@/assets/images/arrow.svg" alt="Arrow" />
@@ -11,9 +11,17 @@
 </template>
 
 <script>
-import '../assets/styles/MainPage.css'
-
 export default {
   name: 'MainPage',
+  props: {
+    title: {
+      type: String,
+      default: 'Sales AI',
+    },
+  },
 }
 </script>
+
+<style scoped>
+@import '../assets/styles/MainPage.css';
+</style>
