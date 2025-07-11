@@ -1,16 +1,16 @@
 <template>
   <div class="payment-item">
-    <Card :card="card" />
+    <PaymentCard :card="card" />
     <button>-</button>
   </div>
 </template>
 
 <script>
-import Card from './Card.vue';
+import PaymentCard from './PaymentCard.vue';
 
 export default {
   name: 'PaymentItem',
-  components: { Card },
+  components: { PaymentCard },
   props: {
     card: {
       type: Object,
@@ -24,7 +24,7 @@ export default {
 <style scoped>
 .payment-item {
   display: flex;
-  width: 647px;
+  width: 100%;
   padding: 25px 36px;
   justify-content: space-between;
   align-items: center;

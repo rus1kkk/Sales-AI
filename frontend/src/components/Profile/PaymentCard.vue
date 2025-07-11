@@ -7,7 +7,7 @@
 
 <script>
 export default {
-  name: 'Card',
+  name: 'PaymentCard',
   props: {
     card: {
       type: Object,

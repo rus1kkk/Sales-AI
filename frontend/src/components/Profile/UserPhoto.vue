@@ -13,14 +13,16 @@ export default {
 
 <style scoped>
 .photo {
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 16px;
 }
 .user-pic {
-  width: 250px;
-  height: 250px;
+  max-width: 250px;
+  width: 100%;
+  height: 100%;
   aspect-ratio: 1/1;
   border-radius: 10px;
   background-color: rgb(37, 37, 37);

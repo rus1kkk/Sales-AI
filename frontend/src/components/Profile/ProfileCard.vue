@@ -20,6 +20,9 @@ export default {
 
 <style scoped>
 .profile-card {
+  max-width: 647px;
+  min-width: 562px;
+  width: 100%;
   display: flex;
   padding: 36px;
   justify-content: center;
@@ -33,6 +36,8 @@ export default {
   backdrop-filter: blur(7.5px);
 }
 .left-part {
+  max-width: 250px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;

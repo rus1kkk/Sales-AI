@@ -56,7 +56,9 @@ export default {
 <style scoped>
 .history {
   display: flex;
-  width: 652px;
+  max-width: 652px;
+  min-width: 518px;
+  width: 100%;
   flex-direction: column;
   align-items: flex-start;
   gap: 36px;

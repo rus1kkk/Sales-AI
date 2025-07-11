@@ -3,8 +3,10 @@
     <div class="top-block">
       <ProfileCard />
       <PurchaseHistory />
+      <PaymentMethod />
+      
     </div>
-    <PaymentMethod />
+    
   </div>
 </template>
 
@@ -21,16 +23,24 @@ export default {
 
 <style scoped>
 .user-profile {
-  margin: 0 auto;
+  max-width: 1483px;
+  width: 100%;
+  margin: 82px auto 90px;
   display: flex;
-  flex-wrap: wrap;
+  box-sizing: border-box;
+  padding: 0 80px;
   font-family: Montserrat;
   color: #fff;
   gap: 24px;
 }
 .top-block {
-  display: inline-flex;
-  align-items: flex-start;
+  display: grid; 
+  grid-template-columns: minmax(562px, 647px) minmax(518px, 652px);
+  grid-template-rows: auto auto;
+  gap: 0px 0px; 
   gap: 24px;
+  width: 100%;
 }
+
+
 </style>

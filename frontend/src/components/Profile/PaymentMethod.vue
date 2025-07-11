@@ -40,6 +40,9 @@ export default {
 
 <style scoped>
 .payment {
+  max-width: 647px;
+  min-width: 562px;
+  width: 100%;
   display: inline-flex;
   padding-top: 24px;
   flex-direction: column;
@@ -59,7 +62,7 @@ export default {
 
 .payment-form {
   display: flex;
-  width: 647px;
+  width: 100%;
   align-items: flex-start;
   gap: 24px;
   border-radius: 60px;
@@ -70,7 +73,7 @@ export default {
 
 .payment-choice {
   display: flex;
-  width: 647px;
+  width: 100%;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;

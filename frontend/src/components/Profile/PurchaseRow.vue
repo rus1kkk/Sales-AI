@@ -28,6 +28,7 @@ export default {
   justify-content: space-between;
   align-items: flex-start;
   align-self: stretch;
+  gap:27px;
   border-bottom: 1px solid #a8a9af;
 }
 .purchase-data {
@@ -38,11 +39,18 @@ export default {
   line-height: 120%;
 }
 .purchase-about {
-  width: 70%;
+  max-width: 437px;
+  width: 100%;
+  height: 19px;
   display: flex;
+  gap:24px;
   justify-content: space-between;
 }
 .expiry-date.current-subscription {
   color: #71abeb;
+}
+
+.quantity{
+ margin-right: 3px;
 }
 </style>
