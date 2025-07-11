@@ -15,7 +15,7 @@ export default {
       validator: (card) => 'title' in card && 'icon' in card,
     },
   },
-};
+}
 </script>
 
 <style scoped>

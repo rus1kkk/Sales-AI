@@ -3,11 +3,7 @@
     <p class="payment-title">Привязанные карты</p>
     <div class="payment-form">
       <div class="payment-choice">
-        <PaymentItem
-          v-for="card in cards"
-          :key="card.title"
-          :card="card"
-        />
+        <PaymentItem v-for="card in cards" :key="card.title" :card="card" />
         <PaymentInput :card="inputCard" />
       </div>
     </div>
@@ -15,12 +11,12 @@
 </template>
 
 <script>
-import PaymentItem from './PaymentItem.vue';
-import PaymentInput from './PaymentInput.vue';
-import tbankIcon from '@/assets/images/tbank-icon.png';
-import sberIcon from '@/assets/images/sber-icon.png';
-import alphaIcon from '@/assets/images/alpha-icon.png';
-import mirIcon from '@/assets/images/mir-icon.png';
+import PaymentItem from './PaymentItem.vue'
+import PaymentInput from './PaymentInput.vue'
+import tbankIcon from '@/assets/images/tbank-icon.png'
+import sberIcon from '@/assets/images/sber-icon.png'
+import alphaIcon from '@/assets/images/alpha-icon.png'
+import mirIcon from '@/assets/images/mir-icon.png'
 
 export default {
   name: 'PaymentMethod',
@@ -33,9 +29,9 @@ export default {
         { title: '**1770', icon: alphaIcon },
       ],
       inputCard: { title: 'Привязать карту', icon: mirIcon },
-    };
+    }
   },
-};
+}
 </script>
 
 <style scoped>

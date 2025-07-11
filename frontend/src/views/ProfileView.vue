@@ -4,16 +4,14 @@
       <ProfileCard />
       <PurchaseHistory />
       <PaymentMethod />
-      
     </div>
-    
   </div>
 </template>
 
 <script>
 import ProfileCard from '../components/Profile/ProfileCard.vue'
 import PurchaseHistory from '@/components/Profile/PurchaseHistory.vue'
-import PaymentMethod from '@/components/Profile/PaymentMethod.vue';
+import PaymentMethod from '@/components/Profile/PaymentMethod.vue'
 
 export default {
   name: 'ProfileView',
@@ -34,13 +32,11 @@ export default {
   gap: 24px;
 }
 .top-block {
-  display: grid; 
+  display: grid;
   grid-template-columns: minmax(562px, 647px) minmax(518px, 652px);
   grid-template-rows: auto auto;
-  gap: 0px 0px; 
+  gap: 0px 0px;
   gap: 24px;
   width: 100%;
 }
-
-
 </style>

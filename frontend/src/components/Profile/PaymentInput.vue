@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import PaymentCard from './PaymentCard.vue';
+import PaymentCard from './PaymentCard.vue'
 
 export default {
   name: 'PaymentInput',
@@ -18,7 +18,7 @@ export default {
       validator: (card) => 'title' in card && 'icon' in card,
     },
   },
-};
+}
 </script>
 
 <style scoped>
