@@ -121,4 +121,3 @@ function coreStyle(star) {
 <style>
 @import url('../../assets/styles/Background/BackgroundStars.css');
 </style>
-

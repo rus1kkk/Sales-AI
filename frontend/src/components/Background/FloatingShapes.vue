@@ -11,7 +11,7 @@
       class="custom-shape top-right"
       :src="generateFigure_1"
       alt="Generate Figure"
-       id="flower-figure"
+      id="flower-figure"
     />
     <img
       v-if="$route.name === 'GeneratePage'"
@@ -20,18 +20,18 @@
       alt="Generate Figure 2"
     />
     <img
-    v-if="$route.name === 'profile'"
-    class="custom-shape top-right"
-    :src="profileFigure_1"
-    alt="Profile Figure"
-  />
-  <img
-    v-if="$route.name === 'profile'"
-    class="custom-shape bottom-left"
-    id="chain-figure"
-    :src="profileFigure_2"
-    alt="Profile Figure 2"
-  />
+      v-if="$route.name === 'profile'"
+      class="custom-shape top-right"
+      :src="profileFigure_1"
+      alt="Profile Figure"
+    />
+    <img
+      v-if="$route.name === 'profile'"
+      class="custom-shape bottom-left"
+      id="chain-figure"
+      :src="profileFigure_2"
+      alt="Profile Figure 2"
+    />
   </div>
 </template>
 
@@ -51,7 +51,7 @@ export default {
       profileFigure_1,
       profileFigure_2,
     }
-  }
+  },
 }
 </script>
 
