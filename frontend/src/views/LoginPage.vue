@@ -2,8 +2,16 @@
   <div class="form-wrapper">
     <form @submit.prevent="submitForm" class="fade-up">
       <div class="form-buttons">
-        <button class="login-button" :disabled="mode === 'login'" @click.prevent="mode = 'login'">ВХОД</button>
-        <button class="registration-button" :disabled="mode === 'register'" @click.prevent="mode = 'register'">РЕГИСТРАЦИЯ</button>
+        <button class="login-button" :disabled="mode === 'login'" @click.prevent="mode = 'login'">
+          ВХОД
+        </button>
+        <button
+          class="registration-button"
+          :disabled="mode === 'register'"
+          @click.prevent="mode = 'register'"
+        >
+          РЕГИСТРАЦИЯ
+        </button>
       </div>
       <transition name="expand" mode="out-in">
         <div class="form-input" :key="mode">
@@ -43,7 +51,6 @@
               @blur="touch('password')"
               :class="['base-input', { 'error-input': fields.password && validate('password') }]"
             />
-
             <input
               v-if="mode === 'register'"
               key="confirmPassword"
@@ -51,7 +58,10 @@
               placeholder="Повторите пароль"
               v-model="fields.confirmPassword"
               @blur="touch('confirmPassword')"
-              :class="['base-input', { 'error-input': fields.confirmPassword && validate('confirmPassword') }]"
+              :class="[
+                'base-input',
+                { 'error-input': fields.confirmPassword && validate('confirmPassword') },
+              ]"
             />
             <transition name="fade-text" mode="out-in"></transition>
             <p key="error" class="error-text">{{ error }}</p>
@@ -66,10 +76,9 @@
   </div>
 </template>
 
-
-
 <script setup>
 import { ref, watch, computed, onMounted } from 'vue'
+import { z } from 'zod'
 
 const mode = ref('login')
 
@@ -84,23 +93,34 @@ const fields = ref({
 const touched = ref({})
 const errors = ref({})
 
-const rules = {
-  email: [(val) => (/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(val) ? '' : 'Некорректный email')],
-  password: [(val) => (val.length >= 6 ? '' : 'Пароль слишком короткий')],
-  name: [(val) => (val.trim() ? '' : 'Имя обязательно')],
-  confirmPassword: [(val) => (val === fields.value.password ? '' : 'Пароли не совпадают')],
-  phone: [
-    (val) => {
-      if (val.includes('+') && !val.startsWith('+')) {
-        return 'Символ + допустим только в начале'
-      }
+const baseSchema = z.object({
+  email: z.email('Некорректный email'),
+  password: z.string().min(6, 'Пароль слишком короткий'),
+})
 
-      const cleaned = val.replace(/\D/g, '')
-      return cleaned.length === 11 ? '' : 'Номер должен содержать 11 цифр'
+const registerSchema = baseSchema.extend({
+  name: z.string().min(1, 'Имя обязательно'),
+  confirmPassword: z.string().refine(
+    (val, ctx) => {
+      if (val !== ctx.parent.password) return false
+      return true
     },
-    (val) => (/^[+\d\s\-()]+$/.test(val) ? '' : 'Телефон может содержать только цифры и +'),
-  ],
-}
+    { message: 'Пароли не совпадают' },
+  ),
+  phone: z
+    .string()
+    .refine((val) => (val.includes('+') ? val.startsWith('+') : true), {
+      message: 'Символ + допустим только в начале',
+    })
+    .refine((val) => val.replace(/\D/g, '').length === 11, {
+      message: 'Номер должен содержать 11 цифр',
+    })
+    .refine((val) => /^[+\d\s\-()]+$/.test(val), {
+      message: 'Телефон может содержать только цифры и +',
+    }),
+})
+
+const getSchema = computed(() => (mode.value === 'login' ? baseSchema : registerSchema))
 
 const requiredFields = computed(() =>
   mode.value === 'login'
@@ -110,12 +130,18 @@ const requiredFields = computed(() =>
 
 function validate(field) {
   const value = fields.value[field]
-  if (!value) return ''
-  const validators = rules[field] || []
-  for (const rule of validators) {
-    const msg = rule(value)
-    if (msg) return msg
+  if (!value.trim()) return ''
+
+  const schema = getSchema.value
+  const partialSchema = schema.pick({ [field]: true })
+
+  const result = partialSchema.safeParse({ [field]: value })
+
+  if (!result.success) {
+    const issue = result.error.issues.find((i) => i.path[0] === field)
+    return issue?.message || ''
   }
+
   return ''
 }
 
@@ -156,10 +182,22 @@ const error = computed(() => {
 })
 
 function submitForm() {
-  requiredFields.value.forEach(touch)
+  requiredFields.value.forEach((field) => {
+    touched.value[field] = true
+
+    const schema = getSchema.value.pick({ [field]: true })
+    const result = schema.safeParse({ [field]: fields.value[field] })
+    if (!result.success) {
+      const issue = result.error.issues.find((i) => i.path[0] === field)
+      errors.value[field] = issue?.message || ''
+    } else {
+      errors.value[field] = ''
+    }
+  })
+
   if (!hasErrors.value) {
     alert(mode.value === 'login' ? 'Вход выполнен' : 'Регистрация завершена')
-    }
+  }
 }
 </script>
 
@@ -169,6 +207,7 @@ function submitForm() {
     opacity: 0;
     transform: translateY(-40px);
   }
+
   100% {
     opacity: 1;
     transform: translateY(0);
@@ -316,7 +355,9 @@ form {
 
 .fade-field-enter-active,
 .fade-field-leave-active {
-  transition: opacity 0.5s ease, transform 0.5s ease;
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s ease;
 }
 
 .fade-field-enter-from,
