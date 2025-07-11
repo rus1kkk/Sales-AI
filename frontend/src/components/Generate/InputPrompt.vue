@@ -66,6 +66,7 @@ onMounted(() => {
     opacity: 0;
     transform: translateY(-40px);
   }
+
   100% {
     opacity: 1;
     transform: translateY(0);
@@ -93,14 +94,6 @@ onMounted(() => {
   gap: 24px;
 }
 
-.input-prompt-section > h1 {
-  font-size: 38px;
-  font-weight: 400;
-  line-height: 120%;
-  text-align: center;
-  color: var(--white-color);
-}
-
 .input-prompt-section {
   position: absolute;
   z-index: 3;
@@ -111,6 +104,14 @@ onMounted(() => {
   align-items: center;
   height: 90vh;
   width: 100vw;
+}
+
+.input-prompt-section > h1 {
+  font-size: 38px;
+  font-weight: 400;
+  line-height: 120%;
+  text-align: center;
+  color: var(--white-color);
 }
 
 .name-model-block {
