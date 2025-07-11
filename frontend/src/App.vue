@@ -9,8 +9,8 @@
 
 <script>
 import AppHeader from './components/AppHeader.vue'
-import BackgroundStars from './components/BackgroundStars.vue'
-import FloatingShapes from './components/FloatingShapes.vue'
+import BackgroundStars from './components/Background/BackgroundStars.vue'
+import FloatingShapes from './components/Background/FloatingShapes.vue'
 
 export default {
   name: 'App',
@@ -27,7 +27,6 @@ export default {
 
 .app-container {
   width: 100%;
-  height: 100vh;
   margin: 0;
   padding: 0;
   overflow: hidden;
