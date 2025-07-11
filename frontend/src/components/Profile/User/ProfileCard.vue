@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import UserPhoto from './User/UserPhoto.vue'
-import UserInfo from './User/UserInfo.vue'
+import UserPhoto from './UserPhoto.vue'
+import UserInfo from './UserInfo.vue'
 
 export default {
   name: 'ProfileCard',
