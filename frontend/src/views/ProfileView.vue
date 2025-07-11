@@ -9,9 +9,9 @@
 </template>
 
 <script>
-import ProfileCard from '../components/Profile/ProfileCard.vue'
-import PurchaseHistory from '@/components/Profile/PurchaseHistory.vue'
-import PaymentMethod from '@/components/Profile/PaymentMethod.vue'
+import ProfileCard from '../components/Profile/User/ProfileCard.vue'
+import PurchaseHistory from '@/components/Profile/History/PurchaseHistory.vue'
+import PaymentMethod from '@/components/Profile/Payment/PaymentMethod.vue'
 
 export default {
   name: 'ProfileView',
