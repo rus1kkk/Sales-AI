@@ -4,7 +4,7 @@
       <UserPhoto />
       <button class="default-btn">Выход</button>
     </div>
-    <UserInfo />
+    <UserInfo :userInfo="userInfo" @open-modal="$emit('open-modal', $event)" />
   </div>
 </template>
 
@@ -14,6 +14,12 @@ import UserInfo from './UserInfo.vue'
 
 export default {
   name: 'ProfileCard',
+  props: {
+    userInfo: {
+      type: Object,
+      required: true,
+    },
+  },
   components: { UserPhoto, UserInfo },
 }
 </script>

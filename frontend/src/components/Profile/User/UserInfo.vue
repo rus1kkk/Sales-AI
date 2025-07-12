@@ -3,32 +3,76 @@
     <div class="rate-container">
       <div class="rate">
         <p class="rate-title">Тариф:</p>
-        <p class="rate-type">PRO</p>
+        <p class="rate-type">{{ userInfo.plan }}</p>
       </div>
-      <p class="term">Действителен до: <strong>23.09.2025</strong></p>
+      <p class="term">
+        Действителен до: <strong>{{ userInfo.validUntil }}</strong>
+      </p>
     </div>
     <div class="info-row">
       <p class="property">Имя</p>
-      <p class="value">Денис</p>
-      <button>Правка</button>
+      <p class="value">{{ userInfo.name }}</p>
+      <button @click="openModal('name')">Правка</button>
     </div>
     <div class="info-row">
       <p class="property">Номер</p>
-      <p class="value">+79783405384</p>
-      <button>Правка</button>
+      <p class="value">{{ userInfo.phone }}</p>
+      <button @click="openModal('phone')">Правка</button>
     </div>
     <div class="info-row">
       <p class="property">Почта:</p>
-      <p class="value">lol.ogo@mail.ru</p>
-      <button>Правка</button>
+      <p class="value">{{ userInfo.email }}</p>
+      <button @click="openModal('email')">Правка</button>
     </div>
     <div class="info-row">
       <p class="property">Пароль:</p>
       <p class="value">********</p>
-      <button>Правка</button>
+      <button @click="openModal('password')">Правка</button>
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  name: 'UserInfo',
+  props: {
+    userInfo: {
+      type: Object,
+      required: true,
+    },
+  },
+  methods: {
+    openModal(field) {
+      let title = ''
+      let inputs = []
+
+      switch (field) {
+        case 'name':
+          title = 'Изменение имени'
+          inputs = [{ placeholder: 'Новое имя', type: 'text', value: this.userInfo[field] }]
+          break
+        case 'phone':
+          title = 'Изменение номера'
+          inputs = [{ placeholder: 'Новый номер', type: 'tel', value: this.userInfo[field] }]
+          break
+        case 'email':
+          title = 'Изменение почты'
+          inputs = [{ placeholder: 'Новая почта', type: 'email', value: this.userInfo[field] }]
+          break
+        case 'password':
+          title = 'Изменение пароля'
+          inputs = [
+            { placeholder: 'Новый пароль', type: 'password', value: '' },
+            { placeholder: 'Повторите пароль', type: 'password', value: '' },
+          ]
+          break
+      }
+
+      this.$emit('open-modal', { field, title, inputs })
+    },
+  },
+}
+</script>
 
 <style scoped>
 .right-part {
@@ -56,18 +100,16 @@
   font-weight: 500;
   line-height: 120%;
 }
-
 .info-row {
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 24px;
-
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
-  line-height: 120%; /* 19.2px */
+  line-height: 120%;
 }
 .rate-title,
 .term {
