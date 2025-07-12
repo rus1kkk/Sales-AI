@@ -3,8 +3,13 @@
     <p class="payment-title">Привязанные карты</p>
     <div class="payment-form">
       <div class="payment-choice">
-        <PaymentItem v-for="card in cards" :key="card.title" :card="card" />
-        <PaymentInput :card="inputCard" />
+        <PaymentItem
+          v-for="card in cards"
+          :key="card.title"
+          :card="card"
+          @remove="emitRemoveCard(card.title)"
+        />
+        <PaymentInput :card="inputCard" @add="emitAddCard" />
       </div>
     </div>
   </div>
@@ -13,23 +18,29 @@
 <script>
 import PaymentItem from './PaymentItem.vue'
 import PaymentInput from './PaymentInput.vue'
-import tbankIcon from '@/assets/images/tbank-icon.png'
-import sberIcon from '@/assets/images/sber-icon.png'
-import alphaIcon from '@/assets/images/alpha-icon.png'
-import mirIcon from '@/assets/images/mir-icon.png'
 
 export default {
   name: 'PaymentMethod',
   components: { PaymentItem, PaymentInput },
-  data() {
-    return {
-      cards: [
-        { title: '**5448', icon: tbankIcon },
-        { title: '**4578', icon: sberIcon },
-        { title: '**1770', icon: alphaIcon },
-      ],
-      inputCard: { title: 'Привязать карту', icon: mirIcon },
-    }
+  props: {
+    cards: {
+      type: Array,
+      required: true,
+      validator: (cards) => cards.every((card) => 'title' in card && 'icon' in card),
+    },
+    inputCard: {
+      type: Object,
+      required: true,
+      validator: (card) => 'title' in card && 'icon' in card,
+    },
+  },
+  methods: {
+    emitAddCard(cardTitle) {
+      this.$emit('add-card', cardTitle)
+    },
+    emitRemoveCard(cardTitle) {
+      this.$emit('remove-card', cardTitle)
+    },
   },
 }
 </script>

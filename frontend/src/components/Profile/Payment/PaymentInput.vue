@@ -1,7 +1,7 @@
 <template>
   <div class="payment-input">
     <PaymentCard :card="card" />
-    <button>+</button>
+    <button @click="handleAddCard">+</button>
   </div>
 </template>
 
@@ -16,6 +16,13 @@ export default {
       type: Object,
       required: true,
       validator: (card) => 'title' in card && 'icon' in card,
+    },
+  },
+  methods: {
+    handleAddCard() {
+      // Заглушка
+      const newCardTitle = '**' + Math.floor(1000 + Math.random() * 9000)
+      this.$emit('add', newCardTitle)
     },
   },
 }

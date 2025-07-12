@@ -1,7 +1,7 @@
 <template>
   <div class="payment-item">
     <PaymentCard :card="card" />
-    <button>-</button>
+    <button @click="$emit('remove', card.title)">-</button>
   </div>
 </template>
 

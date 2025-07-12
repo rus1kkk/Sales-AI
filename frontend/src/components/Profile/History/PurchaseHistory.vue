@@ -57,7 +57,7 @@ export default {
 .history {
   display: flex;
   max-width: 652px;
-  min-width: 518px;
+  min-width: 537px;
   width: 100%;
   flex-direction: column;
   align-items: flex-start;
