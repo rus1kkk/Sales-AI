@@ -1,0 +1,103 @@
+.starry-bg {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background-image: url(@/assets/images/background.png);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: -1;
+}
+
+.shooting-star {
+  position: fixed;
+  width: 3px;
+  height: 80px;
+  background: linear-gradient(rgba(255, 255, 255, 0.4), rgba(100, 124, 190, 0.5), transparent);
+  border-radius: 50% 50% 40% 40%;
+  transform: rotate(-225deg);
+  animation: fall 1s ease-out forwards;
+  opacity: 1;
+  z-index: 1;
+}
+
+@keyframes fall {
+  0% {
+    transform: translate(0, 0) rotate(-225deg);
+    opacity: 1;
+  }
+
+  70% {
+    opacity: 0.7;
+  }
+
+  100% {
+    transform: translate(200px, 200px) rotate(-225deg);
+    opacity: 0;
+  }
+}
+
+.star {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(
+    rgb(146, 154, 204) 5%,
+    rgba(69, 77, 158, 0.63) 35%,
+    rgba(0, 170, 255, 0.1) 100%
+  );
+  filter: blur(4px);
+  box-shadow:
+    0 0 30px rgba(0, 170, 255, 0.1),
+    0 0 40px rgba(255, 255, 255, 0.1),
+    0 0 50px rgba(86, 121, 139, 0.075);
+}
+
+.star-core {
+  position: absolute;
+  background: rgb(193, 196, 204);
+  border-radius: 50%;
+  filter: blur(0.4px);
+  pointer-events: none;
+}
+
+.big-star {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(
+    rgba(255, 252, 254, 0.95) 1%,
+    rgba(230, 149, 238, 0.493) 1%,
+    rgba(201, 45, 162, 0.055) 30%
+  );
+  filter: blur(10px);
+}
+
+.big-star-core {
+  position: absolute;
+  background: rgb(255, 254, 255);
+  border-radius: 50%;
+  filter: blur(2px);
+  pointer-events: none;
+}
+
+.big-star,
+.big-star-core,
+.star,
+.star-core {
+  animation: pulse 3s ease-in-out infinite;
+  transform-origin: center;
+}
+
+@keyframes pulse {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  40%,
+  60% {
+    transform: translate(-50%, -50%) scale(1.5);
+  }
+
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
