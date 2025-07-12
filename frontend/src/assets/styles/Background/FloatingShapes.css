@@ -34,7 +34,7 @@
   animation-delay: 0s, 4s;
 }
 
-#chain-figure {
+.chain {
   left: -35vw;
   bottom: -31vw;
 }

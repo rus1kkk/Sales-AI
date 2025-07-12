@@ -20,18 +20,17 @@
       alt="Generate Figure 2"
     />
     <img
-      v-if="$route.name === 'profile'"
-      class="custom-shape top-right"
-      :src="profileFigure_1"
-      alt="Profile Figure"
-    />
-    <img
-      v-if="$route.name === 'profile'"
-      class="custom-shape bottom-left"
-      id="chain-figure"
-      :src="profileFigure_2"
-      alt="Profile Figure 2"
-    />
+    v-if="$route.name === 'profile' || $route.name === 'HistoryPage'"
+    class="custom-shape top-right"
+    :src="sharedFigure_1"
+    alt="Shared Figure 1"
+  />
+  <img
+    v-if="$route.name === 'profile' || $route.name === 'HistoryPage'"
+    class="custom-shape bottom-left chain"
+    :src="sharedFigure_2"
+    alt="Shared Figure 2"
+  />
   </div>
 </template>
 
@@ -39,8 +38,9 @@
 import mainFigure from '@/assets/images/figure1.png'
 import generateFigure_1 from '@/assets/images/figure2.png'
 import generateFigure_2 from '@/assets/images/figure3.png'
-import profileFigure_1 from '@/assets/images/figure4.png'
-import profileFigure_2 from '@/assets/images/figure5.png'
+import sharedFigure_1 from '@/assets/images/figure4.png';
+import sharedFigure_2 from '@/assets/images/figure5.png';
+
 
 export default {
   data() {
@@ -48,8 +48,8 @@ export default {
       mainFigure,
       generateFigure_1,
       generateFigure_2,
-      profileFigure_1,
-      profileFigure_2,
+      sharedFigure_1,
+      sharedFigure_2,
     }
   },
 }
