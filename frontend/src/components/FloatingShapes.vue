@@ -7,13 +7,13 @@
       alt="Main Figure"
     />
     <img
-      v-if="$route.name === 'GeneratePage'"
+      v-if="$route.name === 'GeneratePage' || $route.name === 'ChatPage'"
       class="custom-shape top-right"
       :src="generateFigure_1"
       alt="Generate Figure"
     />
     <img
-      v-if="$route.name === 'GeneratePage'"
+      v-if="$route.name === 'GeneratePage' || $route.name === 'ChatPage'"
       class="custom-shape bottom-left"
       :src="generateFigure_2"
       alt="Generate Figure 2"

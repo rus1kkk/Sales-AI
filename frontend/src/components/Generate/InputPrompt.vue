@@ -1,20 +1,21 @@
 <template>
   <section class="input-prompt-section">
-    <h1 class="fade-up" style="animation-delay: 0.2s">Какая задача будет сегодня?</h1>
     <div class="input-prompt-block fade-up" style="animation-delay: 0.4s">
       <div class="input-prompt-block-text">
         <textarea
           ref="textarea"
           id="prompt-input"
+          v-model="prompt"
           placeholder="Введите ваш запрос"
           rows="1"
           wrap="soft"
           @input="autoResize"
+          @keydown="handleKey"
         ></textarea>
         <div class="name-model-block">Название модели</div>
       </div>
-      <button>
-        <img :src="promptSendingIcon" alt="./img/Pr" />
+      <button @click="openChat">
+        <img :src="promptSendingIcon" alt="Send" />
       </button>
     </div>
     <div class="input-prompt-block-info fade-up" style="animation-delay: 0.6s">
@@ -22,17 +23,49 @@
         <span>Sales AI</span> может допускать ошибки. Проверьте и отредактируйте презентацию или
         купите подписку.
       </h3>
-      <a href="#"> См. подписки.</a>
+      <a href="#">См. подписки.</a>
     </div>
   </section>
 </template>
 
 <script setup>
+import { ref, onMounted, onUnmounted } from 'vue'
+import { useRouter } from 'vue-router'
 import promptSendingIcon from '@/assets/images/prompt_sending_icon.svg'
 
-import { ref, onMounted, onUnmounted } from 'vue'
+const props = defineProps({
+  onSubmit: Function,
+})
 
+const router = useRouter()
+const prompt = ref('')
 const textarea = ref(null)
+
+import { nextTick } from 'vue'
+
+function openChat() {
+  const trimmed = prompt.value.trim()
+  if (!trimmed) return
+
+  if (props.onSubmit) {
+    props.onSubmit(trimmed)
+  } else {
+    router.push({ name: 'ChatPage', query: { prompt: trimmed } })
+  }
+
+  prompt.value = ''
+
+  nextTick(() => {
+    autoResize()
+  })
+}
+
+function handleKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault()
+    openChat()
+  }
+}
 
 const autoResize = () => {
   if (textarea.value) {
@@ -45,11 +78,9 @@ const autoResize = () => {
 
 onMounted(() => {
   autoResize()
-
   const observer = new ResizeObserver(() => {
     autoResize()
   })
-
   if (textarea.value) {
     observer.observe(textarea.value)
   }
@@ -93,23 +124,12 @@ onMounted(() => {
   gap: 24px;
 }
 
-.input-prompt-section > h1 {
-  font-size: 38px;
-  font-weight: 400;
-  line-height: 120%;
-  text-align: center;
-  color: var(--white-color);
-}
-
 .input-prompt-section {
-  position: absolute;
-  z-index: 3;
   display: flex;
   flex-direction: column;
   gap: 24px;
   justify-content: center;
   align-items: center;
-  height: 90vh;
   width: 100vw;
 }
 

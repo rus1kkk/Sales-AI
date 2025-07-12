@@ -4,6 +4,7 @@ import MainPage from '../views/MainPage.vue'
 import GeneratePage from '../views/GeneratePage.vue'
 import SubscriptionPage from '../views/SubscriptionPage.vue'
 import ProfileView from '../views/ProfileView.vue'
+import ChatPage from '../views/ChatPage.vue'
 
 const routes = [
   {
@@ -25,6 +26,11 @@ const routes = [
     path: '/profile',
     name: 'profile',
     component: ProfileView,
+  },
+  {
+    path: '/chat',
+    name: 'ChatPage',
+    component: ChatPage,
   },
 ]
 
