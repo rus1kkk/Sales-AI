@@ -151,7 +151,7 @@ onMounted(() => {
   display: flex;
   gap: 34px;
   border-radius: 60px;
-  width: 60vw;
+  width: 90%;
   max-width: 1130px;
   backdrop-filter: blur(20px);
 }
