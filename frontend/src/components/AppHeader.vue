@@ -8,7 +8,7 @@
         <router-link to="/subscription" class="nav-link">ПОДПИСКА</router-link>
         <router-link to="/history" class="nav-link disabled">ИСТОРИЯ</router-link>
       </nav>
-      <router-link to="" class="login-btn">ВХОД</router-link>
+      <router-link to="/login" class="login-btn">ВХОД</router-link>
     </div>
   </header>
 </template>
