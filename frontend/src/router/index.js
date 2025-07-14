@@ -5,7 +5,7 @@ import GeneratePage from '../views/GeneratePage.vue'
 import SubscriptionPage from '../views/SubscriptionPage.vue'
 import ProfileView from '../views/ProfileView.vue'
 import HistoryPage from '../views/HistoryPage.vue'
-
+import LoginPage from '../views/LoginPage.vue'
 
 const routes = [
   {
@@ -32,6 +32,11 @@ const routes = [
     path: '/history',
     name: 'HistoryPage',
     component: HistoryPage,
+  },
+  {
+    path: '/login',
+    name: 'LoginPage',
+    component: LoginPage,
   },
 ]
 
