@@ -1,12 +1,14 @@
 <template>
-  <div class="content-banner">
+  <div class="content-wrapper">
+  <div class="main-banner">
     <h1>
       Начни Создавать Вместе с
-      <span class="sales-ai-text">{{ title }}</span>
+      <span class="title-text">{{ title }}
+        <img src="@/assets/images/arrow.svg" class="arrow" alt="Arrow" />
+    </span>
     </h1>
-    <div class="arrow">
-      <img src="@/assets/images/arrow.svg" alt="Arrow" />
-    </div>
+
+  </div>
   </div>
 </template>
 
