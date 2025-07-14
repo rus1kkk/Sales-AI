@@ -4,7 +4,24 @@
       <div class="input">
         <div class="title-row">
           <p>{{ title }}</p>
-          <button type="button" @click="onClose">x</button>
+          <CustomButton type="icon-line" @click="onClose">
+            <template #icon>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="21"
+                viewBox="0 0 20 21"
+                fill="none"
+              >
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M0.418415 0.918415C0.976316 0.360528 1.88083 0.360528 2.43873 0.918415L10 8.47973L17.5613 0.918415C18.1192 0.360528 19.0237 0.360528 19.5816 0.918415C20.1395 1.47632 20.1395 2.38083 19.5816 2.93873L12.0203 10.5L19.5816 18.0613C20.1395 18.6192 20.1395 19.5237 19.5816 20.0816C19.0237 20.6395 18.1192 20.6395 17.5613 20.0816L10 12.5203L2.43873 20.0816C1.88083 20.6395 0.976316 20.6395 0.418415 20.0816C-0.139472 19.5237 -0.139472 18.6192 0.418415 18.0613L7.97973 10.5L0.418415 2.93873C-0.139472 2.38083 -0.139472 1.47632 0.418415 0.918415Z"
+                  fill="#A8A9AF"
+                />
+              </svg>
+            </template>
+          </CustomButton>
         </div>
         <div class="inputs">
           <div v-for="(input, index) in inputs" :key="index" class="input-wrapper">
@@ -27,23 +44,29 @@
               {{ validationErrors[index] }}
             </div>
           </div>
+          <p v-if="serverError" class="error-message">{{ serverError }}</p>
         </div>
       </div>
       <div class="action-buttons">
-        <button type="button" @click="onClose">Отменить</button>
-        <button type="submit" :disabled="!isFormValid">Принять</button>
+        <CustomButton type="text" label="Отменить" @click="onClose" />
+        <CustomButton
+          type="text-blue"
+          label="Принять"
+          buttonType="submit"
+          :disabled="isSubmitting || !isFormValid"
+        />
       </div>
     </form>
   </div>
 </template>
+
 <script>
 import InputModal from './InputModal.vue'
+import CustomButton from '../CustomButton.vue'
 
 export default {
   name: 'ModalForm',
-  components: {
-    InputModal,
-  },
+  components: { InputModal, CustomButton },
   props: {
     isOpen: { type: Boolean, required: true },
     title: { type: String, default: 'Модальное окно' },
@@ -64,6 +87,8 @@ export default {
       inputValues: [],
       validationErrors: [],
       touchedFields: [],
+      isSubmitting: false,
+      serverError: '',
     }
   },
   computed: {
@@ -81,6 +106,7 @@ export default {
         this.inputValues = this.inputs.map((input) => input.value || '')
         this.validationErrors = new Array(this.inputs.length).fill('')
         this.touchedFields = new Array(this.inputs.length).fill(false)
+        this.serverError = '' // Сбрасываем ошибку при изменении inputs
       },
       immediate: true,
     },
@@ -98,6 +124,7 @@ export default {
       }
 
       this.validateField(index, value, 'input')
+      this.serverError = '' // Сбрасываем серверную ошибку при изменении поля
     },
     handleBlur(index) {
       const newTouched = [...this.touchedFields]
@@ -242,16 +269,33 @@ export default {
       }
       return ''
     },
-    handleSubmit() {
+    async handleSubmit() {
       this.touchedFields = new Array(this.inputs.length).fill(true)
-
       this.inputValues.forEach((value, index) => {
         this.validateField(index, value, 'blur')
       })
 
       if (this.isFormValid) {
-        this.onSubmit(this.inputValues)
+        this.isSubmitting = true
+        this.serverError = ''
+        try {
+          await this.onSubmit(this.inputValues)
+        } catch (error) {
+          this.serverError = error.message || this.getErrorMessage(this.field)
+        } finally {
+          this.isSubmitting = false
+        }
       }
+    },
+    getErrorMessage(field) {
+      const errorMessages = {
+        name: 'Не удалось изменить имя',
+        phone: 'Не удалось изменить номер телефона',
+        email: 'Не удалось изменить почту',
+        password: 'Не удалось изменить пароль',
+        photoUrl: 'Не удалось сохранить фото',
+      }
+      return errorMessages[field] || 'Ошибка при сохранении данных'
     },
   },
 }

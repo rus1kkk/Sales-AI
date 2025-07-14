@@ -6,13 +6,18 @@
         :userInfo="userInfo"
         @open-modal="openModal"
         @update-user-field="updateUserField"
+        @photo-changed="handlePhotoChange"
+        @logout="logout"
       />
       <PurchaseHistory :purchases="purchases" />
       <PaymentMethod
         :cards="cards"
         :inputCard="inputCard"
+        :isAddingCard="isAddingCard"
         @add-card="addCard"
         @remove-card="removeCard"
+        @start-adding-card="startAddingCard"
+        @cancel-adding-card="cancelAddingCard"
       />
     </div>
     <ModalForm
@@ -35,6 +40,7 @@ import tbankIcon from '@/assets/images/tbank-icon.png'
 import sberIcon from '@/assets/images/sber-icon.png'
 import alphaIcon from '@/assets/images/alpha-icon.png'
 import mirIcon from '@/assets/images/mir-icon.png'
+import userPhoto from '@/assets/images/user-photo.png'
 
 export default {
   name: 'ProfileView',
@@ -47,7 +53,11 @@ export default {
         email: 'lol.ogo@mail.ru',
         plan: 'PRO',
         validUntil: '23.09.2025',
+        photoUrl: userPhoto,
       },
+      isAddingCard: false, // Состояние показа формы добавления карты
+      pendingRemovals: [], // Очередь для удаления карт (хранит объекты { card, index })
+      mockServerError: true, // true - для имитации ошибки
       purchases: [
         {
           id: 1,
@@ -116,46 +126,117 @@ export default {
     closeModal() {
       this.modal.isOpen = false
     },
-    handleSubmit(values) {
-      if (this.modal.field === 'password') {
-        const newPassword = values[0]
-        this.updateUserField(this.modal.field, newPassword)
-      } else {
-        const newValue = values[0]
-        this.updateUserField(this.modal.field, newValue)
-      }
+    async handleSubmit(values) {
+      const value = this.modal.field === 'password' ? values[0] : values[0]
+      await this.updateUserField(this.modal.field, value)
       this.closeModal()
     },
-    updateUserField(field, value) {
-      console.log('updateUserField called with:', { field, value })
+    async updateUserField(field, value) {
+      await this.saveUserData(field, value)
       if (field !== 'password') {
         this.userInfo[field] = value
       }
-      this.saveUserData(field, value)
     },
-    async saveUserData(field, value) {
+    async handlePhotoChange({ file, url }) {
+      console.log('Выбранное фото:', { file, url })
       try {
-        console.log(`Сохранение поля ${field} со значением:`, value)
+        await this.saveUserData('photoUrl', url)
+        this.userInfo.photoUrl = url
       } catch (error) {
-        console.error('Ошибка при сохранении данных:', error)
-        this.$toast?.error('Ошибка при сохранении данных')
+        alert('Ошибка загрузки фотографии')
+        if (this.$refs.profileCard && this.$refs.profileCard.$refs.userPhoto) {
+          this.$refs.profileCard.$refs.userPhoto.resetPhoto()
+        } else {
+          console.error('Фото не найдено')
+        }
+        throw error
       }
     },
-    addCard(cardTitle) {
+    async saveUserData(field, value) {
+      //метод заглушка
+      console.log(`Сохранение поля ${field} со значением:`, value)
+      if (this.mockServerError) {
+        await new Promise((resolve) => setTimeout(resolve, 2000))
+        throw new Error('Произошла ошибка при сохранении данных')
+      }
+    },
+    startAddingCard() {
+      this.isAddingCard = true
+    },
+    cancelAddingCard() {
+      this.isAddingCard = false
+    },
+    async addCard(cardTitle, { resolve, reject } = {}) {
       const newCard = { title: cardTitle, icon: this.inputCard.icon }
       this.cards = [...this.cards, newCard]
-      this.saveCardData(newCard)
+      try {
+        await this.saveCardData(newCard)
+        this.isAddingCard = false
+        resolve && resolve()
+      } catch (error) {
+        this.cards = this.cards.filter((card) => card.title !== cardTitle)
+        reject && reject(error)
+      }
     },
     removeCard(cardTitle) {
-      this.cards = this.cards.filter((card) => card.title !== cardTitle)
-      this.saveCardData({ title: cardTitle }, true)
+      const index = this.cards.findIndex((card) => card.title === cardTitle)
+      if (index === -1 || this.pendingRemovals.some((c) => c.card.title === cardTitle)) {
+        return
+      }
+      const cardToRemove = this.cards[index]
+      this.pendingRemovals.push({ card: cardToRemove, index })
+      this.cards = this.cards.filter(
+        (card) => !this.pendingRemovals.some((c) => c.card.title === card.title),
+      )
+      this.processRemovalQueue()
+    },
+    async processRemovalQueue() {
+      if (!this.pendingRemovals.length) {
+        return
+      }
+      const removals = this.pendingRemovals.map(({ card }) => ({
+        card,
+        promise: this.saveCardData(card, true),
+      }))
+      const pendingRemovalsCopy = [...this.pendingRemovals]
+      this.pendingRemovals = []
+      try {
+        const results = await Promise.allSettled(removals.map((r) => r.promise))
+        results.forEach((result, index) => {
+          const { card, index: originalIndex } = pendingRemovalsCopy[index]
+          if (result.status !== 'fulfilled') {
+            if (this.cards.every((c) => c.title !== card.title)) {
+              this.cards.splice(originalIndex, 0, card)
+            }
+            alert(result.reason?.message || `Ошибка при удалении карты ${card.title}`)
+          }
+        })
+      } catch (error) {
+        console.error('Ошибка:', error)
+      }
     },
     async saveCardData(card, isRemoval = false) {
+      //метод заглушка
+      console.log(`${isRemoval ? 'Удаление' : 'Добавление'} карты ${card.title}`)
+      if (this.mockServerError) {
+        await new Promise((resolve) => setTimeout(resolve, 2000))
+        if(isRemoval){
+          throw new Error('Произошла ошибка при удалении карты')
+        }
+        else throw new Error('Произошла ошибка при добавлении карты')
+        
+      }
+    },
+    async logout() {
+      //метод заглушка
       try {
-        console.log(`${isRemoval ? 'Удаление' : 'Добавление'} карты ${card.title}`)
+        if (this.mockServerError) {
+          await new Promise((resolve) => setTimeout(resolve, 2000))
+          throw new Error('Произошла ошибка при выходе из профиля')
+        }
+        this.$router.push('/')
       } catch (error) {
-        console.error('Ошибка при сохранении данных карты:', error)
-        this.$toast?.error('Ошибка при сохранении данных карты')
+        alert(error.message)
       }
     },
   },

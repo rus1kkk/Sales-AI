@@ -1,8 +1,12 @@
 <template>
   <div class="profile-card">
     <div class="left-part">
-      <UserPhoto />
-      <button class="default-btn">Выход</button>
+      <UserPhoto
+        ref="userPhoto"
+        :photoUrl="userInfo.photoUrl"
+        @photo-changed="$emit('photo-changed', $event)"
+      />
+      <CustomButton type="default" label="Выход" @click="$emit('logout')" />
     </div>
     <UserInfo :userInfo="userInfo" @open-modal="$emit('open-modal', $event)" />
   </div>
@@ -11,6 +15,7 @@
 <script>
 import UserPhoto from './UserPhoto.vue'
 import UserInfo from './UserInfo.vue'
+import CustomButton from '../CustomButton.vue'
 
 export default {
   name: 'ProfileCard',
@@ -20,7 +25,7 @@ export default {
       required: true,
     },
   },
-  components: { UserPhoto, UserInfo },
+  components: { UserPhoto, UserInfo, CustomButton },
 }
 </script>
 

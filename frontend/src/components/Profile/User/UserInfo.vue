@@ -6,35 +6,98 @@
         <p class="rate-type">{{ userInfo.plan }}</p>
       </div>
       <p class="term">
-        Действителен до: <strong>{{ userInfo.validUntil }}</strong>
+        Действителен до: <span>{{ userInfo.validUntil }}</span>
       </p>
     </div>
     <div class="info-row">
       <p class="property">Имя</p>
       <p class="value">{{ userInfo.name }}</p>
-      <button @click="openModal('name')">Правка</button>
+      <CustomButton type="icon" @click="openModal('name')">
+        <template #icon>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="18"
+            height="19"
+            viewBox="0 0 18 19"
+            fill="none"
+          >
+            <path
+              d="M13.3614 1.76204L16.7381 5.14024L17.3006 4.57676C17.5224 4.355 17.6982 4.09174 17.8182 3.802C17.9382 3.51226 18 3.20172 18 2.88811C18 2.5745 17.9382 2.26396 17.8182 1.97422C17.6982 1.68448 17.5224 1.42122 17.3006 1.19946C17.0789 0.977704 16.8157 0.801798 16.526 0.681784C16.2363 0.56177 15.9258 0.5 15.6122 0.5C14.979 0.5 14.3716 0.751604 13.9239 1.19946L13.3614 1.76204ZM15.1875 6.68757L11.8107 3.30937L1.0962 14.0263L0 18.5L4.47299 17.4045L15.1875 6.68757Z"
+              fill="#A8A9AF"
+            />
+          </svg>
+        </template>
+      </CustomButton>
     </div>
     <div class="info-row">
       <p class="property">Номер</p>
       <p class="value">{{ userInfo.phone }}</p>
-      <button @click="openModal('phone')">Правка</button>
+      <CustomButton type="icon" @click="openModal('phone')">
+        <template #icon>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="18"
+            height="19"
+            viewBox="0 0 18 19"
+            fill="none"
+          >
+            <path
+              d="M13.3614 1.76204L16.7381 5.14024L17.3006 4.57676C17.5224 4.355 17.6982 4.09174 17.8182 3.802C17.9382 3.51226 18 3.20172 18 2.88811C18 2.5745 17.9382 2.26396 17.8182 1.97422C17.6982 1.68448 17.5224 1.42122 17.3006 1.19946C17.0789 0.977704 16.8157 0.801798 16.526 0.681784C16.2363 0.56177 15.9258 0.5 15.6122 0.5C14.979 0.5 14.3716 0.751604 13.9239 1.19946L13.3614 1.76204ZM15.1875 6.68757L11.8107 3.30937L1.0962 14.0263L0 18.5L4.47299 17.4045L15.1875 6.68757Z"
+              fill="#A8A9AF"
+            />
+          </svg>
+        </template>
+      </CustomButton>
     </div>
     <div class="info-row">
       <p class="property">Почта:</p>
       <p class="value">{{ userInfo.email }}</p>
-      <button @click="openModal('email')">Правка</button>
+      <CustomButton type="icon" @click="openModal('email')">
+        <template #icon>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="18"
+            height="19"
+            viewBox="0 0 18 19"
+            fill="none"
+          >
+            <path
+              d="M13.3614 1.76204L16.7381 5.14024L17.3006 4.57676C17.5224 4.355 17.6982 4.09174 17.8182 3.802C17.9382 3.51226 18 3.20172 18 2.88811C18 2.5745 17.9382 2.26396 17.8182 1.97422C17.6982 1.68448 17.5224 1.42122 17.3006 1.19946C17.0789 0.977704 16.8157 0.801798 16.526 0.681784C16.2363 0.56177 15.9258 0.5 15.6122 0.5C14.979 0.5 14.3716 0.751604 13.9239 1.19946L13.3614 1.76204ZM15.1875 6.68757L11.8107 3.30937L1.0962 14.0263L0 18.5L4.47299 17.4045L15.1875 6.68757Z"
+              fill="#A8A9AF"
+            />
+          </svg>
+        </template>
+      </CustomButton>
     </div>
     <div class="info-row">
       <p class="property">Пароль:</p>
       <p class="value">********</p>
-      <button @click="openModal('password')">Правка</button>
+      <CustomButton type="icon" @click="openModal('password')">
+        <template #icon>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="18"
+            height="19"
+            viewBox="0 0 18 19"
+            fill="none"
+          >
+            <path
+              d="M13.3614 1.76204L16.7381 5.14024L17.3006 4.57676C17.5224 4.355 17.6982 4.09174 17.8182 3.802C17.9382 3.51226 18 3.20172 18 2.88811C18 2.5745 17.9382 2.26396 17.8182 1.97422C17.6982 1.68448 17.5224 1.42122 17.3006 1.19946C17.0789 0.977704 16.8157 0.801798 16.526 0.681784C16.2363 0.56177 15.9258 0.5 15.6122 0.5C14.979 0.5 14.3716 0.751604 13.9239 1.19946L13.3614 1.76204ZM15.1875 6.68757L11.8107 3.30937L1.0962 14.0263L0 18.5L4.47299 17.4045L15.1875 6.68757Z"
+              fill="#A8A9AF"
+            />
+          </svg>
+        </template>
+      </CustomButton>
     </div>
   </div>
 </template>
 
 <script>
+import CustomButton from '../CustomButton.vue'
+
 export default {
   name: 'UserInfo',
+  components: { CustomButton },
   props: {
     userInfo: {
       type: Object,
@@ -115,7 +178,7 @@ export default {
 .term {
   color: #a8a9af;
 }
-strong {
+span {
   color: #fff;
 }
 </style>

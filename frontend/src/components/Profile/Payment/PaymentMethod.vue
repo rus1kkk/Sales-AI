@@ -1,5 +1,6 @@
 <template>
-  <div class="payment">
+  <CardInputForm v-if="isAddingCard" @cancel="emitCancelAddingCard" />
+  <div v-else class="payment">
     <p class="payment-title">Привязанные карты</p>
     <div class="payment-form">
       <div class="payment-choice">
@@ -9,7 +10,11 @@
           :card="card"
           @remove="emitRemoveCard(card.title)"
         />
-        <PaymentInput :card="inputCard" @add="emitAddCard" />
+        <PaymentInput
+          :key="'unique-payment-input'"
+          :card="inputCard"
+          @start-adding-card="emitStartAddingCard"
+        />
       </div>
     </div>
   </div>
@@ -18,10 +23,11 @@
 <script>
 import PaymentItem from './PaymentItem.vue'
 import PaymentInput from './PaymentInput.vue'
+import CardInputForm from './CardInputForm.vue'
 
 export default {
   name: 'PaymentMethod',
-  components: { PaymentItem, PaymentInput },
+  components: { PaymentItem, PaymentInput, CardInputForm },
   props: {
     cards: {
       type: Array,
@@ -33,13 +39,20 @@ export default {
       required: true,
       validator: (card) => 'title' in card && 'icon' in card,
     },
+    isAddingCard: {
+      type: Boolean,
+      default: false,
+    },
   },
   methods: {
-    emitAddCard(cardTitle) {
-      this.$emit('add-card', cardTitle)
-    },
     emitRemoveCard(cardTitle) {
       this.$emit('remove-card', cardTitle)
+    },
+    emitStartAddingCard() {
+      this.$emit('start-adding-card')
+    },
+    emitCancelAddingCard() {
+      this.$emit('cancel-adding-card')
     },
   },
 }
