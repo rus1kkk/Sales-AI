@@ -6,7 +6,7 @@
         <router-link to="/" class="nav-link">ГЛАВНАЯ</router-link>
         <router-link to="/generate" class="nav-link">ГЕНЕРАЦИЯ</router-link>
         <router-link to="/subscription" class="nav-link">ПОДПИСКА</router-link>
-        <router-link to="/history" class="nav-link disabled">ИСТОРИЯ</router-link>
+        <router-link to="/history" class="nav-link">ИСТОРИЯ</router-link>
       </nav>
       <router-link to="/login" class="login-btn">ВХОД</router-link>
     </div>
