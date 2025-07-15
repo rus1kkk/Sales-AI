@@ -98,59 +98,7 @@ export default {
 </script>
 
 <style scoped>
-@import '../../../assets/styles/main.css';
+@import '../../../assets/styles/Profile/PaymentMethod.css';
 
-.payment {
-  max-width: 647px;
-  min-width: 562px;
-  width: 100%;
-  display: inline-flex;
-  padding-top: 24px;
-  flex-direction: column;
-  align-items: center;
-  gap: 24px;
-}
 
-.payment-title {
-  color:var(--white-color);
-  text-align: center;
-  font-family: Montserrat;
-  font-size: 24px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 120%; /* 28.8px */
-}
-
-.payment-form {
-  display: flex;
-  width: 100%;
-  align-items: flex-start;
-  gap: 24px;
-  border-radius: 60px;
-  background: rgba(255, 255, 255, 0.2);
-  box-shadow: 0px 0px 68px 0px rgba(255, 255, 255, 0.05) inset;
-  backdrop-filter: blur(7.5px);
-}
-
-.payment-choice {
-  display: flex;
-  width: 100%;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  flex-shrink: 0;
-}
-
-.fade-up {
-  opacity: 0;
-  transform: translateY(30px);
-  animation: fadeUp 0.3s ease forwards;
-}
-
-@keyframes fadeUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 </style>
