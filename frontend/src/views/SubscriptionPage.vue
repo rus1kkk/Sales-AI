@@ -4,8 +4,8 @@ import PricingCard from '../components/PricingCard.vue'
 
 <template>
   <div class="price-section">
-    <h1 class="pricing-h1">Тарифные планы</h1>
-    <div class="pricing-card-list">
+    <h1 class="pricing-h1 fade-up" style="animation-delay: 0.2s">Тарифные планы</h1>
+    <div class="pricing-card-list fade-up" style="animation-delay: 0.4s">
       <PricingCard />
       <PricingCard
         title="PRO"
@@ -66,5 +66,40 @@ import PricingCard from '../components/PricingCard.vue'
   flex-shrink: 0;
   margin-bottom: 176px;
   margin-top: 86px;
+}
+
+.fade-up {
+  opacity: 0;
+  animation: fadeUp 0.8s ease-out forwards;
+}
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(-40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-out {
+  opacity: 1;
+  animation: fadeOut 0.5s ease-out forwards;
+}
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-40px);
+  }
+}
+@media (max-width: 460px) {
+  .price-section {
+    padding: 0px 10px;
+  }
 }
 </style>
