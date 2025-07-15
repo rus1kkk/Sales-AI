@@ -4,7 +4,7 @@
       <div class="input">
         <div class="title-row">
           <p>{{ title }}</p>
-          <CustomButton type="icon-line" @click="onClose">
+          <CustomButton type="icon" @click="onClose">
             <template #icon>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -29,8 +29,8 @@
               :placeholder="input.placeholder || `Поле ${index + 1}`"
               :type="input.type || 'text'"
               :value="inputValues[index] || ''"
-              :hasError="!!validationErrors[index] && touchedFields[index]"
-              @update:value="updateInputValue(index, $event)"
+              :hasError="!!validationErrors[index]"
+              @update:value="handleInputChange(index, $event)"
               @blur="handleBlur(index)"
               :aria-describedby="errorMessage ? 'error-message' : null"
             />
@@ -54,8 +54,8 @@
 </template>
 
 <script>
-import InputModal from './InputModal.vue'
-import CustomButton from '../CustomButton.vue'
+import InputModal from './InputModal.vue';
+import CustomButton from '../CustomButton.vue';
 
 export default {
   name: 'ModalForm',
@@ -67,9 +67,7 @@ export default {
       type: Array,
       default: () => [],
       validator: (inputs) =>
-        inputs.every(
-          (input) => typeof input === 'object' && 'placeholder' in input && 'type' in input,
-        ),
+        inputs.every((input) => typeof input === 'object' && 'placeholder' in input && 'type' in input),
     },
     field: { type: String, default: '' },
     onClose: { type: Function, required: true },
@@ -82,7 +80,7 @@ export default {
       touchedFields: [],
       isSubmitting: false,
       serverError: '',
-    }
+    };
   },
   computed: {
     isFormValid() {
@@ -90,218 +88,204 @@ export default {
         this.inputValues.length === this.inputs.length &&
         this.inputValues.every((value) => value && value.trim() !== '') &&
         this.validationErrors.every((error) => !error)
-      )
+      );
     },
     errorMessage() {
-      // Возвращает первую найденную ошибку
-      if (this.serverError) return this.serverError
-      const errorIndex = this.validationErrors.findIndex(
-        (error, index) => error && this.touchedFields[index],
-      )
-      return errorIndex !== -1 ? this.validationErrors[errorIndex] : ''
+      if (this.serverError) return this.serverError;
+      const errorIndex = this.validationErrors.findIndex((error) => error);
+      return errorIndex !== -1 ? this.validationErrors[errorIndex] : '';
     },
   },
   watch: {
     inputs: {
       handler() {
-        this.inputValues = this.inputs.map((input) => input.value || '')
-        this.validationErrors = new Array(this.inputs.length).fill('')
-        this.touchedFields = new Array(this.inputs.length).fill(false)
-        this.serverError = ''
+        this.inputValues = this.inputs.map((input) => input.value || '');
+        this.validationErrors = new Array(this.inputs.length).fill('');
+        this.touchedFields = new Array(this.inputs.length).fill(false);
+        this.serverError = '';
       },
       immediate: true,
     },
   },
   methods: {
-    updateInputValue(index, value) {
-      const newValues = [...this.inputValues]
-      newValues[index] = value
-      this.inputValues = newValues
+    handleInputChange(index, value) {
+      const newValues = [...this.inputValues];
+      newValues[index] = value;
+      this.inputValues = newValues;
 
       if (!this.touchedFields[index]) {
-        const newTouched = [...this.touchedFields]
-        newTouched[index] = true
-        this.touchedFields = newTouched
+        const newTouched = [...this.touchedFields];
+        newTouched[index] = true;
+        this.touchedFields = newTouched;
       }
 
-      this.validateField(index, value, 'input')
-      this.serverError = ''
+      this.serverError = '';
+      this.validateField(index, value);
     },
+
     handleBlur(index) {
-      const newTouched = [...this.touchedFields]
-      newTouched[index] = true
-      this.touchedFields = newTouched
-
-      this.validateField(index, this.inputValues[index], 'blur')
+      const newTouched = [...this.touchedFields];
+      newTouched[index] = true;
+      this.touchedFields = newTouched;
+      this.validateField(index, this.inputValues[index]);
     },
-    validateField(index, value, eventType = 'input') {
-      const newErrors = [...this.validationErrors]
-      const rules = this.getValidationRules(index, this.field)
 
-      newErrors[index] = ''
+    validateField(index, value) {
+      const newErrors = [...this.validationErrors];
+      const rules = this.getValidationRules(index, this.field);
+
+      let currentError = '';
+
       for (const rule of rules) {
-        if (rule.eventType && rule.eventType !== eventType) continue
         if (!rule.validator(value)) {
-          newErrors[index] = rule.message
-          break
+          currentError = rule.message;
+          break;
         }
       }
 
-      if (this.field === 'password' && index === 0 && this.inputValues[1] && eventType === 'blur') {
-        newErrors[1] = this.validatePasswordConfirm(this.inputValues[0], this.inputValues[1])
+      newErrors[index] = currentError;
+
+      if (this.field === 'password' && index === 0 && this.inputValues[1]) {
+        newErrors[1] = this.inputValues[1].trim() === ''
+          ? 'Подтвердите пароль'
+          : this.inputValues[0] !== this.inputValues[1]
+            ? 'Пароли не совпадают'
+            : '';
       }
 
-      this.validationErrors = newErrors
+      this.validationErrors = newErrors;
     },
+
     getValidationRules(index, field) {
       switch (field) {
         case 'name':
           return [
             {
-              eventType: 'input',
-              validator: (value) => /^[а-яёА-ЯЁa-zA-Z]*$/.test(value),
+              validator: (value) => /^[а-яёА-ЯЁa-zA-Z]+$/.test(value),
               message: 'Имя должно состоять только из букв',
             },
             {
-              eventType: 'blur',
               validator: (value) => value.trim() !== '',
               message: 'Имя не может быть пустым',
             },
             {
-              eventType: 'blur',
               validator: (value) => value.trim().length >= 2,
               message: 'Имя должно содержать минимум 2 символа',
             },
-          ]
+          ];
         case 'phone':
           return [
             {
-              eventType: 'input',
-              validator: (value) => /^[\d+\s]*$/.test(value),
+              validator: (value) => /^(\+?[\d\s\-\(\)]*)?$/.test(value),
               message: 'Только цифры, +, -, (), пробелы',
             },
             {
-              eventType: 'blur',
+              validator: (value) => {
+                const plusCount = (value.match(/\+/g) || []).length;
+                return plusCount <= 1 && (plusCount === 0 || value.indexOf('+') === 0);
+              },
+              message: 'Знак + может быть только в начале номера',
+            },
+            {
               validator: (value) => value.trim() !== '',
               message: 'Номер телефона не может быть пустым',
             },
             {
-              eventType: 'blur',
               validator: (value) => {
-                const cleanPhone = value.replace(/[^\d+]/g, '')
-                return /^(\+7|8)\d*$/.test(cleanPhone)
+                const cleanPhone = value.replace(/[^\d]/g, '');
+                return cleanPhone.length === 11;
               },
-              message: 'Номер телефона должен начинаться с +7 или +8',
+              message: 'Номер должен содержать 11 цифр',
             },
-            {
-              eventType: 'blur',
-              validator: (value) => value.length == 12,
-              message: 'Номер телефона должен состоять из 11 цифр',
-            },
-          ]
+          ];
         case 'email':
           return [
             {
-              eventType: 'input',
               validator: (value) => /^[^\s@]*@?[^\s@]*\.?[^\s@]*$/.test(value),
               message: 'Недопустимые символы в email',
             },
             {
-              eventType: 'blur',
               validator: (value) => value.trim() !== '',
               message: 'Email не может быть пустым',
             },
             {
-              eventType: 'blur',
               validator: (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value),
               message: 'Введите корректный email адрес',
             },
-          ]
+          ];
         case 'password':
           if (index === 0) {
             return [
               {
-                eventType: 'input',
                 validator: (value) => /^[a-zA-Z0-9!@#$%^&*]*$/.test(value),
                 message: 'Только буквы, цифры и специальные символы',
               },
               {
-                eventType: 'blur',
                 validator: (value) => value.trim() !== '',
                 message: 'Пароль не может быть пустым',
               },
               {
-                eventType: 'blur',
                 validator: (value) => value.length >= 6,
                 message: 'Пароль должен содержать минимум 6 символов',
               },
               {
-                eventType: 'blur',
                 validator: (value) => /(?=.*[a-zA-Z])(?=.*\d)/.test(value),
                 message: 'Пароль должен содержать хотя бы одну букву и одну цифру',
               },
-            ]
+            ];
           } else if (index === 1) {
             return [
               {
-                eventType: 'blur',
                 validator: (value) => value.trim() !== '',
                 message: 'Подтвердите пароль',
               },
               {
-                eventType: 'blur',
                 validator: (value) => value === this.inputValues[0],
                 message: 'Пароли не совпадают',
               },
-            ]
+            ];
           }
-          break
+          return [];
         default:
-          return []
+          return [];
       }
     },
-    validatePasswordConfirm(password, confirmPassword) {
-      if (!confirmPassword || confirmPassword.trim() === '') {
-        return 'Подтвердите пароль'
-      }
-      if (password !== confirmPassword) {
-        return 'Пароли не совпадают'
-      }
-      return ''
-    },
+
     async handleSubmit() {
-      this.touchedFields = new Array(this.inputs.length).fill(true)
+      this.touchedFields = new Array(this.inputs.length).fill(true);
       this.inputValues.forEach((value, index) => {
-        this.validateField(index, value, 'blur')
-      })
+        this.validateField(index, value);
+      });
 
       if (this.isFormValid) {
-        this.isSubmitting = true
-        this.serverError = ''
+        this.isSubmitting = true;
+        this.serverError = '';
         try {
-          await this.onSubmit(this.inputValues)
+          await this.onSubmit(this.inputValues);
         } catch (error) {
-          this.serverError = error.message || this.getErrorMessage(this.field)
+          this.serverError = error.message || this.getErrorMessage(this.field);
         } finally {
-          this.isSubmitting = false
+          this.isSubmitting = false;
         }
       }
     },
+
     getErrorMessage(field) {
       const errorMessages = {
         name: 'Не удалось изменить имя',
         phone: 'Не удалось изменить номер телефона',
         email: 'Не удалось изменить почту',
         password: 'Не удалось изменить пароль',
-        photoUrl: 'Не удалось сохранить фото',
-      }
-      return errorMessages[field] || 'Ошибка при сохранении данных'
+      };
+      return errorMessages[field] || 'Ошибка при сохранении данных';
     },
   },
-}
+};
 </script>
 
 <style scoped>
+@import '../../../assets/styles/main.css';
+
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -331,7 +315,7 @@ export default {
 }
 
 .input {
-  color: #fff;
+  color:var(--white-color);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -373,7 +357,7 @@ export default {
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
-  line-height: 120%; /* 19.2px */
+  line-height: 120%;
   opacity: 0;
   height: 19.2px;
   transition: opacity 0.3s ease;
