@@ -2,13 +2,26 @@
   <div class="profile-card">
     <div class="left-part">
       <UserPhoto
+        class="fade-up"
+        style="animation-delay: 0.3s"
         ref="userPhoto"
         :photoUrl="userInfo.photoUrl"
         @photo-changed="$emit('photo-changed', $event)"
       />
-      <CustomButton type="default" label="Выход" @click="$emit('logout')" />
+      <CustomButton
+        class="fade-up"
+        style="animation-delay: 0.6s"
+        type="default"
+        label="Выход"
+        @click="$emit('logout')"
+      />
     </div>
-    <UserInfo :userInfo="userInfo" @open-modal="$emit('open-modal', $event)" />
+    <UserInfo
+      class="fade-up"
+      style="animation-delay: 0.4s"
+      :userInfo="userInfo"
+      @open-modal="$emit('open-modal', $event)"
+    />
   </div>
 </template>
 
@@ -54,5 +67,18 @@ export default {
   justify-content: center;
   align-items: center;
   gap: 24px;
+}
+
+.fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeUp 0.6s ease forwards;
+}
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 </style>

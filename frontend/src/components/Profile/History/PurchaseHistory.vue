@@ -1,11 +1,13 @@
 <template>
   <div class="history">
-    <p class="history-title">История покупок:</p>
+    <p class="history-title" style="animation-delay: 0.2s">История покупок:</p>
     <PurchaseRow
       v-for="(purchase, index) in purchases"
       :key="purchase.id"
       :purchase="purchase"
       :isCurrent="index === 0"
+      class="fade-up"
+      :style="{ 'animation-delay': `${0.4 + index * 0.2}s` }"
     />
   </div>
 </template>
@@ -16,39 +18,21 @@ import PurchaseRow from './PurchaseRow.vue'
 export default {
   name: 'PurchaseHistory',
   components: { PurchaseRow },
-  data() {
-    return {
-      purchases: [
-        {
-          id: 1,
-          date: '12.04.2025',
-          title: 'Тариф “Pro”',
-          quantity: '1',
-          expiryDate: '12.05.2025',
-        },
-        {
-          id: 2,
-          date: '12.03.2025',
-          title: 'Тариф “Pro”',
-          quantity: '1',
-          expiryDate: '12.04.2025',
-        },
-        {
-          id: 3,
-          date: '12.02.2025',
-          title: 'Тариф “Pro”',
-          quantity: '1',
-          expiryDate: '12.03.2025',
-        },
-        {
-          id: 4,
-          date: '12.12.2024',
-          title: 'Тариф “Pro”',
-          quantity: '2',
-          expiryDate: '12.02.2025',
-        },
-      ],
-    }
+  props: {
+    purchases: {
+      type: Array,
+      required: true,
+      validator: (purchases) =>
+        purchases.every(
+          (purchase) =>
+            typeof purchase === 'object' &&
+            'id' in purchase &&
+            'date' in purchase &&
+            'title' in purchase &&
+            'quantity' in purchase &&
+            'expiryDate' in purchase,
+        ),
+    },
   },
 }
 </script>
@@ -69,5 +53,18 @@ export default {
   font-style: normal;
   font-weight: 500;
   line-height: 120%;
+}
+
+.fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeUp 0.6s ease forwards;
+}
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 </style>

@@ -2,6 +2,8 @@
   <div class="user-profile">
     <div class="top-block">
       <ProfileCard
+        class="fade-up"
+        style="animation-delay: 0.2s"
         ref="profileCard"
         :userInfo="userInfo"
         @open-modal="openModal"
@@ -9,8 +11,10 @@
         @photo-changed="handlePhotoChange"
         @logout="logout"
       />
-      <PurchaseHistory :purchases="purchases" />
+      <PurchaseHistory class="fade-up" style="animation-delay: 0.3s" :purchases="purchases" />
       <PaymentMethod
+        class="fade-up"
+        style="animation-delay: 0.4s"
         :cards="cards"
         :inputCard="inputCard"
         :isAddingCard="isAddingCard"
@@ -20,14 +24,17 @@
         @cancel-adding-card="cancelAddingCard"
       />
     </div>
-    <ModalForm
-      :isOpen="modal.isOpen"
-      :title="modal.title"
-      :inputs="modal.inputs"
-      :field="modal.field"
-      :onClose="closeModal"
-      :onSubmit="handleSubmit"
-    />
+    <transition name="modal-fade">
+      <ModalForm
+        v-if="modal.isOpen"
+        :isOpen="modal.isOpen"
+        :title="modal.title"
+        :inputs="modal.inputs"
+        :field="modal.field"
+        :onClose="closeModal"
+        :onSubmit="handleSubmit"
+      />
+    </transition>
   </div>
 </template>
 
@@ -220,11 +227,9 @@ export default {
       console.log(`${isRemoval ? 'Удаление' : 'Добавление'} карты ${card.title}`)
       if (this.mockServerError) {
         await new Promise((resolve) => setTimeout(resolve, 2000))
-        if(isRemoval){
+        if (isRemoval) {
           throw new Error('Произошла ошибка при удалении карты')
-        }
-        else throw new Error('Произошла ошибка при добавлении карты')
-        
+        } else throw new Error('Произошла ошибка при добавлении карты')
       }
     },
     async logout() {
@@ -261,5 +266,29 @@ export default {
   grid-template-rows: auto auto;
   gap: 24px;
   width: 100%;
+}
+
+.fade-up {
+  opacity: 0;
+  transform: translateY(-30px);
+  animation: fadeUp 0.6s ease forwards;
+}
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Анимация для модального окна */
+.modal-fade-enter-active,
+.modal-fade-leave-active {
+  transition: all 0.4s ease;
+}
+.modal-fade-enter-from,
+.modal-fade-leave-to {
+  opacity: 0;
+  transform: translateY(-20px);
 }
 </style>

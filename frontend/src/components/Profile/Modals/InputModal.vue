@@ -48,6 +48,8 @@ export default {
   font-size: 16px;
   outline: none;
   font-family: Montserrat;
+  transition: background 0.5s ease;
+  will-change: background;
 }
 
 .input::placeholder {
@@ -56,11 +58,6 @@ export default {
 }
 
 .input-error {
-  border-radius: 60px;
-  background:
-    linear-gradient(0deg, rgba(255, 0, 0, 0.2) 0%, rgba(255, 0, 0, 0.2) 100%),
-    rgba(255, 255, 255, 0.2);
-  box-shadow: 0px 0px 68px 0px rgba(255, 255, 255, 0.05) inset;
-  backdrop-filter: blur(7.5px);
+  background: rgba(252, 134, 134, 0.5);
 }
 </style>

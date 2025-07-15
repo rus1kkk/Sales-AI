@@ -9,7 +9,7 @@
         Действителен до: <span>{{ userInfo.validUntil }}</span>
       </p>
     </div>
-    <div class="info-row">
+    <div class="info-row fade-up" style="animation-delay: 0.5s">
       <p class="property">Имя</p>
       <p class="value">{{ userInfo.name }}</p>
       <CustomButton type="icon" @click="openModal('name')">
@@ -29,7 +29,7 @@
         </template>
       </CustomButton>
     </div>
-    <div class="info-row">
+    <div class="info-row fade-up" style="animation-delay: 0.6s">
       <p class="property">Номер</p>
       <p class="value">{{ userInfo.phone }}</p>
       <CustomButton type="icon" @click="openModal('phone')">
@@ -49,7 +49,7 @@
         </template>
       </CustomButton>
     </div>
-    <div class="info-row">
+    <div class="info-row fade-up" style="animation-delay: 0.7s">
       <p class="property">Почта:</p>
       <p class="value">{{ userInfo.email }}</p>
       <CustomButton type="icon" @click="openModal('email')">
@@ -69,7 +69,7 @@
         </template>
       </CustomButton>
     </div>
-    <div class="info-row">
+    <div class="info-row fade-up" style="animation-delay: 0.8s">
       <p class="property">Пароль:</p>
       <p class="value">********</p>
       <CustomButton type="icon" @click="openModal('password')">
@@ -180,5 +180,18 @@ export default {
 }
 span {
   color: #fff;
+}
+
+.fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeUp 0.8s ease forwards;
+}
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 </style>

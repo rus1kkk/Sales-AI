@@ -32,19 +32,12 @@
               :hasError="!!validationErrors[index] && touchedFields[index]"
               @update:value="updateInputValue(index, $event)"
               @blur="handleBlur(index)"
-              :aria-describedby="
-                validationErrors[index] && touchedFields[index] ? `error-${index}` : null
-              "
+              :aria-describedby="errorMessage ? 'error-message' : null"
             />
-            <div
-              v-if="validationErrors[index] && touchedFields[index]"
-              class="error-message"
-              :id="`error-${index}`"
-            >
-              {{ validationErrors[index] }}
-            </div>
           </div>
-          <p v-if="serverError" class="error-message">{{ serverError }}</p>
+          <div class="error-message" :class="{ 'error-visible': errorMessage }" id="error-message">
+            {{ errorMessage || '' }}
+          </div>
         </div>
       </div>
       <div class="action-buttons">
@@ -99,6 +92,14 @@ export default {
         this.validationErrors.every((error) => !error)
       )
     },
+    errorMessage() {
+      // Возвращает первую найденную ошибку
+      if (this.serverError) return this.serverError
+      const errorIndex = this.validationErrors.findIndex(
+        (error, index) => error && this.touchedFields[index],
+      )
+      return errorIndex !== -1 ? this.validationErrors[errorIndex] : ''
+    },
   },
   watch: {
     inputs: {
@@ -106,7 +107,7 @@ export default {
         this.inputValues = this.inputs.map((input) => input.value || '')
         this.validationErrors = new Array(this.inputs.length).fill('')
         this.touchedFields = new Array(this.inputs.length).fill(false)
-        this.serverError = '' // Сбрасываем ошибку при изменении inputs
+        this.serverError = ''
       },
       immediate: true,
     },
@@ -124,7 +125,7 @@ export default {
       }
 
       this.validateField(index, value, 'input')
-      this.serverError = '' // Сбрасываем серверную ошибку при изменении поля
+      this.serverError = ''
     },
     handleBlur(index) {
       const newTouched = [...this.touchedFields]
@@ -146,7 +147,6 @@ export default {
         }
       }
 
-      // Для паролей проверяем подтверждение при изменении первого поля
       if (this.field === 'password' && index === 0 && this.inputValues[1] && eventType === 'blur') {
         newErrors[1] = this.validatePasswordConfirm(this.inputValues[0], this.inputValues[1])
       }
@@ -374,6 +374,14 @@ export default {
   font-style: normal;
   font-weight: 500;
   line-height: 120%; /* 19.2px */
+  opacity: 0;
+  height: 19.2px;
+  transition: opacity 0.3s ease;
+  will-change: opacity;
+}
+
+.error-message.error-visible {
+  opacity: 1;
 }
 
 .action-buttons {
