@@ -79,6 +79,8 @@ export default {
 </script>
 
 <style scoped>
+@import '../../../assets/styles/main.css';
+
 .photo {
   width: 100%;
   display: flex;
@@ -103,7 +105,7 @@ export default {
 .text-btn {
   background: none;
   border: none;
-  color: #e6e9ed;
+  color:var(--standart-color);
   font-family: Montserrat;
   font-size: 16px;
   font-style: normal;

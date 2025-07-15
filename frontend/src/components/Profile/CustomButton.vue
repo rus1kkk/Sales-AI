@@ -28,6 +28,8 @@ export default {
 </script>
 
 <style scoped>
+@import '../../assets/styles/main.css';
+
 .custom-btn {
   font-family: Montserrat;
   font-style: normal;
@@ -35,6 +37,11 @@ export default {
   line-height: 120%;
   cursor: pointer;
   transition: background 0.2s ease-in;
+}
+
+.custom-button:focus {
+  outline: none;
+  border: none;
 }
 
 /* Стили для default-btn */
@@ -46,59 +53,70 @@ export default {
   align-items: center;
   gap: 10px;
   border-radius: 34px;
-  border: 3px solid #71abeb;
-  background: #71abeb;
-  color: #e6e9ed;
+  border: 3px solid var(--actient-color);
+  background:var(--actient-color);
+  color: var(--standart-color);
   font-size: 24px;
 }
 .btn-default:hover {
-  background: #a8a9af;
+  background:var(--muted-color);
 }
 .btn-default:active:hover {
-  border: 3px solid #71abeb;
-  background: #a8a9af;
+  border: 3px solid var(--actient-color);
+  background: var(--muted-color);
 }
 .btn-default:active {
-  border: 3px solid #a8a9af;
-  background: #a8a9af;
+  border: 3px solid var(--muted-color);
+  background: var(--muted-color);
 }
 .btn-default:disabled {
-  border: 3px solid #a8a9af;
-  background: #a8a9af;
+  border: 3px solidvar(--muted-color);
+  background: var(--muted-color);
+}
+
+.btn-default:focus {
+  outline: none;
+
 }
 
 /* Стили для text-btn */
 .btn-text {
   background: none;
   border: none;
-  color: #e6e9ed;
+  color:var(--standart-color);
   font-size: 16px;
 }
 .btn-text:active {
-  color: #a8a9af;
+  color: var(--muted-color);
 }
 .btn-text:hover {
-  color: #71abeb;
+  color: var(--actient-color);
 }
 .btn-text:disabled {
-  color: #a8a9af;
+  color: var(--muted-color);
+}
+.btn-text:focus {
+  outline: none;
 }
 
 /* Стили для text-blue-btn */
 .btn-text-blue {
   background: none;
   border: none;
-  color: #71abeb;
+  color: var(--actient-color);
   font-size: 16px;
 }
 .btn-text-blue:active {
-  color: #e6e9ed;
+  color: var(--standart-color);
 }
 .btn-text-blue:hover {
-  color: #e6e9ed;
+  color:var(--standart-color);
 }
 .btn-text-blue:disabled {
-  color: #a8a9af;
+  color: var(--muted-color);
+}
+.btn-text-blue:focus {
+  outline: none;
 }
 
 /* Стили для btn-icon */
@@ -112,15 +130,17 @@ export default {
   align-items: center;
   justify-content: center;
 }
-
 .btn-icon:active :deep(svg path) {
-  fill: #71abeb;
+  fill: var(--actient-color);
 }
 .btn-icon:active:hover :deep(svg path) {
-  fill: #71abeb;
+  fill: var(--actient-color);
 }
 .btn-icon:hover :deep(svg path) {
-  fill: #71abeb;
+  fill:var(--actient-color);
+}
+.btn-icon:focus {
+  outline: none;
 }
 
 /* Стили для btn-icon-line*/
@@ -136,12 +156,15 @@ export default {
 }
 
 .btn-icon-line:active :deep(svg path) {
-  stroke: #71abeb;
+  stroke: var(--actient-color);
 }
 .btn-icon-line:active:hover :deep(svg path) {
-  stroke: #71abeb;
+  stroke: var(--actient-color);
 }
 .btn-icon-line:hover :deep(svg path) {
-  stroke: #71abeb;
+  stroke: var(--actient-color);
+}
+.btn-icon-line:focus {
+  outline: none;
 }
 </style>

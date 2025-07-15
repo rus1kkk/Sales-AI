@@ -51,6 +51,8 @@ export default {
 </script>
 
 <style scoped>
+@import '../../../assets/styles/main.css';
+
 .card-input {
   max-width: 647px;
   min-width: 562px;
@@ -76,7 +78,7 @@ export default {
 }
 
 .form-title {
-  color: #fff;
+  color: var(--white-color);
   text-align: center;
   font-family: Montserrat;
   font-size: 24px;
@@ -90,36 +92,6 @@ export default {
   flex-direction: column;
   gap: 16px;
   align-items: center;
-}
-
-.default-btn {
-  display: flex;
-  height: 67px;
-  padding: 25px 36px;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  border-radius: 34px;
-  border: 3px solid #71abeb;
-  background: #71abeb;
-  color: #e6e9ed;
-  text-align: center;
-  font-family: Montserrat;
-  font-size: 24px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 120%; /* 28.8px */
-}
-
-.text-btn {
-  background: none;
-  border: none;
-  color: #e6e9ed;
-  font-family: Montserrat;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 120%;
 }
 
 .error-message {

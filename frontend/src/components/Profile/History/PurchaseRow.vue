@@ -23,16 +23,18 @@ export default {
 </script>
 
 <style scoped>
+@import '../../../assets/styles/main.css';
+
 .purchase-row {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   align-self: stretch;
   gap: 27px;
-  border-bottom: 1px solid #a8a9af;
+  border-bottom: 1px solid var(--muted-color);
 }
 .purchase-data {
-  color: #e6e9ed;
+  color: var(--standart-color);
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
@@ -47,7 +49,7 @@ export default {
   justify-content: space-between;
 }
 .expiry-date.current-subscription {
-  color: #71abeb;
+  color:  var(--actient-color);
 }
 
 .quantity {

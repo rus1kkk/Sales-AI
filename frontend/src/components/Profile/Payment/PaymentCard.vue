@@ -19,6 +19,8 @@ export default {
 </script>
 
 <style scoped>
+@import '../../../assets/styles/main.css';
+
 .card {
   display: flex;
   justify-content: flex-end;
@@ -36,7 +38,7 @@ export default {
 }
 
 .card-title {
-  color: #e6e9ed;
+  color:var(--standart-color);
   font-family: Montserrat;
   font-size: 16px;
   font-style: normal;

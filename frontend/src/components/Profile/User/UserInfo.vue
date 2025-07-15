@@ -138,6 +138,8 @@ export default {
 </script>
 
 <style scoped>
+@import '../../../assets/styles/main.css';
+
 .right-part {
   display: flex;
   flex-direction: column;
@@ -176,10 +178,10 @@ export default {
 }
 .rate-title,
 .term {
-  color: #a8a9af;
+  color:var(--muted-color);
 }
 span {
-  color: #fff;
+  color:var(--white-color);
 }
 
 .fade-up {

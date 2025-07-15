@@ -249,6 +249,8 @@ export default {
 </script>
 
 <style scoped>
+@import '../assets/styles/main.css';
+
 .user-profile {
   max-width: 1483px;
   width: 100%;
@@ -256,8 +258,7 @@ export default {
   display: flex;
   box-sizing: border-box;
   padding: 0 80px;
-  font-family: Montserrat;
-  color: #fff;
+  color: var(--white-color);
   gap: 24px;
 }
 .top-block {

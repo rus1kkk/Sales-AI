@@ -38,6 +38,8 @@ export default {
 </script>
 
 <style scoped>
+@import '../../../assets/styles/main.css';
+
 .history {
   display: flex;
   max-width: 652px;
@@ -48,7 +50,7 @@ export default {
   gap: 36px;
 }
 .history-title {
-  color: #e6e9ed;
+  color:var(--standart-color);
   font-size: 32px;
   font-style: normal;
   font-weight: 500;

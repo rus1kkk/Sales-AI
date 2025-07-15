@@ -98,6 +98,8 @@ export default {
 </script>
 
 <style scoped>
+@import '../../../assets/styles/main.css';
+
 .payment {
   max-width: 647px;
   min-width: 562px;
@@ -110,7 +112,7 @@ export default {
 }
 
 .payment-title {
-  color: #fff;
+  color:var(--white-color);
   text-align: center;
   font-family: Montserrat;
   font-size: 24px;

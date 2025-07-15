@@ -36,6 +36,8 @@ export default {
 </script>
 
 <style scoped>
+@import '../../../assets/styles/main.css';
+
 .input {
   width: 100%;
   max-width: 705px;
@@ -44,7 +46,7 @@ export default {
   background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(7.5px);
   border: none;
-  color: #a8a9af;
+  color: var(--muted-color);
   font-size: 16px;
   outline: none;
   font-family: Montserrat;
@@ -54,7 +56,7 @@ export default {
 
 .input::placeholder {
   font-family: Montserrat;
-  color: #a8a9af;
+  color:var(--muted-color);
 }
 
 .input-error {
