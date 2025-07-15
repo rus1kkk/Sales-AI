@@ -20,17 +20,17 @@
       alt="Generate Figure 2"
     />
     <img
-    v-if="$route.name === 'profile' || $route.name === 'HistoryPage'"
-    class="custom-shape top-right"
-    :src="sharedFigure_1"
-    alt="Shared Figure 1"
-  />
-  <img
-    v-if="$route.name === 'profile' || $route.name === 'HistoryPage'"
-    class="custom-shape bottom-left chain"
-    :src="sharedFigure_2"
-    alt="Shared Figure 2"
-  />
+      v-if="$route.name === 'profile' || $route.name === 'HistoryPage'"
+      class="custom-shape top-right"
+      :src="sharedFigure_1"
+      alt="Shared Figure 1"
+    />
+    <img
+      v-if="$route.name === 'profile' || $route.name === 'HistoryPage'"
+      class="custom-shape bottom-left chain"
+      :src="sharedFigure_2"
+      alt="Shared Figure 2"
+    />
   </div>
 </template>
 
@@ -38,9 +38,8 @@
 import mainFigure from '@/assets/images/figure1.png'
 import generateFigure_1 from '@/assets/images/figure2.png'
 import generateFigure_2 from '@/assets/images/figure3.png'
-import sharedFigure_1 from '@/assets/images/figure4.png';
-import sharedFigure_2 from '@/assets/images/figure5.png';
-
+import sharedFigure_1 from '@/assets/images/figure4.png'
+import sharedFigure_2 from '@/assets/images/figure5.png'
 
 export default {
   data() {
