@@ -114,12 +114,17 @@
   }
 
   .bottom-left {
-    left: -40vw;
-    bottom: -28vw;
+    left: -45vw;
+    bottom: -40vw;
     animation:
       fadeIn 4s ease-out forwards,
       float-mirrored-1100 60s infinite cubic-bezier(0.45, 0.05, 0.55, 0.95);
-    animation-delay: 0s, 4s;
+    animation-delay: 0s, 6s;
+  }
+
+  #flower-figure {
+    right: -40vw;
+    top: -25vw;
   }
 
   @keyframes float-1100 {
@@ -171,23 +176,30 @@
 
 @media (max-width: 768px) {
   .custom-shape {
-    width: 150vw;
+    width: 160vw;
   }
 
   .top-right {
-    right: -35vw;
-    top: -18vw;
+    right: -40vw;
+    top: -26vw;
     animation:
-      fadeIn 1s ease-in forwards,
+      fadeIn 4s ease-in forwards,
       float-768 60s infinite ease-in-out;
+    animation-delay: 0s, 4s;
   }
 
   .bottom-left {
-    left: -40vw;
-    bottom: -28vw;
+    left: -55vw;
+    bottom: -50vw;
     animation:
-      fadeIn 1s ease-in forwards,
+      fadeIn 4s ease-in forwards,
       float-mirrored-768 60s infinite ease-in-out;
+    animation-delay: 0s, 6s;
+  }
+
+  #flower-figure {
+    right: -50vw;
+    top: -30vw;
   }
 
   @keyframes float-768 {
@@ -237,25 +249,32 @@
   }
 }
 
-@media (max-width: 520px) {
+@media (max-width: 535px) {
   .custom-shape {
     width: 200vw;
   }
 
   .top-right {
     right: -60vw;
-    top: -20vw;
+    top: -28vw;
     animation:
-      fadeIn 1s ease-in forwards,
+      fadeIn 4s ease-in forwards,
       float-520 60s infinite ease-in-out;
+    animation-delay: 0s, 4s;
   }
 
   .bottom-left {
-    left: -40vw;
-    bottom: -28vw;
+    left: -70vw;
+    bottom: -60vw;
     animation:
-      fadeIn 1s ease-in forwards,
+      fadeIn 4s ease-in forwards,
       float-mirrored-520 60s infinite ease-in-out;
+    animation-delay: 0s, 6s;
+  }
+
+  #flower-figure {
+    right: -70vw;
+    top: -32vw;
   }
 
   @keyframes float-520 {
@@ -305,25 +324,32 @@
   }
 }
 
-@media (max-width: 390px) {
+@media (max-width: 410px) {
   .custom-shape {
     width: 240vw;
   }
 
   .top-right {
     right: -90vw;
-    top: -20vw;
+    top: -34vw;
     animation:
-      fadeIn 1s ease-in forwards,
+      fadeIn 4s ease-in forwards,
       float-390 60s infinite ease-in-out;
+    animation-delay: 0s, 4s;
   }
 
   .bottom-left {
-    left: -40vw;
-    bottom: -28vw;
+    left: -82vw;
+    bottom: -70vw;
     animation:
-      fadeIn 1s ease-in forwards,
+      fadeIn 4s ease-in forwards,
       float-mirrored-390 60s infinite ease-in-out;
+    animation-delay: 0s, 6s;
+  }
+
+  #flower-figure {
+    right: -89vw;
+    top: -42vw;
   }
 
   @keyframes float-390 {
