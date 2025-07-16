@@ -105,7 +105,7 @@ export default {
 .text-btn {
   background: none;
   border: none;
-  color:var(--standart-color);
+  color: var(--standart-color);
   font-family: Montserrat;
   font-size: 16px;
   font-style: normal;

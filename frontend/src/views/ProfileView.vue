@@ -79,8 +79,7 @@ export default {
           expiryDate: '12.02.2025',
         },
       ],
-      
-      
+
       modal: {
         isOpen: false,
         title: '',
@@ -102,7 +101,7 @@ export default {
     },
   },
   methods: {
-    openModal({ field, title, inputs }) { 
+    openModal({ field, title, inputs }) {
       this.modal = {
         isOpen: true,
         title,
@@ -118,13 +117,15 @@ export default {
       await this.updateUserField(this.modal.field, value)
       this.closeModal()
     },
-    async updateUserField(field, value) {// обновление userInfo
+    async updateUserField(field, value) {
+      // обновление userInfo
       await this.saveUserData(field, value)
       if (field !== 'password') {
         this.userInfo[field] = value
       }
     },
-    async handlePhotoChange({ file, url }) { //Cмена фотографии
+    async handlePhotoChange({ file, url }) {
+      //Cмена фотографии
       console.log('Выбранное фото:', { file, url })
       try {
         await this.saveUserData('photoUrl', url)
@@ -139,7 +140,8 @@ export default {
         throw error
       }
     },
-    async saveUserData(field, value) { //Сохранение данных профиля
+    async saveUserData(field, value) {
+      //Сохранение данных профиля
       //метод заглушка
       console.log(`Сохранение поля ${field} со значением:`, value)
       if (this.mockServerError) {
@@ -147,7 +149,8 @@ export default {
         throw new Error('Произошла ошибка при сохранении данных')
       }
     },
-    async logout() {  //выход из профиля
+    async logout() {
+      //выход из профиля
       //метод заглушка
       try {
         if (this.mockServerError) {

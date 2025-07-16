@@ -38,10 +38,10 @@
 }
 .rate-title,
 .term {
-  color:var(--muted-color);
+  color: var(--muted-color);
 }
 span {
-  color:var(--white-color);
+  color: var(--white-color);
 }
 
 .fade-up {

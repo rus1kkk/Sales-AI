@@ -18,7 +18,7 @@
 
 .input::placeholder {
   font-family: Montserrat;
-  color:var(--muted-color);
+  color: var(--muted-color);
 }
 
 .input-error {

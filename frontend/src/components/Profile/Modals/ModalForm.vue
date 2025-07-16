@@ -54,8 +54,8 @@
 </template>
 
 <script>
-import InputModal from './InputModal.vue';
-import CustomButton from '../CustomButton.vue';
+import InputModal from './InputModal.vue'
+import CustomButton from '../CustomButton.vue'
 
 export default {
   name: 'ModalForm',
@@ -67,7 +67,9 @@ export default {
       type: Array,
       default: () => [],
       validator: (inputs) =>
-        inputs.every((input) => typeof input === 'object' && 'placeholder' in input && 'type' in input),
+        inputs.every(
+          (input) => typeof input === 'object' && 'placeholder' in input && 'type' in input,
+        ),
     },
     field: { type: String, default: '' },
     onClose: { type: Function, required: true },
@@ -80,7 +82,7 @@ export default {
       touchedFields: [],
       isSubmitting: false,
       serverError: '',
-    };
+    }
   },
   computed: {
     isFormValid() {
@@ -88,72 +90,73 @@ export default {
         this.inputValues.length === this.inputs.length &&
         this.inputValues.every((value) => value && value.trim() !== '') &&
         this.validationErrors.every((error) => !error)
-      );
+      )
     },
     errorMessage() {
-      if (this.serverError) return this.serverError;
-      const errorIndex = this.validationErrors.findIndex((error) => error);
-      return errorIndex !== -1 ? this.validationErrors[errorIndex] : '';
+      if (this.serverError) return this.serverError
+      const errorIndex = this.validationErrors.findIndex((error) => error)
+      return errorIndex !== -1 ? this.validationErrors[errorIndex] : ''
     },
   },
   watch: {
     inputs: {
       handler() {
-        this.inputValues = this.inputs.map((input) => input.value || '');
-        this.validationErrors = new Array(this.inputs.length).fill('');
-        this.touchedFields = new Array(this.inputs.length).fill(false);
-        this.serverError = '';
+        this.inputValues = this.inputs.map((input) => input.value || '')
+        this.validationErrors = new Array(this.inputs.length).fill('')
+        this.touchedFields = new Array(this.inputs.length).fill(false)
+        this.serverError = ''
       },
       immediate: true,
     },
   },
   methods: {
     handleInputChange(index, value) {
-      const newValues = [...this.inputValues];
-      newValues[index] = value;
-      this.inputValues = newValues;
+      const newValues = [...this.inputValues]
+      newValues[index] = value
+      this.inputValues = newValues
 
       if (!this.touchedFields[index]) {
-        const newTouched = [...this.touchedFields];
-        newTouched[index] = true;
-        this.touchedFields = newTouched;
+        const newTouched = [...this.touchedFields]
+        newTouched[index] = true
+        this.touchedFields = newTouched
       }
 
-      this.serverError = '';
-      this.validateField(index, value);
+      this.serverError = ''
+      this.validateField(index, value)
     },
 
     handleBlur(index) {
-      const newTouched = [...this.touchedFields];
-      newTouched[index] = true;
-      this.touchedFields = newTouched;
-      this.validateField(index, this.inputValues[index]);
+      const newTouched = [...this.touchedFields]
+      newTouched[index] = true
+      this.touchedFields = newTouched
+      this.validateField(index, this.inputValues[index])
     },
 
     validateField(index, value) {
-      const newErrors = [...this.validationErrors];
-      const rules = this.getValidationRules(index, this.field);
+      const newErrors = [...this.validationErrors]
+      const rules = this.getValidationRules(index, this.field)
 
-      let currentError = '';
+      let currentError = ''
 
       for (const rule of rules) {
         if (!rule.validator(value)) {
-          currentError = rule.message;
-          break;
+          currentError = rule.message
+          break
         }
       }
 
-      newErrors[index] = currentError;
+      newErrors[index] = currentError
 
       if (this.field === 'password' && index === 0 && this.inputValues[1]) {
-        newErrors[1] = this.inputValues[1].trim() === ''
-          ? 'Подтвердите пароль'
-          : this.inputValues[0] !== this.inputValues[1]
-            ? 'Пароли не совпадают'
-            : '';
+        newErrors[1] =
+          this.inputValues[1].trim() === ''
+            ? 'Подтвердите пароль'
+            : this.inputValues[0] !== this.inputValues[1]
+              ? 'Пароли не совпадают'
+              : ''
       }
 
-      this.validationErrors = newErrors;
+      this.validationErrors = newErrors
     },
 
     getValidationRules(index, field) {
@@ -172,17 +175,17 @@ export default {
               validator: (value) => value.trim().length >= 2,
               message: 'Имя должно содержать минимум 2 символа',
             },
-          ];
+          ]
         case 'phone':
           return [
             {
-              validator: (value) => /^(\+?[\d\s\-\(\)]*)?$/.test(value),
+              validator: (value) => /^(\+?[\d\s\-()]+)$/.test(value),
               message: 'Только цифры, +, -, (), пробелы',
             },
             {
               validator: (value) => {
-                const plusCount = (value.match(/\+/g) || []).length;
-                return plusCount <= 1 && (plusCount === 0 || value.indexOf('+') === 0);
+                const plusCount = (value.match(/\+/g) || []).length
+                return plusCount <= 1 && (plusCount === 0 || value.indexOf('+') === 0)
               },
               message: 'Знак + может быть только в начале номера',
             },
@@ -192,12 +195,12 @@ export default {
             },
             {
               validator: (value) => {
-                const cleanPhone = value.replace(/[^\d]/g, '');
-                return cleanPhone.length === 11;
+                const cleanPhone = value.replace(/[^\d]/g, '')
+                return cleanPhone.length === 11
               },
               message: 'Номер должен содержать 11 цифр',
             },
-          ];
+          ]
         case 'email':
           return [
             {
@@ -212,7 +215,7 @@ export default {
               validator: (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value),
               message: 'Введите корректный email адрес',
             },
-          ];
+          ]
         case 'password':
           if (index === 0) {
             return [
@@ -232,7 +235,7 @@ export default {
                 validator: (value) => /(?=.*[a-zA-Z])(?=.*\d)/.test(value),
                 message: 'Пароль должен содержать хотя бы одну букву и одну цифру',
               },
-            ];
+            ]
           } else if (index === 1) {
             return [
               {
@@ -243,29 +246,29 @@ export default {
                 validator: (value) => value === this.inputValues[0],
                 message: 'Пароли не совпадают',
               },
-            ];
+            ]
           }
-          return [];
+          return []
         default:
-          return [];
+          return []
       }
     },
 
     async handleSubmit() {
-      this.touchedFields = new Array(this.inputs.length).fill(true);
+      this.touchedFields = new Array(this.inputs.length).fill(true)
       this.inputValues.forEach((value, index) => {
-        this.validateField(index, value);
-      });
+        this.validateField(index, value)
+      })
 
       if (this.isFormValid) {
-        this.isSubmitting = true;
-        this.serverError = '';
+        this.isSubmitting = true
+        this.serverError = ''
         try {
-          await this.onSubmit(this.inputValues);
+          await this.onSubmit(this.inputValues)
         } catch (error) {
-          this.serverError = error.message || this.getErrorMessage(this.field);
+          this.serverError = error.message || this.getErrorMessage(this.field)
         } finally {
-          this.isSubmitting = false;
+          this.isSubmitting = false
         }
       }
     },
@@ -276,14 +279,13 @@ export default {
         phone: 'Не удалось изменить номер телефона',
         email: 'Не удалось изменить почту',
         password: 'Не удалось изменить пароль',
-      };
-      return errorMessages[field] || 'Ошибка при сохранении данных';
+      }
+      return errorMessages[field] || 'Ошибка при сохранении данных'
     },
   },
-};
+}
 </script>
 
 <style scoped>
 @import '../../../assets/styles/Profile/ModalForm.css';
-
 </style>

@@ -29,7 +29,7 @@
 }
 
 .input {
-  color:var(--white-color);
+  color: var(--white-color);
   display: flex;
   flex-direction: column;
   justify-content: center;

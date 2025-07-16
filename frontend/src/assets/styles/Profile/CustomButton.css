@@ -24,12 +24,12 @@
   gap: 10px;
   border-radius: 34px;
   border: 3px solid var(--actient-color);
-  background:var(--actient-color);
+  background: var(--actient-color);
   color: var(--standart-color);
   font-size: 24px;
 }
 .btn-default:hover {
-  background:var(--muted-color);
+  background: var(--muted-color);
 }
 .btn-default:active:hover {
   border: 3px solid var(--actient-color);
@@ -46,14 +46,13 @@
 
 .btn-default:focus {
   outline: none;
-
 }
 
 /* Стили для text-btn */
 .btn-text {
   background: none;
   border: none;
-  color:var(--standart-color);
+  color: var(--standart-color);
   font-size: 16px;
 }
 .btn-text:active {
@@ -80,7 +79,7 @@
   color: var(--standart-color);
 }
 .btn-text-blue:hover {
-  color:var(--standart-color);
+  color: var(--standart-color);
 }
 .btn-text-blue:disabled {
   color: var(--muted-color);
@@ -107,7 +106,7 @@
   fill: var(--actient-color);
 }
 .btn-icon:hover :deep(svg path) {
-  fill:var(--actient-color);
+  fill: var(--actient-color);
 }
 .btn-icon:focus {
   outline: none;

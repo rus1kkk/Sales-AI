@@ -49,7 +49,7 @@ export default {
   justify-content: space-between;
 }
 .expiry-date.current-subscription {
-  color:  var(--actient-color);
+  color: var(--actient-color);
 }
 
 .quantity {

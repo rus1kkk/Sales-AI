@@ -50,7 +50,7 @@ export default {
   gap: 36px;
 }
 .history-title {
-  color:var(--standart-color);
+  color: var(--standart-color);
   font-size: 32px;
   font-style: normal;
   font-weight: 500;
