@@ -19,85 +19,86 @@
     <transition name="expand" mode="out-in">
       <div class="form-input" :key="mode">
         <transition-group name="fade-field" tag="div" class="form-input">
-          <input
-            v-if="mode === 'register'"
-            key="name"
-            placeholder="Имя"
-            v-model="fields.name"
-            @blur="touch('name')"
-            :class="['base-input', { 'error-input': fields.name && validate('name') }]"
-          />
+            <input
+              v-if="mode === 'register'" 
+              key="name"
+              placeholder="Имя"
+              v-model="fields.name"
+              @input="validateInput('name')"
+              @blur="touch('name')"
+              :class="['base-input', { 'error-input': fields.name && errors.name }]"
+            />
+            <p v-if="errors.name" class="error-text">{{ errors.name }}</p>
+          
+            <input
+              v-if="mode === 'login'" 
+              key="emailLogin"
+              placeholder="Email"
+              v-model="fields.emailLogin"
+              @input="validateInput('email', 'emailLogin')"
+              @blur="touch('emailLogin')"
+              :class="['base-input', { 'error-input': fields.emailLogin && errors.emailLogin }]"
+            />
+            <p v-if="errors.emailLogin" class="error-text">{{ errors.emailLogin }}</p>
 
-          <input
-            v-if="mode === 'login'"
-            key="emailLogin"
-            placeholder="Email"
-            v-model="fields.emailLogin"
-            @blur="touch('emailLogin')"
-            :class="['base-input', { 'error-input': fields.emailLogin && validate('emailLogin') }]"
-          />
-
-          <input
-            v-if="mode === 'register'"
+            <input
+            v-if="mode === 'register'" 
             key="emailRegister"
-            placeholder="Email"
-            v-model="fields.emailRegister"
-            @blur="touch('emailRegister')"
-            :class="[
-              'base-input',
-              { 'error-input': fields.emailRegister && validate('emailRegister') },
-            ]"
-          />
+              placeholder="Email"
+              v-model="fields.emailRegister"
+              @input="validateInput('email', 'emailRegister')"
+              @blur="touch('emailRegister')"
+              :class="['base-input', { 'error-input': fields.emailRegister && errors.emailRegister }]"
+            />
+            <p v-if="errors.emailRegister" class="error-text">{{ errors.emailRegister }}</p>
 
-          <input
-            v-if="mode === 'register'"
-            key="phone"
-            type="phone"
-            placeholder="Телефон"
-            v-model="fields.phone"
-            @blur="touch('phone')"
-            :class="['base-input', { 'error-input': fields.phone && validate('phone') }]"
-          />
+            <input
+              v-if="mode === 'register'" 
+              key="phone"
+              type="phone"
+              placeholder="Телефон"
+              v-model="fields.phone"
+              @input="validateInput('phone')"
+              @blur="touch('phone')"
+              :class="['base-input', { 'error-input': fields.phone && errors.phone }]"
+            />
+            <p v-if="errors.phone" class="error-text">{{ errors.phone }}</p>
 
-          <input
-            v-if="mode === 'login'"
-            key="passwordLogin"
-            type="password"
-            placeholder="Пароль"
-            v-model="fields.passwordLogin"
-            @blur="touch('passwordLogin')"
-            :class="[
-              'base-input',
-              { 'error-input': fields.passwordLogin && validate('passwordLogin') },
-            ]"
-          />
+            <input
+              v-if="mode === 'login'" 
+              key="passwordLogin" 
+              type="password"
+              placeholder="Пароль"
+              v-model="fields.passwordLogin"
+              @input="validateInput('password', 'passwordLogin')"
+              @blur="touch('passwordLogin')"
+              :class="['base-input', { 'error-input': fields.passwordLogin && errors.passwordLogin }]"
+            />
+            <p v-if="errors.passwordLogin" class="error-text">{{ errors.passwordLogin }}</p>
 
-          <input
-            v-if="mode === 'register'"
-            key="passwordRegister"
-            type="password"
-            placeholder="Пароль"
-            v-model="fields.passwordRegister"
-            @blur="touch('passwordRegister')"
-            :class="[
-              'base-input',
-              { 'error-input': fields.passwordRegister && validate('passwordRegister') },
-            ]"
-          />
+            <input
+              v-if="mode === 'register'" 
+              key="passwordRegister"
+              type="password"
+              placeholder="Пароль"
+              v-model="fields.passwordRegister"
+              @input="validateInput('password', 'passwordRegister')"
+              @blur="touch('passwordRegister')"
+              :class="['base-input', { 'error-input': fields.passwordRegister && errors.passwordRegister }]"
+            />
+            <p v-if="errors.passwordRegister" class="error-text">{{ errors.passwordRegister }}</p>
 
-          <input
-            v-if="mode === 'register'"
-            key="confirmPassword"
-            type="password"
-            placeholder="Повторите пароль"
-            v-model="fields.confirmPassword"
-            @blur="touch('confirmPassword')"
-            :class="[
-              'base-input',
-              { 'error-input': fields.confirmPassword && validate('confirmPassword') },
-            ]"
-          />
-          <p key="error" class="error-text">{{ error }}</p>
+            <input
+              v-if="mode === 'register'" 
+              key="confirmPassword"
+              type="password"
+              placeholder="Повторите пароль"
+              v-model="fields.confirmPassword"
+              @input="validateInput('confirmPassword')"
+              @blur="touch('confirmPassword')"
+              :class="['base-input', { 'error-input': fields.confirmPassword && errors.confirmPassword }]"
+            />
+            <p v-if="errors.confirmPassword" class="error-text">{{ errors.confirmPassword }}</p>
         </transition-group>
       </div>
     </transition>
@@ -109,108 +110,82 @@
 </template>
 
 <script setup>
-import { ref, watch, computed, onMounted } from 'vue'
-import { z } from 'zod'
+import { ref, computed, watch } from 'vue'
+import { ValidationHelpers } from '@/utils/ValidationModule'
+import debounce from 'lodash.debounce'
 
 const mode = ref('login')
-
 const fields = ref({
   emailLogin: '',
   passwordLogin: '',
   name: '',
   emailRegister: '',
+  phone: '',
   passwordRegister: '',
   confirmPassword: '',
-  phone: '',
 })
-
 const touched = ref({})
 const errors = ref({})
+const error = ref('')
 
-const loginSchema = z.object({
-  emailLogin: z.email('Некорректный email'),
-  passwordLogin: z.string().min(6, 'Пароль слишком короткий'),
-})
-
-const registerSchema = z
-  .object({
-    name: z.string().min(2, 'Слишком короткое имя'),
-    confirmPassword: z.string(),
-    emailRegister: z.email('Некорректный email'),
-    passwordRegister: z.string().min(6, 'Пароль слишком короткий'),
-    phone: z
-      .string()
-      .refine((val) => (val.includes('+') ? val.startsWith('+') : true), {
-        message: 'Символ + допустим только в начале',
-      })
-      .refine((val) => val.replace(/\D/g, '').length === 11, {
-        message: 'Номер должен содержать 11 цифр',
-      })
-      .refine((val) => /^[+\d\s\-()]+$/.test(val), {
-        message: 'Телефон может содержать только цифры и +',
-      }),
-  })
-  .refine((data) => data.passwordRegister === data.confirmPassword, {
-    path: ['confirmPassword'],
-    message: 'Пароли не совпадают',
-  })
-
-const getSchema = computed(() => (mode.value === 'login' ? loginSchema : registerSchema))
-
-const requiredFields = computed(() =>
+const requiredFields = computed(() => 
   mode.value === 'login'
     ? ['emailLogin', 'passwordLogin']
-    : ['name', 'emailRegister', 'phone', 'passwordRegister', 'confirmPassword'],
+    : ['name', 'emailRegister', 'phone', 'passwordRegister', 'confirmPassword']
 )
 
-function validate(field) {
-  const value = fields.value[field]
-
-  if (!value || !value.trim()) {
-    return ''
+function validateInput (schemaField, formField = schemaField){
+  if (!fields.value[formField]) {
+    errors.value[formField] = ''
+    return
   }
 
-  const schema = getSchema.value
-  const result = schema.safeParse(fields.value)
-
-  if (!result.success) {
-    const issue = result.error.issues.find((i) => i.path[0] === field)
-    return issue?.message || ''
+  if (schemaField === 'confirmPassword') {
+    errors.value[formField] = fields.value.confirmPassword === fields.value.passwordRegister ? '' : 'Пароли не совпадают'
+    return
   }
 
-  return ''
+  const result = ValidationHelpers.validateOnInput(schemaField, fields.value[formField])
+  errors.value[formField] = result.success ? '' : result.errors.root?.[result.errors.root.length - 1] || ''
+}
+
+function validateBlur(field) {
+  if (!fields.value[field]) {
+    errors.value[field] = ''
+    return
+  }
+
+  if (field === 'confirmPassword') {
+    errors.value[field] = fields.value.confirmPassword === fields.value.passwordRegister ? '' : 'Пароли не совпадают'
+    return
+  }
+
+  const schemaField = field === 'emailLogin' || field === 'emailRegister' ? 'email' 
+    : field === 'passwordLogin' || field === 'passwordRegister' ? 'password' 
+    : field
+  const result = ValidationHelpers.validateOnBlur(schemaField, fields.value[field])
+  errors.value[field] = result.success ? '' : result.errors.root?.[result.errors.root.length - 1] || ''
 }
 
 function touch(field) {
   touched.value[field] = true
-  errors.value[field] = validate(field)
+  validateBlur(field)
 }
 
-onMounted(() => {
-  for (const field of Object.keys(fields.value)) {
-    touched.value[field] = false
-    errors.value[field] = ''
+watch(fields.value, () => {
+  requiredFields.value.forEach(field => {
+    if (touched.value[field]) {
+      validateBlur(field)
+    }
+  })
+}, { deep: true })
 
-    watch(
-      () => fields.value[field],
-      (val) => {
-        if (!touched.value[field] && val.trim()) {
-          touched.value[field] = true
-        }
-        if (touched.value[field]) {
-          errors.value[field] = validate(field)
-        }
-      },
-    )
-  }
-})
-
-const hasErrors = computed(() =>
-  requiredFields.value.some((f) => !fields.value[f] || errors.value[f]),
+const hasErrors = computed(() => 
+  requiredFields.value.some(f => !fields.value[f] || errors.value[f])
 )
 
-const error = computed(() => {
-  if (!requiredFields.value.some((f) => touched.value[f])) return ''
+const errorMessage = computed(() => {
+  if (!requiredFields.value.some(f => touched.value[f])) return ''
   for (const f of requiredFields.value) {
     if (touched.value[f] && errors.value[f]) return errors.value[f]
   }
@@ -218,21 +193,15 @@ const error = computed(() => {
 })
 
 function submitForm() {
-  requiredFields.value.forEach((field) => {
+  requiredFields.value.forEach(field => {
     touched.value[field] = true
-
-    const schema = getSchema.value.pick({ [field]: true })
-    const result = schema.safeParse({ [field]: fields.value[field] })
-    if (!result.success) {
-      const issue = result.error.issues.find((i) => i.path[0] === field)
-      errors.value[field] = issue?.message || ''
-    } else {
-      errors.value[field] = ''
-    }
+    validateBlur(field)
   })
 
   if (!hasErrors.value) {
-    alert(mode.value === 'login' ? 'Вход выполнен' : 'Регистрация завершена')
+    error.value = mode.value === 'login' ? 'Успешный вход!' : 'Успешная регистрация!'
+  } else {
+    error.value = errorMessage.value
   }
 }
 
@@ -245,8 +214,11 @@ function switchMode(newMode) {
     phone: '',
     passwordLogin: '',
     passwordRegister: '',
-    confirmPassword: '',
+    confirmPassword: ''
   }
+  touched.value = {}
+  errors.value = {}
+  error.value = ''
 }
 </script>
 
@@ -319,6 +291,12 @@ function switchMode(newMode) {
   width: 100%;
   box-sizing: border-box;
   gap: 30px;
+}
+
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .base-input {
