@@ -12,17 +12,6 @@
         @logout="logout"
       />
       <PurchaseHistory class="fade-up" style="animation-delay: 0.3s" :purchases="purchases" />
-      <PaymentMethod
-        class="fade-up"
-        style="animation-delay: 0.4s"
-        :cards="cards"
-        :inputCard="inputCard"
-        :isAddingCard="isAddingCard"
-        @add-card="addCard"
-        @remove-card="removeCard"
-        @start-adding-card="startAddingCard"
-        @cancel-adding-card="cancelAddingCard"
-      />
     </div>
     <transition name="modal-fade">
       <ModalForm
@@ -41,17 +30,12 @@
 <script>
 import ProfileCard from '../components/Profile/User/ProfileCard.vue'
 import PurchaseHistory from '@/components/Profile/History/PurchaseHistory.vue'
-import PaymentMethod from '@/components/Profile/Payment/PaymentMethod.vue'
 import ModalForm from '@/components/Profile/Modals/ModalForm.vue'
-import tbankIcon from '@/assets/images/tbank-icon.png'
-import sberIcon from '@/assets/images/sber-icon.png'
-import alphaIcon from '@/assets/images/alpha-icon.png'
-import mirIcon from '@/assets/images/mir-icon.png'
 import userPhoto from '@/assets/images/user-photo.png'
 
 export default {
   name: 'ProfileView',
-  components: { ProfileCard, PurchaseHistory, PaymentMethod, ModalForm },
+  components: { ProfileCard, PurchaseHistory, ModalForm },
   data() {
     return {
       userInfo: {
@@ -95,12 +79,8 @@ export default {
           expiryDate: '12.02.2025',
         },
       ],
-      cards: [
-        { title: '**5448', icon: tbankIcon },
-        { title: '**4578', icon: sberIcon },
-        { title: '**1770', icon: alphaIcon },
-      ],
-      inputCard: { title: 'Привязать карту', icon: mirIcon },
+      
+      
       modal: {
         isOpen: false,
         title: '',
@@ -122,7 +102,7 @@ export default {
     },
   },
   methods: {
-    openModal({ field, title, inputs }) {
+    openModal({ field, title, inputs }) { 
       this.modal = {
         isOpen: true,
         title,
@@ -138,13 +118,13 @@ export default {
       await this.updateUserField(this.modal.field, value)
       this.closeModal()
     },
-    async updateUserField(field, value) {
+    async updateUserField(field, value) {// обновление userInfo
       await this.saveUserData(field, value)
       if (field !== 'password') {
         this.userInfo[field] = value
       }
     },
-    async handlePhotoChange({ file, url }) {
+    async handlePhotoChange({ file, url }) { //Cмена фотографии
       console.log('Выбранное фото:', { file, url })
       try {
         await this.saveUserData('photoUrl', url)
@@ -159,7 +139,7 @@ export default {
         throw error
       }
     },
-    async saveUserData(field, value) {
+    async saveUserData(field, value) { //Сохранение данных профиля
       //метод заглушка
       console.log(`Сохранение поля ${field} со значением:`, value)
       if (this.mockServerError) {
@@ -167,72 +147,7 @@ export default {
         throw new Error('Произошла ошибка при сохранении данных')
       }
     },
-    startAddingCard() {
-      this.isAddingCard = true
-    },
-    cancelAddingCard() {
-      this.isAddingCard = false
-    },
-    async addCard(cardTitle, { resolve, reject } = {}) {
-      const newCard = { title: cardTitle, icon: this.inputCard.icon }
-      this.cards = [...this.cards, newCard]
-      try {
-        await this.saveCardData(newCard)
-        this.isAddingCard = false
-        resolve && resolve()
-      } catch (error) {
-        this.cards = this.cards.filter((card) => card.title !== cardTitle)
-        reject && reject(error)
-      }
-    },
-    removeCard(cardTitle) {
-      const index = this.cards.findIndex((card) => card.title === cardTitle)
-      if (index === -1 || this.pendingRemovals.some((c) => c.card.title === cardTitle)) {
-        return
-      }
-      const cardToRemove = this.cards[index]
-      this.pendingRemovals.push({ card: cardToRemove, index })
-      this.cards = this.cards.filter(
-        (card) => !this.pendingRemovals.some((c) => c.card.title === card.title),
-      )
-      this.processRemovalQueue()
-    },
-    async processRemovalQueue() {
-      if (!this.pendingRemovals.length) {
-        return
-      }
-      const removals = this.pendingRemovals.map(({ card }) => ({
-        card,
-        promise: this.saveCardData(card, true),
-      }))
-      const pendingRemovalsCopy = [...this.pendingRemovals]
-      this.pendingRemovals = []
-      try {
-        const results = await Promise.allSettled(removals.map((r) => r.promise))
-        results.forEach((result, index) => {
-          const { card, index: originalIndex } = pendingRemovalsCopy[index]
-          if (result.status !== 'fulfilled') {
-            if (this.cards.every((c) => c.title !== card.title)) {
-              this.cards.splice(originalIndex, 0, card)
-            }
-            alert(result.reason?.message || `Ошибка при удалении карты ${card.title}`)
-          }
-        })
-      } catch (error) {
-        console.error('Ошибка:', error)
-      }
-    },
-    async saveCardData(card, isRemoval = false) {
-      //метод заглушка
-      console.log(`${isRemoval ? 'Удаление' : 'Добавление'} карты ${card.title}`)
-      if (this.mockServerError) {
-        await new Promise((resolve) => setTimeout(resolve, 2000))
-        if (isRemoval) {
-          throw new Error('Произошла ошибка при удалении карты')
-        } else throw new Error('Произошла ошибка при добавлении карты')
-      }
-    },
-    async logout() {
+    async logout() {  //выход из профиля
       //метод заглушка
       try {
         if (this.mockServerError) {
