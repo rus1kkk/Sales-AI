@@ -25,10 +25,10 @@ h1 {
 }
 
 .arrow {
-  width: 124px; 
-  height: auto; 
+  width: 124px;
+  height: auto;
   position: absolute;
-  bottom: -35px; 
+  bottom: -35px;
   right: 0;
 }
 
@@ -43,11 +43,10 @@ h1 {
     margin: 74px 60px 0 60px;
   }
   .main-banner {
-    margin-left:16px;
+    margin-left: 16px;
     max-width: 828px;
   }
 }
-
 
 @media (max-width: 768px) {
   h1 {
@@ -60,13 +59,13 @@ h1 {
     margin: 74px 60px 0 60px;
   }
   .main-banner {
-    margin-left:16px;
+    margin-left: 16px;
     max-width: 520px;
     line-height: 63px;
   }
-  .arrow{
+  .arrow {
     width: 100px;
-    bottom: -23px; 
+    bottom: -23px;
   }
 }
 
@@ -84,12 +83,11 @@ h1 {
     max-width: 345px;
     line-height: 48px;
   }
-  .arrow{
+  .arrow {
     width: 75px;
-    bottom: -16px; 
+    bottom: -16px;
   }
 }
-
 
 @media (max-width: 410px) {
   h1 {
@@ -103,11 +101,11 @@ h1 {
     margin: 75px 20px 0 20px;
   }
   .main-banner {
-    margin-left:8px;
+    margin-left: 8px;
     max-width: 303px;
     line-height: 39px;
   }
-  .arrow{
+  .arrow {
     width: 70px;
   }
 }
