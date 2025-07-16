@@ -1,0 +1,138 @@
+@import url('../main.css');
+
+.custom-btn {
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 120%;
+  cursor: pointer;
+  transition: background 0.2s ease-in;
+}
+
+.custom-button:focus {
+  outline: none;
+  border: none;
+}
+
+/* Стили для default-btn */
+.btn-default {
+  display: flex;
+  height: 67px;
+  padding: 25px 36px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 34px;
+  border: 3px solid var(--actient-color);
+  background: var(--actient-color);
+  color: var(--standart-color);
+  font-size: 24px;
+}
+.btn-default:hover {
+  background: var(--muted-color);
+}
+.btn-default:active:hover {
+  border: 3px solid var(--actient-color);
+  background: var(--muted-color);
+}
+.btn-default:active {
+  border: 3px solid var(--muted-color);
+  background: var(--muted-color);
+}
+.btn-default:disabled {
+  border: 3px solidvar(--muted-color);
+  background: var(--muted-color);
+}
+
+.btn-default:focus {
+  outline: none;
+}
+
+/* Стили для text-btn */
+.btn-text {
+  background: none;
+  border: none;
+  color: var(--standart-color);
+  font-size: 16px;
+}
+.btn-text:active {
+  color: var(--muted-color);
+}
+.btn-text:hover {
+  color: var(--actient-color);
+}
+.btn-text:disabled {
+  color: var(--muted-color);
+}
+.btn-text:focus {
+  outline: none;
+}
+
+/* Стили для text-blue-btn */
+.btn-text-blue {
+  background: none;
+  border: none;
+  color: var(--actient-color);
+  font-size: 16px;
+}
+.btn-text-blue:active {
+  color: var(--standart-color);
+}
+.btn-text-blue:hover {
+  color: var(--standart-color);
+}
+.btn-text-blue:disabled {
+  color: var(--muted-color);
+}
+.btn-text-blue:focus {
+  outline: none;
+}
+
+/* Стили для btn-icon */
+.btn-icon {
+  width: 18px;
+  height: 18px;
+  aspect-ratio: 1/1;
+  background: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.btn-icon:active :deep(svg path) {
+  fill: var(--actient-color);
+}
+.btn-icon:active:hover :deep(svg path) {
+  fill: var(--actient-color);
+}
+.btn-icon:hover :deep(svg path) {
+  fill: var(--actient-color);
+}
+.btn-icon:focus {
+  outline: none;
+}
+
+/* Стили для btn-icon-line*/
+.btn-icon-line {
+  width: 18px;
+  height: 18px;
+  aspect-ratio: 1/1;
+  background: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-icon-line:active :deep(svg path) {
+  stroke: var(--actient-color);
+}
+.btn-icon-line:active:hover :deep(svg path) {
+  stroke: var(--actient-color);
+}
+.btn-icon-line:hover :deep(svg path) {
+  stroke: var(--actient-color);
+}
+.btn-icon-line:focus {
+  outline: none;
+}
