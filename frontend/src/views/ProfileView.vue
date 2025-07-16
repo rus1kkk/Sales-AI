@@ -48,7 +48,7 @@ export default {
       },
       isAddingCard: false, // Состояние показа формы добавления карты
       pendingRemovals: [], // Очередь для удаления карт (хранит объекты { card, index })
-      mockServerError: true, // true - для имитации ошибки
+      mockServerError: false, // true - для имитации ошибки
       purchases: [
         {
           id: 1,
