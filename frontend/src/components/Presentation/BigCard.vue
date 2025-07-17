@@ -51,7 +51,3 @@ defineProps({
 <style scoped>
 @import '@/assets/styles/Presentation/PresCards.css';
 </style>
-
-<style scoped>
-@import '@/assets/styles/Presentation/PresCards.css';
-</style>

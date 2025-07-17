@@ -16,7 +16,6 @@ defineProps({
     type: Array,
     default: () => [],
   },
-
 })
 </script>
 
@@ -27,11 +26,7 @@ defineProps({
     <h2>{{ title }}</h2>
     <div class="cover-photo-list">
       <div v-for="(image, index) in images" :key="index" class="cover-photo">
-        <img
-          :src="image.src || image"
-          :alt="image.alt || ''"
-          :title="image.title || ''"
-        />
+        <img :src="image.src || image" :alt="image.alt || ''" :title="image.title || ''" />
       </div>
     </div>
     <div class="from-someone-to-someone">
@@ -50,7 +45,6 @@ defineProps({
 </template>
 
 <style scoped>
-
 .cover-content {
   display: flex;
   width: 1128px;
@@ -68,7 +62,6 @@ h1 {
   font-size: 36px;
   text-align: center;
   line-height: 120%;
-
 }
 
 h2 {
@@ -91,20 +84,20 @@ h3 {
   padding-bottom: 24px;
 }
 
-.cover-photo-list{
+.cover-photo-list {
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 10px;
 }
-
+/*
 .cover-photo {
-  //border-radius: 6000px;
-  //border: 0.6px solid rgba(255, 255, 255, 0.6);
-  //background: lightgray 50% / cover no-repeat;
-  //aspect-ratio: 1/1;
+  border-radius: 6000px;
+  border: 0.6px solid rgba(255, 255, 255, 0.6);
+  background: lightgray 50% / cover no-repeat;
+  aspect-ratio: 1/1;
 }
-
+*/
 .vertical-line {
   border-left: 1px solid white;
   height: 100%;
@@ -135,5 +128,4 @@ h3 {
   align-items: flex-end;
   gap: 24px;
 }
-
 </style>
