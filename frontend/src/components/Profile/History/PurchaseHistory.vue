@@ -69,4 +69,16 @@ export default {
     transform: translateY(0);
   }
 }
+
+@media (max-width: 768px) {
+  .history {
+    min-width: 0;
+  }
+}
+
+@media (max-width: 360px) {
+  .history {
+    padding: 0px 6.5px;
+  }
+}
 </style>

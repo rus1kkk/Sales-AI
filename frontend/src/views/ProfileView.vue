@@ -47,10 +47,10 @@ export default {
         validUntil: '23.09.2025',
         photoUrl: userPhoto,
       },
-      isSaving: false,
-      isAddingCard: false,
-      pendingRemovals: [],
-      mockServerError: false,
+      isSaving: false, // Состояние сохранения изображения
+      isAddingCard: false, // Состояние показа формы добавления карты
+      pendingRemovals: [], // Очередь для удаления карт (хранит объекты { card, index })
+      mockServerError: false, // true - для имитации ошибки
       purchases: [
         {
           id: 1,
@@ -119,12 +119,14 @@ export default {
       this.closeModal()
     },
     async updateUserField(field, value) {
+      // обновление userInfo
       await this.saveUserData(field, value)
       if (field !== 'password') {
         this.userInfo[field] = value
       }
     },
     async handlePhotoChange({ file, url }) {
+      //Cмена фотографии
       console.log('Выбранное фото:', { file, url })
       this.isSaving = true // Устанавливаем isSaving перед серверной обработкой
       try {
@@ -143,6 +145,8 @@ export default {
       }
     },
     async saveUserData(field, value) {
+      //Сохранение данных профиля
+      //метод заглушка
       console.log(`Сохранение поля ${field} со значением:`, value)
       if (this.mockServerError) {
         await new Promise((resolve) => setTimeout(resolve, 2000))
@@ -152,6 +156,8 @@ export default {
       await new Promise((resolve) => setTimeout(resolve, 2000))
     },
     async logout() {
+      //выход из профиля
+      //метод заглушка
       try {
         if (this.mockServerError) {
           await new Promise((resolve) => setTimeout(resolve, 2000))
@@ -208,5 +214,44 @@ export default {
 .modal-fade-leave-to {
   opacity: 0;
   transform: translateY(-20px);
+}
+
+@media (max-width: 1280px) {
+  .top-block {
+    grid-template-columns: minmax(562px, 647px);
+    grid-template-rows: auto;
+    gap: 24px;
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .top-block {
+    grid-template-columns: minmax(80vw, 95vw);
+    grid-template-rows: auto;
+    gap: 24px;
+    width: 100%;
+    justify-content: center;
+  }
+  .user-profile {
+    padding: 0px 60.5px;
+  }
+}
+@media (max-width: 600px) {
+  .user-profile {
+    padding: 0px 32px;
+  }
+}
+@media (max-width: 480px) {
+  .user-profile {
+    padding: 0px 12px;
+  }
+}
+
+@media (max-width: 360px) {
+  .user-profile {
+    padding: 0px 5.5px;
+  }
 }
 </style>

@@ -8,7 +8,6 @@
         @error="handleImageError"
       />
       <div v-if="isSaving" class="loading-spinner"></div>
-      <!-- Добавляем спиннер -->
     </div>
     <input
       type="file"
@@ -134,7 +133,7 @@ export default {
   width: 56px;
   height: 56px;
   border: 5px solid rgba(255, 255, 255, 0.3); /* Полупрозрачная дуга (оставшаяся часть) */
-  border-top: 5px solid #fff; /* Основная видимая часть дуги */
+  border-top: 5px solid var(--white-color); /* Основная видимая часть дуги */
   border-radius: 50%;
   animation: spin 1s linear infinite;
   z-index: 2;
@@ -153,7 +152,6 @@ export default {
   background: none;
   border: none;
   color: var(--standart-color);
-  font-family: Montserrat;
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
