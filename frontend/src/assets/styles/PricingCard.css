@@ -207,7 +207,8 @@
   .subtitle {
     font-size: 12px;
   }
-  .feature-text, .price-description,
+  .feature-text,
+  .price-description,
   .price-action {
     font-size: 14px;
   }
