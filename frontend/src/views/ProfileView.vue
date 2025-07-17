@@ -12,7 +12,12 @@
         @photo-changed="handlePhotoChange"
         @logout="logout"
       />
-      <PurchaseHistory class="fade-up" style="animation-delay: 0.3s" :purchases="purchases" />
+      <PurchaseHistory 
+        class="fade-up" 
+        style="animation-delay: 0.3s" 
+        :purchases="purchases" 
+        @open-info-modal="openInfoModal"
+        />
     </div>
     <transition name="modal-fade">
       <ModalForm
@@ -25,6 +30,14 @@
         :onSubmit="handleSubmit"
       />
     </transition>
+    <transition name="modal-fade">
+      <ModalInfo
+        v-if="infoModal.isOpen"
+        :isOpen="infoModal.isOpen"
+        :purchase="infoModal.purchase"
+        :onClose="closeInfoModal"
+      />
+    </transition>
   </div>
 </template>
 
@@ -33,10 +46,11 @@ import ProfileCard from '../components/Profile/User/ProfileCard.vue'
 import PurchaseHistory from '@/components/Profile/History/PurchaseHistory.vue'
 import ModalForm from '@/components/Profile/Modals/ModalForm.vue'
 import userPhoto from '@/assets/images/user-photo.png'
+import ModalInfo from '@/components/Profile/Modals/ModalInfo.vue'
 
 export default {
   name: 'ProfileView',
-  components: { ProfileCard, PurchaseHistory, ModalForm },
+  components: { ProfileCard, PurchaseHistory, ModalForm, ModalInfo},
   data() {
     return {
       userInfo: {
@@ -55,28 +69,28 @@ export default {
         {
           id: 1,
           date: '12.04.2025',
-          title: 'Тариф “Pro”',
+          title: 'Pro',
           quantity: '1',
           expiryDate: '12.05.2025',
         },
         {
           id: 2,
           date: '12.03.2025',
-          title: 'Тариф “Pro”',
+          title: 'Pro',
           quantity: '1',
           expiryDate: '12.04.2025',
         },
         {
           id: 3,
           date: '12.02.2025',
-          title: 'Тариф “Pro”',
+          title: 'Pro',
           quantity: '1',
           expiryDate: '12.03.2025',
         },
         {
           id: 4,
           date: '12.12.2024',
-          title: 'Тариф “Pro”',
+          title: 'Pro',
           quantity: '2',
           expiryDate: '12.02.2025',
         },
@@ -86,6 +100,10 @@ export default {
         title: '',
         inputs: [],
         field: '',
+      },
+      infoModal: {
+        isOpen: false,
+        purchase: null,
       },
     }
   },
@@ -112,6 +130,16 @@ export default {
     },
     closeModal() {
       this.modal.isOpen = false
+    },
+    openInfoModal(purchase) {
+      this.infoModal = {
+        isOpen: true,
+        purchase,
+      }
+    },
+    closeInfoModal() {
+      this.infoModal.isOpen = false
+      this.infoModal.purchase = null
     },
     async handleSubmit(values) {
       const value = this.modal.field === 'password' ? values[0] : values[0]

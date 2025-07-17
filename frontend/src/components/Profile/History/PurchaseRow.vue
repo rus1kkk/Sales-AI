@@ -2,13 +2,13 @@
   <div class="purchase-row">
     <div class="purchase-data">{{ purchase.date }}</div>
     <div class="purchase-about">
-      <p class="purchase-title">{{ purchase.title }}</p>
+      <p class="purchase-title">Тариф "{{ purchase.title }}"</p>
       <p class="quantity">{{ purchase.quantity }} шт</p>
       <p class="term">действителен до:</p>
       <p :class="['expiry-date', { 'current-subscription': isCurrent }]">
         {{ purchase.expiryDate }}
       </p>
-      <CustomButton type="icon" class="info-btn">
+      <CustomButton type="icon" class="info-btn" @click="openInfoModal">
         <template #icon>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -38,6 +38,11 @@ export default {
   props: {
     purchase: { type: Object, required: true },
     isCurrent: { type: Boolean, default: false },
+  },
+  methods: {
+    openInfoModal() {
+      this.$emit('open-info', this.purchase)
+    },
   },
 }
 </script>
