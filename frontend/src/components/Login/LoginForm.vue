@@ -1,104 +1,62 @@
 <template>
   <form @submit.prevent="submitForm" class="login-form fade-up">
     <div class="form-buttons">
-      <button
-        class="login-button"
-        :disabled="mode === 'login'"
-        @click.prevent="switchMode('login')"
-      >
+      <button class="login-button" :disabled="mode === 'login'" @click.prevent="switchMode('login')">
         ВХОД
       </button>
-      <button
-        class="registration-button"
-        :disabled="mode === 'register'"
-        @click.prevent="switchMode('register')"
-      >
+      <button class="registration-button" :disabled="mode === 'register'" @click.prevent="switchMode('register')">
         РЕГИСТРАЦИЯ
       </button>
     </div>
     <transition name="expand" mode="out-in">
       <div class="form-input" :key="mode">
         <transition-group name="fade-field" tag="div" class="form-input">
-            <input
-              v-if="mode === 'register'" 
-              key="name"
-              placeholder="Имя"
-              v-model="fields.name"
-              @input="validateInput('name')"
-              @blur="touch('name')"
-              :class="['base-input', { 'error-input': fields.name && errors.name }]"
-            />
-            <p v-if="errors.name" class="error-text">{{ errors.name }}</p>
-          
-            <input
-              v-if="mode === 'login'" 
-              key="emailLogin"
-              placeholder="Email"
-              v-model="fields.emailLogin"
-              @input="validateInput('email', 'emailLogin')"
-              @blur="touch('emailLogin')"
-              :class="['base-input', { 'error-input': fields.emailLogin && errors.emailLogin }]"
-            />
-            <p v-if="errors.emailLogin" class="error-text">{{ errors.emailLogin }}</p>
+          <div v-if="mode === 'register'" class="input-wrapper">
+            <input key="name" placeholder="Имя" v-model="fields.name" @input="validateInput('name')"
+              @blur="touch('name')" :class="['base-input', { 'error-input': fields.name && errors.name }]" />
+            <p class="error-text">{{ errors.name }}</p>
+          </div>
 
-            <input
-            v-if="mode === 'register'" 
-            key="emailRegister"
-              placeholder="Email"
-              v-model="fields.emailRegister"
-              @input="validateInput('email', 'emailRegister')"
-              @blur="touch('emailRegister')"
-              :class="['base-input', { 'error-input': fields.emailRegister && errors.emailRegister }]"
-            />
-            <p v-if="errors.emailRegister" class="error-text">{{ errors.emailRegister }}</p>
+          <div v-if="mode === 'login'" class="input-wrapper">
+            <input key="emailLogin" placeholder="Email" v-model="fields.emailLogin"
+              @input="validateInput('email', 'emailLogin')" @blur="touch('emailLogin')"
+              :class="['base-input', { 'error-input': fields.emailLogin && errors.emailLogin }]" />
+            <p class="error-text">{{ errors.emailLogin }}</p>
+          </div>
 
-            <input
-              v-if="mode === 'register'" 
-              key="phone"
-              type="phone"
-              placeholder="Телефон"
-              v-model="fields.phone"
-              @input="validateInput('phone')"
-              @blur="touch('phone')"
-              :class="['base-input', { 'error-input': fields.phone && errors.phone }]"
-            />
-            <p v-if="errors.phone" class="error-text">{{ errors.phone }}</p>
+          <div v-if="mode === 'register'" class="input-wrapper">
+            <input key="emailRegister" placeholder="Email" v-model="fields.emailRegister"
+              @input="validateInput('email', 'emailRegister')" @blur="touch('emailRegister')"
+              :class="['base-input', { 'error-input': fields.emailRegister && errors.emailRegister }]" />
+            <p class="error-text">{{ errors.emailRegister }}</p>
+          </div>
 
-            <input
-              v-if="mode === 'login'" 
-              key="passwordLogin" 
-              type="password"
-              placeholder="Пароль"
-              v-model="fields.passwordLogin"
-              @input="validateInput('password', 'passwordLogin')"
-              @blur="touch('passwordLogin')"
-              :class="['base-input', { 'error-input': fields.passwordLogin && errors.passwordLogin }]"
-            />
-            <p v-if="errors.passwordLogin" class="error-text">{{ errors.passwordLogin }}</p>
+          <div v-if="mode === 'register'" class="input-wrapper">
+            <input key="phone" type="phone" placeholder="Телефон" v-model="fields.phone" @input="validateInput('phone')"
+              @blur="touch('phone')" :class="['base-input', { 'error-input': fields.phone && errors.phone }]" />
+            <p class="error-text">{{ errors.phone }}</p>
+          </div>
 
-            <input
-              v-if="mode === 'register'" 
-              key="passwordRegister"
-              type="password"
-              placeholder="Пароль"
-              v-model="fields.passwordRegister"
-              @input="validateInput('password', 'passwordRegister')"
-              @blur="touch('passwordRegister')"
-              :class="['base-input', { 'error-input': fields.passwordRegister && errors.passwordRegister }]"
-            />
-            <p v-if="errors.passwordRegister" class="error-text">{{ errors.passwordRegister }}</p>
+          <div v-if="mode === 'login'" class="input-wrapper">
+            <input key="passwordLogin" type="password" placeholder="Пароль" v-model="fields.passwordLogin"
+              @input="validateInput('password', 'passwordLogin')" @blur="touch('passwordLogin')"
+              :class="['base-input', { 'error-input': fields.passwordLogin && errors.passwordLogin }]" />
+            <p class="error-text">{{ errors.passwordLogin }}</p>
+          </div>
 
-            <input
-              v-if="mode === 'register'" 
-              key="confirmPassword"
-              type="password"
-              placeholder="Повторите пароль"
-              v-model="fields.confirmPassword"
-              @input="validateInput('confirmPassword')"
-              @blur="touch('confirmPassword')"
-              :class="['base-input', { 'error-input': fields.confirmPassword && errors.confirmPassword }]"
-            />
-            <p v-if="errors.confirmPassword" class="error-text">{{ errors.confirmPassword }}</p>
+          <div v-if="mode === 'register'" class="input-wrapper">
+            <input key="passwordRegister" type="password" placeholder="Пароль" v-model="fields.passwordRegister"
+              @input="validateInput('password', 'passwordRegister')" @blur="touch('passwordRegister')"
+              :class="['base-input', { 'error-input': fields.passwordRegister && errors.passwordRegister }]" />
+            <p class="error-text">{{ errors.passwordRegister }}</p>
+          </div>
+
+          <div v-if="mode === 'register'" class="input-wrapper">
+            <input key="confirmPassword" type="password" placeholder="Повторите пароль" v-model="fields.confirmPassword"
+              @input="validateInput('confirmPassword')" @blur="touch('confirmPassword')"
+              :class="['base-input', { 'error-input': fields.confirmPassword && errors.confirmPassword }]" />
+            <p class="error-text">{{ errors.confirmPassword }}</p>
+          </div>
         </transition-group>
       </div>
     </transition>
@@ -112,7 +70,7 @@
 <script setup>
 import { ref, computed, watch } from 'vue'
 import { ValidationHelpers } from '@/utils/ValidationModule'
-import debounce from 'lodash.debounce'
+
 
 const mode = ref('login')
 const fields = ref({
@@ -128,13 +86,13 @@ const touched = ref({})
 const errors = ref({})
 const error = ref('')
 
-const requiredFields = computed(() => 
+const requiredFields = computed(() =>
   mode.value === 'login'
     ? ['emailLogin', 'passwordLogin']
     : ['name', 'emailRegister', 'phone', 'passwordRegister', 'confirmPassword']
 )
 
-function validateInput (schemaField, formField = schemaField){
+function validateInput(schemaField, formField = schemaField) {
   if (!fields.value[formField]) {
     errors.value[formField] = ''
     return
@@ -160,9 +118,9 @@ function validateBlur(field) {
     return
   }
 
-  const schemaField = field === 'emailLogin' || field === 'emailRegister' ? 'email' 
-    : field === 'passwordLogin' || field === 'passwordRegister' ? 'password' 
-    : field
+  const schemaField = field === 'emailLogin' || field === 'emailRegister' ? 'email'
+    : field === 'passwordLogin' || field === 'passwordRegister' ? 'password'
+      : field
   const result = ValidationHelpers.validateOnBlur(schemaField, fields.value[field])
   errors.value[field] = result.success ? '' : result.errors.root?.[result.errors.root.length - 1] || ''
 }
@@ -180,7 +138,7 @@ watch(fields.value, () => {
   })
 }, { deep: true })
 
-const hasErrors = computed(() => 
+const hasErrors = computed(() =>
   requiredFields.value.some(f => !fields.value[f] || errors.value[f])
 )
 
@@ -223,23 +181,6 @@ function switchMode(newMode) {
 </script>
 
 <style>
-@keyframes fadeUp {
-  0% {
-    opacity: 0;
-    transform: translateY(-40px);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.fade-up {
-  opacity: 0;
-  animation: fadeUp 0.8s ease-out forwards;
-}
-
 .login-form {
   display: flex;
   flex-direction: column;
@@ -267,17 +208,13 @@ function switchMode(newMode) {
 .form-buttons > button {
   all: unset;
   flex: 1;
-  padding: 10px 20px;
-  border: none;
+  padding: 23px 0;
   background: transparent;
   transition: background-color 0.5s ease;
   cursor: pointer;
   font-weight: 500;
   font-size: 20px;
-  width: 50%;
-  cursor: pointer;
   text-align: center;
-  padding: 23px 0px 23px 0px;
 }
 
 .form-buttons > button:disabled {
@@ -290,22 +227,21 @@ function switchMode(newMode) {
   flex-direction: column;
   width: 100%;
   box-sizing: border-box;
-  gap: 30px;
+  gap: 20px;
 }
 
 .input-wrapper {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 5px;
 }
 
 .base-input {
   all: unset;
   cursor: pointer;
-  padding: 23px 0px 23px 0px;
   background-color: rgba(255, 255, 255, 0.2);
   border-radius: 60px;
-  padding: 25px 36px 25px 36px;
+  padding: 25px 36px;
   transition: background-color 0.5s ease;
 }
 
@@ -313,11 +249,19 @@ function switchMode(newMode) {
   color: var(--muted-color);
 }
 
+.error-input {
+  background-color: rgba(252, 134, 134, 0.5);
+}
+
+.error-input::placeholder {
+  color: var(--white-color);
+}
+
 .error-text {
   color: rgba(252, 134, 134, 0.8);
-  font-size: 16px;
+  font-size: 12px;
   text-align: center;
-  height: 19px;
+  min-height: 15px;
   transition: opacity 0.5s ease;
 }
 
@@ -330,7 +274,7 @@ function switchMode(newMode) {
   text-align: center;
   background-color: var(--actient-color);
   box-sizing: border-box;
-  padding: 23px 0px 23px 0px;
+  padding: 23px 0;
   border-radius: 60px;
 }
 
@@ -338,12 +282,19 @@ function switchMode(newMode) {
   cursor: default;
 }
 
-.error-input {
-  background-color: rgba(252, 134, 134, 0.5);
+.fade-up {
+  animation: fadeUp 0.8s ease-out forwards;
 }
 
-.error-input::placeholder {
-  color: var(--white-color);
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(-40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .expand-enter-active,
@@ -364,7 +315,7 @@ function switchMode(newMode) {
 
 .expand-enter-to,
 .expand-leave-from {
-  max-height: 1000px;
+  max-height: 600px;
   opacity: 1;
   transform: translateY(0);
 }
