@@ -1,0 +1,59 @@
+.presentation-content {
+  display: flex;
+  flex-direction: column;
+  gap: 120px;
+  margin: 120px;
+}
+
+/* обложка */
+.cover {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/*problem & solution section*/
+.problem-and-solution {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 120px;
+  width: 1366px;
+  margin: 0 auto;
+}
+
+.problem-card{
+  height: 577px;
+  width: 698px;
+}
+
+.product-card {
+  height: 519px;
+  width: 1166px;
+  margin: 0 auto;
+}
+
+/*Стадии работы и оплата*/
+.stages-of-work,
+.price-of-work {
+  width: 1225px;
+  height: 690px;
+  margin: 0 auto;
+  display: flex;
+}
+
+.work-card {
+  width: 50%; /* Занимает половину родительского элемента */
+  margin-left: auto; /* Выравнивает по правому краю */
+  height: 100%;
+}
+
+.price-card {
+  width: 50%; /* Занимает половину родительского элемента */
+  height: 100%;
+}
+
+.do-it, .next-steps {
+  width: 1166px;
+  margin: 0 auto;
+}
