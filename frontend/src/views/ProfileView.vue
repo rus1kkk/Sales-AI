@@ -6,6 +6,7 @@
         style="animation-delay: 0.2s"
         ref="profileCard"
         :userInfo="userInfo"
+        :isSaving="isSaving"
         @open-modal="openModal"
         @update-user-field="updateUserField"
         @photo-changed="handlePhotoChange"
@@ -46,9 +47,10 @@ export default {
         validUntil: '23.09.2025',
         photoUrl: userPhoto,
       },
-      isAddingCard: false, // Состояние показа формы добавления карты
-      pendingRemovals: [], // Очередь для удаления карт (хранит объекты { card, index })
-      mockServerError: false, // true - для имитации ошибки
+      isSaving: false,
+      isAddingCard: false,
+      pendingRemovals: [],
+      mockServerError: false,
       purchases: [
         {
           id: 1,
@@ -79,7 +81,6 @@ export default {
           expiryDate: '12.02.2025',
         },
       ],
-
       modal: {
         isOpen: false,
         title: '',
@@ -118,15 +119,14 @@ export default {
       this.closeModal()
     },
     async updateUserField(field, value) {
-      // обновление userInfo
       await this.saveUserData(field, value)
       if (field !== 'password') {
         this.userInfo[field] = value
       }
     },
     async handlePhotoChange({ file, url }) {
-      //Cмена фотографии
       console.log('Выбранное фото:', { file, url })
+      this.isSaving = true // Устанавливаем isSaving перед серверной обработкой
       try {
         await this.saveUserData('photoUrl', url)
         this.userInfo.photoUrl = url
@@ -138,20 +138,20 @@ export default {
           console.error('Фото не найдено')
         }
         throw error
+      } finally {
+        this.isSaving = false // Сбрасываем isSaving после завершения
       }
     },
     async saveUserData(field, value) {
-      //Сохранение данных профиля
-      //метод заглушка
       console.log(`Сохранение поля ${field} со значением:`, value)
       if (this.mockServerError) {
         await new Promise((resolve) => setTimeout(resolve, 2000))
         throw new Error('Произошла ошибка при сохранении данных')
       }
+      // Имитация серверной задержки
+      await new Promise((resolve) => setTimeout(resolve, 2000))
     },
     async logout() {
-      //выход из профиля
-      //метод заглушка
       try {
         if (this.mockServerError) {
           await new Promise((resolve) => setTimeout(resolve, 2000))
@@ -200,7 +200,6 @@ export default {
   }
 }
 
-/* Анимация для модального окна */
 .modal-fade-enter-active,
 .modal-fade-leave-active {
   transition: all 0.4s ease;

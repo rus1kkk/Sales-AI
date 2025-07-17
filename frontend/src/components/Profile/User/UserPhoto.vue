@@ -7,6 +7,8 @@
         alt="User Profile Photo"
         @error="handleImageError"
       />
+      <div v-if="isSaving" class="loading-spinner"></div>
+      <!-- Добавляем спиннер -->
     </div>
     <input
       type="file"
@@ -15,7 +17,12 @@
       style="display: none"
       @change="handleFileChange"
     />
-    <CustomButton type="text" label="Изменить фото" @click="triggerFileInput" />
+    <CustomButton
+      type="text"
+      label="Изменить фото"
+      @click="triggerFileInput"
+      :disabled="isSaving"
+    />
   </div>
 </template>
 
@@ -30,11 +37,14 @@ export default {
       type: String,
       default: '',
     },
+    isSaving: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
       previewUrl: null,
-      isSaving: false,
     }
   },
   methods: {
@@ -53,7 +63,6 @@ export default {
           return
         }
 
-        this.isSaving = true
         const reader = new FileReader()
         reader.onload = (e) => {
           this.previewUrl = e.target.result
@@ -62,16 +71,18 @@ export default {
             url: e.target.result,
           })
         }
+        reader.onerror = () => {
+          alert('Ошибка при чтении файла')
+          this.resetPhoto()
+        }
         reader.readAsDataURL(file)
       }
     },
     handleImageError() {
       this.previewUrl = null
-      this.isSaving = false
     },
     resetPhoto() {
       this.previewUrl = null
-      this.isSaving = false
       this.$refs.fileInput.value = ''
     },
   },
@@ -92,6 +103,7 @@ export default {
   position: relative;
   width: 100%;
   max-width: 250px;
+  max-height: 250px;
 }
 .user-pic {
   max-width: 250px;
@@ -100,6 +112,41 @@ export default {
   aspect-ratio: 1/1;
   border-radius: 10px;
   object-fit: cover;
+}
+
+.photo-wrapper.is-loading::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 2, 11, 0.6);
+  z-index: 1;
+  border-radius: 10px;
+}
+
+.loading-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 56px;
+  height: 56px;
+  border: 5px solid rgba(255, 255, 255, 0.3); /* Полупрозрачная дуга (оставшаяся часть) */
+  border-top: 5px solid #fff; /* Основная видимая часть дуги */
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  z-index: 2;
+}
+
+@keyframes spin {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
 }
 
 .text-btn {

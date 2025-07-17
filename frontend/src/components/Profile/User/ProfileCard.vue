@@ -6,6 +6,7 @@
         style="animation-delay: 0.3s"
         ref="userPhoto"
         :photoUrl="userInfo.photoUrl"
+        :isSaving="isSaving"
         @photo-changed="$emit('photo-changed', $event)"
       />
       <CustomButton
@@ -36,6 +37,10 @@ export default {
     userInfo: {
       type: Object,
       required: true,
+    },
+    isSaving: {
+      type: Boolean,
+      default: false,
     },
   },
   components: { UserPhoto, UserInfo, CustomButton },
