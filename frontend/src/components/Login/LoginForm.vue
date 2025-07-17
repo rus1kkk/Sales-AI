@@ -1,9 +1,5 @@
 <template>
-  <LoginMessageModal
-    :visible="!!error || !!successMessage"
-    :message="error || successMessage"
-    :is-error="!!error"
-  />
+  <LoginMessageModal :visible="!!error" :message="error" />
 
   <form @submit.prevent="submitForm" class="login-form fade-up">
     <div class="form-buttons">
@@ -154,13 +150,11 @@ const fields = ref(defaultFields())
 const touched = ref({})
 const errors = ref({})
 const error = ref('')
-const successMessage = ref('')
 const isSubmitting = ref(false)
 
 function showModal() {
   setTimeout(() => {
     error.value = ''
-    successMessage.value = ''
   }, 1500)
 }
 
@@ -275,7 +269,7 @@ async function submitForm() {
 
     const isSuccess =
       mode.value === 'login'
-        ? sendData.email && sendData.password
+        ? sendData.email && sendData.password === '123'
         : sendData.email && sendData.password && sendData.name && sendData.phone
 
     if (!isSuccess) {
@@ -284,21 +278,11 @@ async function submitForm() {
       return
     }
 
-    if (mode.value === 'login') {
-      successMessage.value = 'Вы успешно вошли!'
-      showModal()
-
-      setTimeout(() => {
-        router.push('/profile')
-      }, 1500)
-    } else {
-      successMessage.value = 'Регистрация прошла успешно! Войдите в свой аккаунт.'
-      fields.value = defaultFields()
-      switchMode('login')
-      showModal()
-    }
+    setTimeout(() => {
+      router.push('/profile')
+    }, 1500)
   } catch (err) {
-    error.value = 'Ошибка сети. Проверьте подключение.'
+    error.value = 'Произошла ошибка.'
     console.log(err)
     showModal()
   } finally {

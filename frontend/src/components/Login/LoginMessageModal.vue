@@ -2,7 +2,7 @@
   <transition name="modal-fade">
     <div v-if="visible" class="modal-overlay">
       <div class="modal-content">
-        <p class="modal-message" :class="{ error: isError }">
+        <p class="modal-message">
           {{ message }}
         </p>
       </div>
@@ -14,7 +14,6 @@
 defineProps({
   visible: Boolean,
   message: String,
-  isError: Boolean,
 })
 </script>
 
