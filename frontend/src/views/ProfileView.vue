@@ -12,12 +12,12 @@
         @photo-changed="handlePhotoChange"
         @logout="logout"
       />
-      <PurchaseHistory 
-        class="fade-up" 
-        style="animation-delay: 0.3s" 
-        :purchases="purchases" 
+      <PurchaseHistory
+        class="fade-up"
+        style="animation-delay: 0.3s"
+        :purchases="purchases"
         @open-info-modal="openInfoModal"
-        />
+      />
     </div>
     <transition name="modal-fade">
       <ModalForm
@@ -50,7 +50,7 @@ import ModalInfo from '@/components/Profile/Modals/ModalInfo.vue'
 
 export default {
   name: 'ProfileView',
-  components: { ProfileCard, PurchaseHistory, ModalForm, ModalInfo},
+  components: { ProfileCard, PurchaseHistory, ModalForm, ModalInfo },
   data() {
     return {
       userInfo: {

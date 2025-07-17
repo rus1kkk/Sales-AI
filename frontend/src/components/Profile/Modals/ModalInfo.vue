@@ -1,169 +1,68 @@
 <template>
   <div v-if="isOpen" class="modal-overlay">
     <div class="modal">
-        <div class="modal-info">
-            <div class="title-row">
-                <div class="title">Информация</div>
-                <CustomButton type="icon" @click="onClose">
-                    <template #icon>
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="20"
-                        height="21"
-                        viewBox="0 0 20 21"
-                        fill="none"
-                    >
-                        <path
-                        fill-rule="evenodd"
-                        clip-rule="evenodd"
-                        d="M0.418415 0.918415C0.976316 0.360528 1.88083 0.360528 2.43873 0.918415L10 8.47973L17.5613 0.918415C18.1192 0.360528 19.0237 0.360528 19.5816 0.918415C20.1395 1.47632 20.1395 2.38083 19.5816 2.93873L12.0203 10.5L19.5816 18.0613C20.1395 18.6192 20.1395 19.5237 19.5816 20.0816C19.0237 20.6395 18.1192 20.6395 17.5613 20.0816L10 12.5203L2.43873 20.0816C1.88083 20.6395 0.976316 20.6395 0.418415 20.0816C-0.139472 19.5237 -0.139472 18.6192 0.418415 18.0613L7.97973 10.5L0.418415 2.93873C-0.139472 2.38083 -0.139472 1.47632 0.418415 0.918415Z"
-                        fill="#A8A9AF"
-                        />
-                    </svg>
-                    </template>
-                </CustomButton>
-            </div>
-          <div class="purchase-info">
-            <div class="data-row">
-                <p class="property">Дата покупки</p>
-                <p class="value">{{ purchase.date }}</p>
-            </div>
-            <div class="data-row">
-                <p class="property">Название тарифа</p>
-                <p class="value">{{ purchase.title }}</p>
-            </div>
-            <div class="data-row">
-                <p class="property">Количество</p>
-                <p class="value">{{ purchase.quantity }} шт</p>
-            </div>
-            <div class="data-row">
-                <p class="property">Действителен до</p>
-                <p class="value">{{ purchase.expiryDate }}</p>
-            </div>
+      <div class="modal-info">
+        <div class="title-row">
+          <div class="title">Информация</div>
+          <CustomButton type="icon" @click="onClose">
+            <template #icon>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="21"
+                viewBox="0 0 20 21"
+                fill="none"
+              >
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M0.418415 0.918415C0.976316 0.360528 1.88083 0.360528 2.43873 0.918415L10 8.47973L17.5613 0.918415C18.1192 0.360528 19.0237 0.360528 19.5816 0.918415C20.1395 1.47632 20.1395 2.38083 19.5816 2.93873L12.0203 10.5L19.5816 18.0613C20.1395 18.6192 20.1395 19.5237 19.5816 20.0816C19.0237 20.6395 18.1192 20.6395 17.5613 20.0816L10 12.5203L2.43873 20.0816C1.88083 20.6395 0.976316 20.6395 0.418415 20.0816C-0.139472 19.5237 -0.139472 18.6192 0.418415 18.0613L7.97973 10.5L0.418415 2.93873C-0.139472 2.38083 -0.139472 1.47632 0.418415 0.918415Z"
+                  fill="#A8A9AF"
+                />
+              </svg>
+            </template>
+          </CustomButton>
+        </div>
+        <div class="purchase-info">
+          <div class="data-row">
+            <p class="property">Дата покупки</p>
+            <p class="value">{{ purchase.date }}</p>
+          </div>
+          <div class="data-row">
+            <p class="property">Название тарифа</p>
+            <p class="value">{{ purchase.title }}</p>
+          </div>
+          <div class="data-row">
+            <p class="property">Количество</p>
+            <p class="value">{{ purchase.quantity }} шт</p>
+          </div>
+          <div class="data-row">
+            <p class="property">Действителен до</p>
+            <p class="value">{{ purchase.expiryDate }}</p>
           </div>
         </div>
-        <div class="button-row">
-            <CustomButton type="text-blue" label="Отменить" @click="onClose" />
-        </div>
+      </div>
+      <div class="button-row">
+        <CustomButton type="text-blue" label="Отменить" @click="onClose" />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-
 import CustomButton from '../CustomButton.vue'
 
-export default{
-    name:'ModalInfo',
-    components: { CustomButton },
-    props: {
-        isOpen: { type: Boolean, required: true },  
-        onClose: { type: Function, required: true },  
-        purchase: { type: Object, required: true },
+export default {
+  name: 'ModalInfo',
+  components: { CustomButton },
+  props: {
+    isOpen: { type: Boolean, required: true },
+    onClose: { type: Function, required: true },
+    purchase: { type: Object, required: true },
   },
 }
 </script>
 
 <style scoped>
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(15, 0, 0, 0.25);
-  backdrop-filter: blur(12.5px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-.modal {
-    display: flex;
-    padding: 36px;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 24px;
-    border-radius: 61px;
-    width: 100%;
-    background: rgba(255, 255, 255, 0.20);
-    margin: 0 60px;
-}
-.modal-info{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 24px;
-    width: 100%;
-}
-.title-row{
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-    align-items: center;
-}
-.purchase-info{
-    display: flex;
-    width: 100%;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
-}
-.data-row{
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    align-self: stretch;
-}
-.property{
-    color: #A8A9AF;
-
-    /* Основной текст */
-    font-family: Montserrat;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 125%; /* 20px */
-}
-.value{
-    color: #E6E9ED;
-
-    /* Основной текст */
-    font-family: Montserrat;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 125%; /* 20px */
-}
-
-.button-row{
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
-    gap: 24px;
-    align-self: stretch;
-}
-.title{
-    color: #FFF;
-    text-align: center;
-
-    /* Подзаголовок */
-    font-family: Montserrat;
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 120%; /* 28.8px */
-}
-@media (max-width:480px){
-    .modal{
-        margin:0 8px;
-    }
-}
-
-@media (max-width:360px){
-    .modal{
-        margin:0 3.5px
-    }
-}
+@import '../../../assets/styles/Profile/ModalInfo.css';
 </style>
