@@ -7,6 +7,7 @@
 
 /* обложка */
 .cover {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -14,6 +15,7 @@
 
 /*problem & solution section*/
 .problem-and-solution {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -22,8 +24,8 @@
   margin: 0 auto;
 }
 
-.problem-card{
-  height: 577px;
+.problem-card {
+  /* height: 577px; */
   width: 698px;
 }
 
@@ -43,17 +45,70 @@
 }
 
 .work-card {
+  position: relative;
   width: 50%; /* Занимает половину родительского элемента */
   margin-left: auto; /* Выравнивает по правому краю */
   height: 100%;
 }
 
 .price-card {
+  position: relative;
   width: 50%; /* Занимает половину родительского элемента */
   height: 100%;
 }
 
-.do-it, .next-steps {
+.do-it,
+.next-steps {
   width: 1166px;
   margin: 0 auto;
+}
+
+.custom-shape {
+  position: absolute;
+  z-index: -1;
+}
+
+.middle {
+  width: 135%;
+  top: -22%;
+  left: -18%;
+}
+
+.left {
+  width: 110vw;
+  left: -44vw;
+  bottom: -40vw;
+}
+.right {
+  width: 110vw;
+  right: -43vw;
+  top: -39vw;
+}
+
+.calendar {
+  width: 250%;
+  /* top: -69%;
+  left: -175%; */
+  transform: translateY(-70%) translateX(-70%);
+}
+.coin {
+  width: 250%;
+  transform: translateY(-71%) translateX(10%);
+  /* top: -69%; */
+  /* right: -175%; */
+}
+
+.cases-block {
+  position: relative;
+}
+
+svg {
+  top: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  position: absolute;
+  z-index: -1;
+  filter: blur(250px);
+  width: 1466px;
+  height: 3037px;
 }

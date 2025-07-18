@@ -11,11 +11,7 @@ defineProps({
   <div class="case-container">
     <h1>Кейсы</h1>
     <div v-for="(item, index) in items" :key="index" class="cases">
-      <img
-        :src="item.src || item"
-        :alt="item.alt || ''"
-        :title="item.title || ''"
-      />
+      <img :src="item.src || item" :alt="item.alt || ''" :title="item.title || ''" />
     </div>
   </div>
 </template>
