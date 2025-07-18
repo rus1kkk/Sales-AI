@@ -1,10 +1,10 @@
 <script setup>
-defineProps({
+const props = defineProps({
   title: {
     type: String,
     default: 'Разработка сайта для магазина спортивной обуви',
   },
-  data: {
+  date: {
     type: String,
     default: 'Июль 2025',
   },
@@ -17,6 +17,12 @@ defineProps({
     default: () => [],
   },
 })
+const isCenter = (index) => {
+  const total = props.images.length;
+  const isOdd = total % 2 === 1;
+  const centerIndex = Math.floor(total / 2);
+  return isOdd && index === centerIndex;
+};
 </script>
 
 <template>
@@ -25,7 +31,12 @@ defineProps({
     <h3>Коммерческое предложение</h3>
     <h2>{{ title }}</h2>
     <div class="cover-photo-list">
-      <div v-for="(image, index) in images" :key="index" class="cover-photo">
+      <div
+        v-for="(image, index) in images"
+        :key="index"
+        class="cover-photo"
+        :class="{ 'center-image': isCenter(index) }"
+      >
         <img :src="image.src || image" :alt="image.alt || ''" :title="image.title || ''" />
       </div>
     </div>
@@ -40,16 +51,17 @@ defineProps({
         <h3>{{ someone }}</h3>
       </div>
     </div>
-    <p>{{ data }}</p>
+    <p>{{ date }}</p>
   </div>
 </template>
 
 <style scoped>
 .cover-content {
   display: flex;
-  width: 1128px;
+  /*width: 1128px;
   height: 985px;
-  padding: 36px;
+  padding: 36px;*/
+  padding: 132px 0;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -70,7 +82,7 @@ h2 {
   font-size: 32px;
   font-style: normal;
   font-weight: 500;
-  line-height: 120%; /* 38.4px */
+  line-height: 120%;
   padding-bottom: 24px;
 }
 
@@ -80,7 +92,7 @@ h3 {
   font-size: 24px;
   font-style: normal;
   font-weight: 500;
-  line-height: 120%; /* 28.8px */
+  line-height: 120%;
   padding-bottom: 24px;
 }
 
@@ -89,26 +101,44 @@ h3 {
   flex-direction: row;
   align-items: center;
   gap: 10px;
+  justify-content: center;
+  padding: 24px 0  48px 0;
 }
-/*
+
 .cover-photo {
+  width: 200px;
+  height: 200px;
   border-radius: 6000px;
   border: 0.6px solid rgba(255, 255, 255, 0.6);
-  background: lightgray 50% / cover no-repeat;
-  aspect-ratio: 1/1;
+  overflow: hidden;
+  flex-shrink: 0;
 }
-*/
-.vertical-line {
-  border-left: 1px solid white;
+
+.cover-photo.center-image {
+  width: 250px;
+  height: 250px;
+}
+
+.cover-photo img {
+  width: 100%;
   height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 
 .from-someone-to-someone {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: stretch;
   gap: 64px;
   align-self: stretch;
+  position: relative;
+}
+
+.vertical-line {
+  width: 1px;
+  background-color: white;
+  flex-shrink: 0;
 }
 
 .from-someone {
