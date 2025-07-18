@@ -31,13 +31,27 @@ h1 {
   flex-direction: column;
   align-items: center;
   gap: 24px;
+  width: 100%;
 }
 
 .cases {
+  /*
   width: 1024px;
   height: 1024px;
-  aspect-ratio: 1/1;
-  border-radius: 60px;
   background: lightgray 50% / cover no-repeat;
+  aspect-ratio: 1/1;*/
+  border-radius: 60px;
+  width: 100%;
+  max-width: 1024px;
+  display: flex;
+  justify-content: center;
+}
+
+.cases img {
+  width: 100%;
+  height: auto;
+  border-radius: 60px;
+  object-fit: cover;
+  display: block;
 }
 </style>

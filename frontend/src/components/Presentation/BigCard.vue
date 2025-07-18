@@ -2,19 +2,12 @@
 defineProps({
   title: {
     type: String,
-    default: 'Следующие шаги',
   },
   subtitle: {
     type: String,
-    default: null,
   },
   items: {
     type: Array,
-    default: () => [
-      'Свяжитесь с нами удобным способом',
-      'Обсудим детали проекта',
-      'Подпишем договор и начинаем работу',
-    ],
   },
   images: {
     type: Array,
@@ -22,8 +15,6 @@ defineProps({
   },
   caption: {
     type: String,
-    default:
-      'Мы объясним каждый этап, покажем макет, поможем после запуска.  Всё будет понятно, без сложных слов — просто нормальный рабочий сайт под ваш магазин.',
   },
 })
 </script>
@@ -36,13 +27,12 @@ defineProps({
       <input v-for="(item, index) in items" :key="index" class="input" type="text" :value="item" />
     </div>
     <div v-if="images.length > 0" class="card-img">
-      <img
-        v-for="(image, index) in images"
-        :key="index"
-        :src="image.src || image"
-        :alt="image.alt || ''"
-        :class="image.class || ''"
-      />
+      <div v-for="(image, index) in images" :key="index" class="team-img">
+        <img :src="image.src || image"
+             :alt="image.alt || ''"
+             :title="image.title || ''"
+        />
+      </div>
     </div>
     <p class="big-card-p">{{ caption }}</p>
   </div>
