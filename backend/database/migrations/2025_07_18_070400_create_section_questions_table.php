@@ -10,11 +10,12 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('specification_questions', function (Blueprint $table) {
+        Schema::create('section_questions', function (Blueprint $table) {
             $table->id('id_question');
             $table->unsignedBigInteger('id_section');
             $table->text('question');
             $table->integer('position');
+            $table->timestamps();
 
             $table->foreign('id_section')->references('id_section')->on('specification_sections');
         });

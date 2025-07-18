@@ -14,9 +14,9 @@ return new class extends Migration {
             $table->id('id_document');
             $table->unsignedBigInteger('id_chat');
             $table->string('version', 20);
-            $table->timestamp('created_at');
+            $table->timestamps();
 
-            $table->foreign('id_chat')->references('id_chat')->on('chats');
+            $table->foreign('id_chat')->references('id_chat')->on('chats')->onDelete('cascade');
         });
     }
 
@@ -25,6 +25,10 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('Specification_Documents');
+        Schema::table('specification_documents', function (Blueprint $table) {
+            $table->dropForeign(['id_chat']);
+        });
+
+        Schema::dropIfExists('specification_documents');
     }
 };

@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->string('model_name');
             $table->string('chat_name');
             $table->enum('chat_status', ['active', 'closed', 'archived']); // TODO: Уточнить значение статусов чата
-            $table->timestamp('timestamp');
+            $table->timestamps();
 
             $table->foreign('model_name')
                 ->references('model_name')

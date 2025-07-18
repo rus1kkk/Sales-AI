@@ -8,9 +8,11 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('models', function (Blueprint $table) {
-            $table->string('model_name')->primary();
+            $table->id('id_model');
+            $table->string('model_name')->unique();
             $table->string('model_fullname');
             $table->text('model_info');
+            $table->timestamps();
         });
     }
 

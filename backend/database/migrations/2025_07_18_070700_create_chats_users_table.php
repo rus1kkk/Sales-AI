@@ -10,16 +10,17 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('messages', function (Blueprint $table) {
-            $table->id();
+        Schema::create('chats_users', function (Blueprint $table) {
             $table->unsignedBigInteger('id_chat');
             $table->unsignedBigInteger('id_user');
-            $table->text('message_text');
-            $table->enum('message_type', ['user', 'system', 'ai']); // TODO: Уточнить значения типов сообщения
             $table->timestamp('timestamp');
+
+            $table->primary(['id_chat', 'id_user']);
 
             $table->foreign('id_chat')->references('id_chat')->on('chats')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('id_user')->references('id_user')->on('users')->onUpdate('cascade')->onDelete('cascade');
+
+            $table->timestamps();
         });
     }
 
@@ -28,6 +29,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('messages');
+        Schema::dropIfExists('chats_users');
     }
 };
