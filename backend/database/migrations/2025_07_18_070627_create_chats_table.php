@@ -12,10 +12,16 @@ return new class extends Migration {
     {
         Schema::create('chats', function (Blueprint $table) {
             $table->id('id_chat');
-            $table->foreignId('id_model')->constrained('ai_models')->onDelete('cascade');
+            $table->string('model_name');
             $table->string('chat_name');
-            $table->string('status')->default('готово');
-            $table->timestamp('timestamp')->useCurrent();
+            $table->enum('chat_status', ['active', 'closed', 'archived']); // TODO: Уточнить значение статусов чата
+            $table->timestamp('timestamp');
+
+            $table->foreign('model_name')
+                ->references('model_name')
+                ->on('models')
+                ->onUpdate('cascade')
+                ->onDelete('set default'); //   TODO: указать, какая модель по дефолту
         });
     }
 
