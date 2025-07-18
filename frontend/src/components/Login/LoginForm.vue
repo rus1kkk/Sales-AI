@@ -30,7 +30,7 @@
               v-model="fields.name"
               @input="validateInput('name')"
               @blur="touch('name')"
-              :class="['base-input', { 'error-input': fields.name && errors.name }]"
+              :class="['base-input', { 'error-input': errors.name }]"
             />
             <p class="error-text">{{ errors.name }}</p>
           </div>
@@ -43,7 +43,7 @@
               v-model="fields.emailLogin"
               @input="validateInput('email', 'emailLogin')"
               @blur="touch('emailLogin')"
-              :class="['base-input', { 'error-input': fields.emailLogin && errors.emailLogin }]"
+              :class="['base-input', { 'error-input': errors.emailLogin }]"
             />
             <p class="error-text">{{ errors.emailLogin }}</p>
           </div>
@@ -56,10 +56,7 @@
               v-model="fields.emailRegister"
               @input="validateInput('email', 'emailRegister')"
               @blur="touch('emailRegister')"
-              :class="[
-                'base-input',
-                { 'error-input': fields.emailRegister && errors.emailRegister },
-              ]"
+              :class="['base-input', { 'error-input': errors.emailRegister }]"
             />
             <p class="error-text">{{ errors.emailRegister }}</p>
           </div>
@@ -73,7 +70,7 @@
               v-model="fields.phone"
               @input="validateInput('phone')"
               @blur="touch('phone')"
-              :class="['base-input', { 'error-input': fields.phone && errors.phone }]"
+              :class="['base-input', { 'error-input': errors.phone }]"
             />
             <p class="error-text">{{ errors.phone }}</p>
           </div>
@@ -85,12 +82,8 @@
               autocomplete="current-password"
               placeholder="Пароль"
               v-model="fields.passwordLogin"
-              @input="validateInput('password', 'passwordLogin')"
               @blur="touch('passwordLogin')"
-              :class="[
-                'base-input',
-                { 'error-input': fields.passwordLogin && errors.passwordLogin },
-              ]"
+              :class="['base-input', { 'error-input': errors.passwordLogin }]"
             />
             <p class="error-text">{{ errors.passwordLogin }}</p>
           </div>
@@ -104,10 +97,7 @@
               v-model="fields.passwordRegister"
               @input="validateInput('password', 'passwordRegister')"
               @blur="touch('passwordRegister')"
-              :class="[
-                'base-input',
-                { 'error-input': fields.passwordRegister && errors.passwordRegister },
-              ]"
+              :class="['base-input', { 'error-input': errors.passwordRegister }]"
             />
             <p class="error-text">{{ errors.passwordRegister }}</p>
           </div>
@@ -121,10 +111,7 @@
               v-model="fields.confirmPassword"
               @input="validateInput('confirmPassword')"
               @blur="touch('confirmPassword')"
-              :class="[
-                'base-input',
-                { 'error-input': fields.confirmPassword && errors.confirmPassword },
-              ]"
+              :class="['base-input', { 'error-input': errors.confirmPassword }]"
             />
             <p class="error-text">{{ errors.confirmPassword }}</p>
           </div>
@@ -165,15 +152,15 @@ const requiredFields = computed(() =>
 )
 
 function validateInput(schemaField, formField = schemaField) {
-  if (!fields.value[formField]) {
-    errors.value[formField] = ''
-    return
-  }
 
   if (schemaField === 'confirmPassword') {
-    errors.value[formField] =
-      fields.value.confirmPassword === fields.value.passwordRegister ? '' : 'Пароли не совпадают'
+  if (!fields.value[formField]) {
+    errors.value[formField] = 'Повторите пароль'
     return
+  }
+  errors.value[formField] =
+    fields.value.confirmPassword === fields.value.passwordRegister ? '' : 'Пароли не совпадают'
+  return
   }
 
   const result = ValidationHelpers.validateOnInput(schemaField, fields.value[formField])
@@ -183,8 +170,13 @@ function validateInput(schemaField, formField = schemaField) {
 }
 
 function validateBlur(field) {
-  if (!fields.value[field]) {
-    errors.value[field] = ''
+    if (field === 'confirmPassword') {
+    if (!fields.value[field]) {
+      errors.value[field] = 'Повторите пароль'
+      return
+    }
+    errors.value[field] =
+      fields.value.confirmPassword === fields.value.passwordRegister ? '' : 'Пароли не совпадают'
     return
   }
 
@@ -194,16 +186,18 @@ function validateBlur(field) {
     return
   }
 
-  const schemaField =
+const schemaField =
     field === 'emailLogin' || field === 'emailRegister'
       ? 'email'
-      : field === 'passwordLogin' || field === 'passwordRegister'
-        ? 'password'
-        : field
+      : field === 'passwordLogin'
+        ? 'passwordLogin'
+        : field === 'passwordRegister'
+          ? 'password'
+          : field
   const result = ValidationHelpers.validateOnBlur(schemaField, fields.value[field])
   errors.value[field] = result.success
     ? ''
-    : result.errors.root?.[result.errors.root.length - 1] || ''
+    : result.errors.root?.[0] || ''
 }
 
 function touch(field) {
