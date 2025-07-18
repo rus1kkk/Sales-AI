@@ -160,39 +160,5 @@ async function sendChatDataToServer() {
 </script>
 
 <style scoped>
-.chat-name {
-  font-size: 32px;
-  font-weight: 500;
-  line-height: 120%;
-  text-align: center;
-  color: var(--white-color);
-  margin-bottom: 36px;
-  margin-top: 36px;
-  animation: fadeIn 0.5s ease-in forwards;
-}
-
-.chat-wrapper {
-  display: flex;
-  flex-direction: column;
-  height: 90vh;
-}
-
-.chat-container {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  overflow: hidden;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+@import url('../../assets/styles/Chat/ChatBlock.css');
 </style>
