@@ -22,11 +22,11 @@ const props = defineProps({
   },
 })
 const isCenter = (index) => {
-  const total = props.images.length;
-  const isOdd = total % 2 === 1;
-  const centerIndex = Math.floor(total / 2);
-  return isOdd && index === centerIndex;
-};
+  const total = props.images.length
+  const isOdd = total % 2 === 1
+  const centerIndex = Math.floor(total / 2)
+  return isOdd && index === centerIndex
+}
 </script>
 
 <template>
@@ -106,7 +106,7 @@ h3 {
   align-items: center;
   gap: 10px;
   justify-content: center;
-  padding: 24px 0  48px 0;
+  padding: 24px 0 48px 0;
 }
 
 .cover-photo {

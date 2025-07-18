@@ -113,7 +113,7 @@ h1 {
   box-sizing: border-box;
 }
 
-.big-list .input{
+.big-list .input {
   width: calc(50% - 8px);
   display: inline-flex;
 }

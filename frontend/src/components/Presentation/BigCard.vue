@@ -28,10 +28,7 @@ defineProps({
     </div>
     <div v-if="images.length > 0" class="card-img">
       <div v-for="(image, index) in images" :key="index" class="team-img">
-        <img :src="image.src || image"
-             :alt="image.alt || ''"
-             :title="image.title || ''"
-        />
+        <img :src="image.src || image" :alt="image.alt || ''" :title="image.title || ''" />
       </div>
     </div>
     <p class="big-card-p">{{ caption }}</p>
