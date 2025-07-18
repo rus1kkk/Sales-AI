@@ -12,7 +12,7 @@ class MessageController extends Controller
     public function index($chatId)
     {
         return Message::where('id_chat', $chatId)
-            ->orderBy('timestamp')
+            ->orderBy('created_at')
             ->get();
     }
 
@@ -23,7 +23,7 @@ class MessageController extends Controller
             'id_user' => $request->id_user,
             'message_text' => $request->message_text,
             'message_type' => 'user',
-            'timestamp' => now(),
+            'created_at' => now(),
         ]);
 
         broadcast(new MessageSent($message))->toOthers();
