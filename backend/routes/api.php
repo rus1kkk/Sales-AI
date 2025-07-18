@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RequirementController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\API\Auth\AuthController;
+use App\Http\Controllers\MessageController;
 
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
@@ -25,3 +26,7 @@ Route::get('/history', [ChatController::class, 'history']);
 Route::post('/chats', [ChatController::class, 'store']);
 Route::put('/chats/{id}', [ChatController::class, 'update']);
 Route::delete('/chats/{id}', [ChatController::class, 'destroy']);
+
+Route::get('/messages/{chatId}', [MessageController::class, 'index']);
+Route::post('/messages', [MessageController::class, 'store']);
+
