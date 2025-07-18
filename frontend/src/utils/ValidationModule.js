@@ -14,6 +14,7 @@ const InputSchemas = {
         .refine(val => val.length === 0 || !/\s/.test(val), 'Email не может содержать пробелы'),
     
     phoneInput: z
+        .string()
         .min(1, 'Ввведите номер телефона')
         .max(12, 'Номер должен содержать не более 11 цифр')
         .refine(val => val.length === 0 || /^[\+]?[0-9]*$/.test(val), 'Разрешены только цифры и + в начале'),
@@ -21,6 +22,45 @@ const InputSchemas = {
     passwordDebounced: z
         .string()
         .min(1, 'Введите пароль')
+};
+
+
+// Схемы для валидации на debouncedInput - проверка длины и допустимый формат
+const DebouncedInputSchemas = {
+    nameDebounced: z
+        .string()
+        .refine(val => val.length === 0 || val.length >= 2, 'Имя должно содержать минимум 2 символа')
+        .regex(
+          /^[А-ЯЁ][а-яё]+([-\s][А-ЯЁ][а-яё]+)*$/,
+          'Неверный формат имени: каждая часть должна начинаться с заглавной буквы',
+        )
+        .refine(val => val.trim().length > 0, 'Имя не может состоять из пробелов'),
+
+    
+    emailDebounced: z
+        .string()
+        .email('Некорректный формат email'),
+    
+    phoneDebounced: z
+        .string()
+        .refine(
+            (val) => {
+                const normalized = val.startsWith('+') ? val : `+${val}`;
+                return normalized.match(/^\+?[78][0-9]{10}$/);
+            },
+            {
+                message: 'Номер должен начинаться с +7 или +8 и содержать 11 цифр',
+            }
+        )
+        .refine((val) => /^[0-9]+$/.test(val.replace(/^\+?[78]/, '')), {
+            message: 'Номер должен содержать только цифры после +',
+        }),
+    
+    passwordDebounced: z
+        .string()
+        .refine(val => val.length === 0 || val.length >= 6, 'Пароль должен содержать минимум 6 символов')
+        .refine(val => val.length === 0 || /[A-ZА-ЯЁ]/.test(val), 'Должна быть хотя бы одна заглавная буква')
+        .refine(val => val.length === 0 || /[0-9]/.test(val), 'Должна быть хотя бы одна цифра'),
 };
 
 // Схемы для валидации на blur - полная проверка
@@ -40,8 +80,7 @@ const BlurSchemas = {
     emailBlur: z
         .string()
         .min(1, 'Введите email')
-        .email('Некорректный формат email')
-        .regex(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, 'Некорректный формат email'),
+        .email('Некорректный формат email'),
     
     phoneBlur: z
         .string()
@@ -66,6 +105,10 @@ const BlurSchemas = {
         .min(6, 'Пароль должен содержать минимум 6 символов')
         .regex(/[A-ZА-ЯЁ]/, 'Пароль должен содержать хотя бы одну заглавную букву')
         .regex(/[0-9]/, 'Пароль должен содержать хотя бы одну цифру'),
+
+    passwordLoginBlur: z
+        .string()
+        .min(1, 'Введите пароль'),
 };
 
 // Схемы для финальной валидации форм
@@ -91,6 +134,7 @@ export const ValidationSchemas = {
     form: FormSchemas,
     email: BlurSchemas.emailBlur,
     password: BlurSchemas.passwordBlur,
+    passwordLogin: BlurSchemas.passwordLoginBlur,
     name: BlurSchemas.nameBlur,
     phone: BlurSchemas.phoneBlur,
     signUpForm: FormSchemas.signUpForm,
