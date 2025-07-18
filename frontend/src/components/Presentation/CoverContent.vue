@@ -22,7 +22,7 @@ defineProps({
 <template>
   <div class="cover-content">
     <h1>SALES AI</h1>
-    <h3>Комерческое предложение</h3>
+    <h3>Коммерческое предложение</h3>
     <h2>{{ title }}</h2>
     <div class="cover-photo-list">
       <div v-for="(image, index) in images" :key="index" class="cover-photo">
