@@ -27,6 +27,7 @@ Route::post('/chats', [ChatController::class, 'store']);
 Route::put('/chats/{id}', [ChatController::class, 'update']);
 Route::delete('/chats/{id}', [ChatController::class, 'destroy']);
 
+Route::post('/generate-image', [ImageGenerationController::class, 'generate']);
 Route::get('/messages/{chatId}', [MessageController::class, 'index']);
 Route::post('/messages', [MessageController::class, 'store']);
 
