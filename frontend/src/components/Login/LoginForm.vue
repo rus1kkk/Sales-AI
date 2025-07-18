@@ -152,15 +152,14 @@ const requiredFields = computed(() =>
 )
 
 function validateInput(schemaField, formField = schemaField) {
-
   if (schemaField === 'confirmPassword') {
-  if (!fields.value[formField]) {
-    errors.value[formField] = 'Повторите пароль'
+    if (!fields.value[formField]) {
+      errors.value[formField] = 'Повторите пароль'
+      return
+    }
+    errors.value[formField] =
+      fields.value.confirmPassword === fields.value.passwordRegister ? '' : 'Пароли не совпадают'
     return
-  }
-  errors.value[formField] =
-    fields.value.confirmPassword === fields.value.passwordRegister ? '' : 'Пароли не совпадают'
-  return
   }
 
   const result = ValidationHelpers.validateOnInput(schemaField, fields.value[formField])
@@ -170,7 +169,7 @@ function validateInput(schemaField, formField = schemaField) {
 }
 
 function validateBlur(field) {
-    if (field === 'confirmPassword') {
+  if (field === 'confirmPassword') {
     if (!fields.value[field]) {
       errors.value[field] = 'Повторите пароль'
       return
@@ -186,7 +185,7 @@ function validateBlur(field) {
     return
   }
 
-const schemaField =
+  const schemaField =
     field === 'emailLogin' || field === 'emailRegister'
       ? 'email'
       : field === 'passwordLogin'
@@ -195,9 +194,7 @@ const schemaField =
           ? 'password'
           : field
   const result = ValidationHelpers.validateOnBlur(schemaField, fields.value[field])
-  errors.value[field] = result.success
-    ? ''
-    : result.errors.root?.[0] || ''
+  errors.value[field] = result.success ? '' : result.errors.root?.[0] || ''
 }
 
 function touch(field) {

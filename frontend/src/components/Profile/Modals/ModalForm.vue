@@ -34,18 +34,18 @@
               @blur="handleBlur(index)"
               :aria-describedby="validationErrors[index] ? `error-message-${index}` : null"
             />
-            <div 
-              v-if="validationErrors[index]" 
-              class="error-message" 
-              :class="{ 'error-visible': validationErrors[index] }" 
+            <div
+              v-if="validationErrors[index]"
+              class="error-message"
+              :class="{ 'error-visible': validationErrors[index] }"
               :id="`error-message-${index}`"
             >
               {{ validationErrors[index] }}
             </div>
           </div>
-          <div 
-            v-if="serverError" 
-            class="server-error-message" 
+          <div
+            v-if="serverError"
+            class="server-error-message"
             :class="{ 'error-visible': serverError }"
           >
             {{ serverError }}
@@ -142,7 +142,7 @@ export default {
       } else {
         // Валидация на input (недопустимые символы)
         this.validateOnInput(index, value)
-        
+
         // Дебаунсинг для валидации длины и формата
         this.debouncedValidation(index, value)
       }
@@ -152,13 +152,13 @@ export default {
       const newTouched = [...this.touchedFields]
       newTouched[index] = true
       this.touchedFields = newTouched
-      
+
       // Очищаем дебаунс при blur
       if (this.debounceTimeouts[index]) {
         clearTimeout(this.debounceTimeouts[index])
         this.debounceTimeouts[index] = null
       }
-      
+
       // Для поля подтверждения пароля используем специальную валидацию
       if (this.field === 'password' && index === 1) {
         this.validatePasswordConfirmation()
@@ -173,7 +173,7 @@ export default {
       if (!fieldType) return
 
       const result = ValidationHelpers.validateOnInput(fieldType, value)
-      
+
       if (!result.success) {
         const firstError = Object.values(result.errors)[0]?.[0]
         this.setFieldError(index, firstError || '')
@@ -193,7 +193,7 @@ export default {
       this.debounceTimeouts[index] = setTimeout(() => {
         // Сначала проверяем input валидацию
         const inputResult = ValidationHelpers.validateOnInput(fieldType, value)
-        
+
         if (!inputResult.success) {
           // Если есть ошибка на input уровне, показываем её
           const firstError = Object.values(inputResult.errors)[0]?.[0]
@@ -201,7 +201,7 @@ export default {
         } else {
           // Если input валидация прошла, проверяем debounced
           const debouncedResult = ValidationHelpers.validateOnDebounced(fieldType, value)
-          
+
           if (!debouncedResult.success) {
             const firstError = Object.values(debouncedResult.errors)[0]?.[0]
             this.setFieldError(index, firstError || '')
@@ -209,7 +209,7 @@ export default {
             this.setFieldError(index, '')
           }
         }
-        
+
         // Дополнительная проверка для подтверждения пароля
         if (this.field === 'password' && index === 0 && this.inputValues[1]) {
           this.validatePasswordConfirmation()
@@ -222,7 +222,7 @@ export default {
       if (!fieldType) return
 
       const result = ValidationHelpers.validateOnBlur(fieldType, value)
-      
+
       if (!result.success) {
         const firstError = Object.values(result.errors)[0]?.[0]
         this.setFieldError(index, firstError || '')
@@ -274,7 +274,7 @@ export default {
 
     async handleSubmit() {
       this.touchedFields = new Array(this.inputs.length).fill(true)
-      
+
       // Валидируем все поля при отправке
       this.inputValues.forEach((value, index) => {
         if (this.field === 'password' && index === 1) {
@@ -308,10 +308,10 @@ export default {
       return errorMessages[field] || 'Ошибка при сохранении данных'
     },
   },
-  
+
   beforeUnmount() {
     // Очищаем все таймауты при уничтожении компонента
-    this.debounceTimeouts.forEach(timeout => {
+    this.debounceTimeouts.forEach((timeout) => {
       if (timeout) {
         clearTimeout(timeout)
       }
