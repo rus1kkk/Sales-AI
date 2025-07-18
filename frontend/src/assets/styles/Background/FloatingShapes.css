@@ -1,0 +1,346 @@
+.shapes-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.custom-shape {
+  position: absolute;
+  width: 110vw;
+  opacity: 0;
+  z-index: -1;
+  background-size: cover;
+  will-change: transform, opacity, scale;
+}
+
+.top-right {
+  right: -27vw;
+  top: -22vw;
+  animation:
+    fadeIn 4s ease-out forwards,
+    float 60s infinite cubic-bezier(0.45, 0.05, 0.55, 0.95);
+  animation-delay: 0s, 4s;
+}
+
+.bottom-left {
+  left: -35vw;
+  bottom: -40vw;
+  animation:
+    fadeIn 4s ease-out forwards,
+    float-mirrored 60s infinite cubic-bezier(0.45, 0.05, 0.55, 0.95);
+  animation-delay: 0s, 6s;
+}
+
+.chain {
+  left: -39vw;
+  bottom: -34vw;
+}
+
+#flower-figure {
+  right: -33vw;
+  top: -25vw;
+}
+
+@keyframes float {
+  0% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  25% {
+    transform: translate(-4vw, -2vw) rotate(5deg) scale(0.97);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translate(2vw, -1vw) rotate(-5deg) scale(1);
+    opacity: 1;
+  }
+  75% {
+    transform: translate(0vw, 1vw) rotate(5deg) scale(0.98);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes float-mirrored {
+  0% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  25% {
+    transform: translate(4vw, -2vw) rotate(-5deg) scale(0.97);
+    opacity: 0.9;
+  }
+  50% {
+    transform: translate(-2vw, -1vw) rotate(5deg) scale(1);
+    opacity: 0.7;
+  }
+  75% {
+    transform: translate(2vw, 1vw) rotate(-5deg) scale(0.98);
+    opacity: 0.9;
+  }
+  100% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 1100px) {
+  .custom-shape {
+    width: 130vw;
+  }
+
+  .top-right {
+    right: -35vw;
+    top: -22vw;
+    animation:
+      fadeIn 4s ease-out forwards,
+      float-1100 60s infinite cubic-bezier(0.45, 0.05, 0.55, 0.95);
+    animation-delay: 0s, 4s;
+  }
+
+  .bottom-left {
+    left: -45vw;
+    bottom: -40vw;
+    animation:
+      fadeIn 4s ease-out forwards,
+      float-mirrored-1100 60s infinite cubic-bezier(0.45, 0.05, 0.55, 0.95);
+    animation-delay: 0s, 6s;
+  }
+
+  #flower-figure {
+    right: -40vw;
+    top: -25vw;
+  }
+
+  @keyframes float-1100 {
+    0% {
+      transform: translate(0, 0) rotate(0deg) scale(1);
+      opacity: 1;
+    }
+    25% {
+      transform: translate(-3vw, -2vw) rotate(4deg) scale(0.97);
+      opacity: 0.6;
+    }
+    50% {
+      transform: translate(2vw, -1vw) rotate(-4deg) scale(1);
+      opacity: 1;
+    }
+    75% {
+      transform: translate(0vw, 1vw) rotate(4deg) scale(0.98);
+      opacity: 0.7;
+    }
+    100% {
+      transform: translate(0, 0) rotate(0deg) scale(1);
+      opacity: 1;
+    }
+  }
+
+  @keyframes float-mirrored-1100 {
+    0% {
+      transform: translate(0, 0) rotate(0deg) scale(1);
+      opacity: 1;
+    }
+    25% {
+      transform: translate(3vw, -2vw) rotate(-4deg) scale(0.97);
+      opacity: 0.9;
+    }
+    50% {
+      transform: translate(-2vw, -1vw) rotate(4deg) scale(1);
+      opacity: 0.7;
+    }
+    75% {
+      transform: translate(3vw, 1vw) rotate(-4deg) scale(0.98);
+      opacity: 0.9;
+    }
+    100% {
+      transform: translate(0, 0) rotate(0deg) scale(1);
+      opacity: 1;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .custom-shape {
+    width: 160vw;
+  }
+
+  .top-right {
+    right: -40vw;
+    top: -26vw;
+    animation:
+      fadeIn 4s ease-in forwards,
+      float-768 60s infinite ease-in-out;
+    animation-delay: 0s, 4s;
+  }
+
+  .bottom-left {
+    left: -56vw;
+    bottom: -49vw;
+    animation:
+      fadeIn 4s ease-in forwards,
+      float-mirrored-768 60s infinite ease-in-out;
+    animation-delay: 0s, 6s;
+  }
+
+  #flower-figure {
+    right: -50vw;
+    top: -30vw;
+  }
+
+  @keyframes float-768 {
+    0% {
+      transform: translate(0, 0) rotate(0deg) scale(1);
+      opacity: 1;
+    }
+    25% {
+      transform: translate(-2vw, -2vw) rotate(3deg) scale(0.97);
+      opacity: 0.6;
+    }
+    50% {
+      transform: translate(1vw, -1vw) rotate(-3deg) scale(1);
+      opacity: 1;
+    }
+    75% {
+      transform: translate(0vw, 1vw) rotate(3deg) scale(0.98);
+      opacity: 0.7;
+    }
+    100% {
+      transform: translate(0, 0) rotate(0deg) scale(1);
+      opacity: 1;
+    }
+  }
+
+  @keyframes float-mirrored-768 {
+    0% {
+      transform: translate(0, 0) rotate(0deg) scale(1);
+      opacity: 1;
+    }
+    25% {
+      transform: translate(2vw, -2vw) rotate(-3deg) scale(0.97);
+      opacity: 0.9;
+    }
+    50% {
+      transform: translate(-1vw, -1vw) rotate(3deg) scale(1);
+      opacity: 0.7;
+    }
+    75% {
+      transform: translate(4vw, 1vw) rotate(-3deg) scale(0.98);
+      opacity: 0.9;
+    }
+    100% {
+      transform: translate(0, 0) rotate(0deg) scale(1);
+      opacity: 1;
+    }
+  }
+}
+
+@media (max-width: 535px) {
+  .custom-shape {
+    width: 200vw;
+  }
+
+  .top-right {
+    right: -60vw;
+    top: -28vw;
+    animation:
+      fadeIn 4s ease-in forwards,
+      float-535 60s infinite ease-in-out;
+    animation-delay: 0s, 4s;
+  }
+
+  .bottom-left {
+    left: -70vw;
+    bottom: -60vw;
+    animation:
+      fadeIn 4s ease-in forwards,
+      float-mirrored-535 60s infinite ease-in-out;
+    animation-delay: 0s, 6s;
+  }
+
+  #flower-figure {
+    right: -70vw;
+    top: -32vw;
+  }
+
+  @keyframes float-535 {
+    0% {
+      transform: translate(0, 0) rotate(0deg) scale(1);
+      opacity: 1;
+    }
+    25% {
+      transform: translate(-2vw, -2vw) rotate(2deg) scale(0.97);
+      opacity: 0.6;
+    }
+    50% {
+      transform: translate(1vw, -1vw) rotate(-2deg) scale(1);
+      opacity: 1;
+    }
+    75% {
+      transform: translate(0vw, 1vw) rotate(2deg) scale(0.98);
+      opacity: 0.7;
+    }
+    100% {
+      transform: translate(0, 0) rotate(0deg) scale(1);
+      opacity: 1;
+    }
+  }
+
+  @keyframes float-mirrored-535 {
+    0% {
+      transform: translate(0, 0) rotate(0deg) scale(1);
+      opacity: 1;
+    }
+    25% {
+      transform: translate(2vw, -2vw) rotate(-2deg) scale(0.97);
+      opacity: 0.9;
+    }
+    50% {
+      transform: translate(-1vw, -1vw) rotate(2deg) scale(1);
+      opacity: 0.7;
+    }
+    75% {
+      transform: translate(4vw, 1vw) rotate(-2deg) scale(0.98);
+      opacity: 0.9;
+    }
+    100% {
+      transform: translate(0, 0) rotate(0deg) scale(1);
+      opacity: 1;
+    }
+  }
+}
+
+@media (max-width: 410px) {
+  .custom-shape {
+    width: 240vw;
+  }
+
+  .top-right {
+    right: -90vw;
+    top: -34vw;
+  }
+
+  .bottom-left {
+    left: -82vw;
+    bottom: -70vw;
+  }
+
+  #flower-figure {
+    right: -89vw;
+    top: -42vw;
+  }
+}

@@ -1,7 +1,11 @@
-.content-banner {
-  margin: 140px 72px 0 72px;
+.content-wrapper {
+  margin: 138px 72px 0 72px;
+}
+
+.main-banner {
   max-width: 828px;
-  position: relative;
+  line-height: 98px;
+  letter-spacing: -0.25px;
 }
 
 h1 {
@@ -11,17 +15,97 @@ h1 {
   margin: 0;
 }
 
-.sales-ai-text {
+.title-text {
   font-family: 'Times New Roman', Times, serif;
   font-style: italic;
   font-size: 110px;
   font-weight: 400;
   color: var(--white-color);
+  position: relative;
 }
 
 .arrow {
   width: 124px;
   height: auto;
-  margin-left: auto;
-  margin-right: 21px;
+  position: absolute;
+  bottom: -35px;
+  right: 0;
+}
+
+@media (max-width: 1100px) {
+  h1 {
+    font-size: 64px;
+  }
+  .title-text {
+    font-size: 86px;
+  }
+  .content-wrapper {
+    margin: 74px 60px 0 60px;
+  }
+  .main-banner {
+    margin-left: 16px;
+    max-width: 828px;
+  }
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 40px;
+  }
+  .title-text {
+    font-size: 56px;
+  }
+  .content-wrapper {
+    margin: 74px 60px 0 60px;
+  }
+  .main-banner {
+    margin-left: 16px;
+    max-width: 520px;
+    line-height: 63px;
+  }
+  .arrow {
+    width: 100px;
+    bottom: -23px;
+  }
+}
+
+@media (max-width: 535px) {
+  h1 {
+    font-size: 36px;
+  }
+  .title-text {
+    font-size: 48px;
+  }
+  .content-wrapper {
+    margin: 74px 20px 0 20px;
+  }
+  .main-banner {
+    max-width: 345px;
+    line-height: 48px;
+  }
+  .arrow {
+    width: 75px;
+    bottom: -16px;
+  }
+}
+
+@media (max-width: 410px) {
+  h1 {
+    font-size: 32px;
+  }
+  .title-text {
+    font-size: 40px;
+  }
+
+  .content-wrapper {
+    margin: 75px 20px 0 20px;
+  }
+  .main-banner {
+    margin-left: 8px;
+    max-width: 303px;
+    line-height: 39px;
+  }
+  .arrow {
+    width: 70px;
+  }
 }
