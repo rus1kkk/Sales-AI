@@ -8,7 +8,11 @@ const props = defineProps({
     type: String,
     default: 'Июль 2025',
   },
-  someone: {
+  fromSomeone: {
+    type: String,
+    default: 'Русские сайты',
+  },
+  toSomeone: {
     type: String,
     default: 'Лучшая обвуь РФ',
   },
@@ -43,12 +47,12 @@ const isCenter = (index) => {
     <div class="from-someone-to-someone">
       <div class="from-someone">
         <p>От компании</p>
-        <h3>Русские сайты</h3>
+        <h3>{{ fromSomeone }}</h3>
       </div>
       <div class="vertical-line"></div>
       <div class="to-someone">
         <p>Для компании</p>
-        <h3>{{ someone }}</h3>
+        <h3>{{ toSomeone }}</h3>
       </div>
     </div>
     <p>{{ date }}</p>
