@@ -39,6 +39,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereUpdatedAt($value)
  * @mixin \Eloquent
  */
+
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
@@ -49,6 +50,8 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
+
+    protected $primaryKey = 'id_user';
     protected $fillable = [
         'name',
         'email',
@@ -78,4 +81,6 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public $timestamps = false;
 }
