@@ -10,14 +10,15 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('payments', function (Blueprint $table) {
-            $table->id('id_payment');
+        Schema::create('messages', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('id_chat');
             $table->unsignedBigInteger('id_user');
-            $table->integer('amount');
-            $table->enum('type', ['card', 'bank_transfer', 'crypto']); //TODO: Уточнить значения видов оплаты
-            $table->enum('status', ['pending', 'completed', 'failed']); // TODO: Уточнить значения статусов оплаты
-            $table->timestamp('timestamp');
+            $table->text('message_text');
+            $table->enum('message_type', ['user', 'system', 'ai']); // TODO: Уточнить значения типов сообщения
+            $table->timestamps();
 
+            $table->foreign('id_chat')->references('id_chat')->on('chats')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('id_user')->references('id_user')->on('users')->onUpdate('cascade')->onDelete('cascade');
         });
     }
@@ -27,6 +28,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('payments');
+        Schema::dropIfExists('messages');
     }
 };

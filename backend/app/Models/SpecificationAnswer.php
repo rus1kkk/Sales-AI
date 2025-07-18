@@ -9,4 +9,5 @@ class SpecificationAnswer extends Model
 {
     /** @use HasFactory<\Database\Factories\SpecificationAnswerFactory> */
     use HasFactory;
+    protected $primaryKey = 'id_answer';
 }

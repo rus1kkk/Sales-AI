@@ -9,4 +9,6 @@ class SpecificationSection extends Model
 {
     /** @use HasFactory<\Database\Factories\SpecificationSectionFactory> */
     use HasFactory;
+    public $timestamps = false;
+    protected $primaryKey = 'id_section';
 }

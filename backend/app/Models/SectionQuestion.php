@@ -9,4 +9,6 @@ class SectionQuestion extends Model
 {
     /** @use HasFactory<\Database\Factories\SectionQuestionFactory> */
     use HasFactory;
+    public $timestamps = false;
+    protected $primaryKey = 'id_question';
 }

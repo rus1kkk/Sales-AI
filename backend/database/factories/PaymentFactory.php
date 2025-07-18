@@ -20,7 +20,8 @@ class PaymentFactory extends Factory
             'amount' => $this->faker->numberBetween(100, 1000),
             'type' => $this->faker->randomElement(['card', 'bank_transfer', 'crypto']),
             'status' => $this->faker->randomElement(['pending', 'completed', 'failed']),
-            'timestamp' => now(),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

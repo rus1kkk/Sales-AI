@@ -50,6 +50,8 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
+
+    protected $primaryKey = 'id_user';
     protected $fillable = [
         'name',
         'email',
@@ -79,4 +81,6 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public $timestamps = false;
 }

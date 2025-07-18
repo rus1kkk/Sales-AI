@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('id_question');
             $table->text('answer');
             $table->text('answer_formatted')->nullable();
-            $table->timestamp('created_at');
+            $table->timestamps();
 
             $table->foreign('id_document')->references('id_document')->on('specification_documents');
             $table->foreign('id_question')->references('id_question')->on('section_questions');

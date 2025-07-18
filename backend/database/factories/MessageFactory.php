@@ -20,8 +20,9 @@ class MessageFactory extends Factory
             'id_chat' => $chat->id_chat,
             'id_user' => $user->id_user,
             'message_text' => $this->faker->paragraph(),
-            'message_type' => $this->faker->randomElement(['user', 'bot']),
-            'timestamp' => now(),
+            'message_type' => $this->faker->randomElement(['user', 'system', 'ai']),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

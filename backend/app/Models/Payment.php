@@ -9,4 +9,5 @@ class Payment extends Model
 {
     /** @use HasFactory<\Database\Factories\PaymentsFactory> */
     use HasFactory;
+    protected $primaryKey = 'id_payment';
 }
