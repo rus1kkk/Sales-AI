@@ -9,15 +9,16 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class SpecificationDocumentFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
+
+        $chat = \App\Models\Chat::factory()->create();
+
         return [
-            //
+            'id_document' => $this->faker->unique()->numberBetween(1, 999999),
+            'id_chat' => $chat->id_chat,
+            'version' => 'v1.0',
+            'created_at' => now(),
         ];
     }
 }

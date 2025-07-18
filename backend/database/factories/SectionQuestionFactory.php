@@ -9,15 +9,16 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class SectionQuestionFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
+
+        $section = \App\Models\SpecificationSection::factory()->create();
+
         return [
-            //
+            'id_question' => $this->faker->unique()->numberBetween(1, 99999),
+            'id_section' => $section->id_section,
+            'question' => $this->faker->sentence(6),
+            'position' => $this->faker->numberBetween(1, 20),
         ];
     }
 }

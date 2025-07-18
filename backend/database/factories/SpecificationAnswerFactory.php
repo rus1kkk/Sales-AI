@@ -9,15 +9,19 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class SpecificationAnswerFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
+
+        $document = \App\Models\SpecificationDocument::factory()->create();
+        $question = \App\Models\SectionQuestion::factory()->create();
+
         return [
-            //
+            'id_answer' => $this->faker->unique()->numberBetween(1, 999999),
+            'id_section' => $document->id_section,
+            'id_question' => $question->id_question,
+            'answer' => $this->faker->paragraph(),
+            'answer_formatted' => null,
+            'created_at' => now(),
         ];
     }
 }

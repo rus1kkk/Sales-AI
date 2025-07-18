@@ -9,15 +9,16 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class ChatUserFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
+
+        $chat = \App\Models\Chat::factory()->create();
+        $user = \App\Models\User::factory()->create();
+
         return [
-            //
+            'id_chat' => $chat->id_chat,
+            'id_user' => $user->id_user,
+            'timestamp' => now(),
         ];
     }
 }

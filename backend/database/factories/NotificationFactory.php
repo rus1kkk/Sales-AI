@@ -9,15 +9,16 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class NotificationFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
-    public function definition(): array
+    public function definition(): array //TODO: переделать сущность и атрибуты
     {
         return [
-            //
+            'type' => 'system',
+            'notifiable_type' => 'App\Models\User',
+            'notifiable_id' => 1, // TODO: или rand/фейкер
+            'timestamp' => now(),
+            'read_at' => null,
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

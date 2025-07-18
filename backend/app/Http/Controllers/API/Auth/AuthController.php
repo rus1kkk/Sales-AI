@@ -9,7 +9,7 @@ use App\Http\Requests\Auth\ChangePasswordRequest;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Requests\Auth\UpdateProfileRequest;
-use App\Models\Users;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
@@ -21,7 +21,7 @@ class AuthController extends Controller
     {
         $data = $registerRequest->validated();
 
-        $user = Users::create([
+        $user = User::create([
             'email' => $data['email'],
             'name' => $data['name'],
             'phone' => $data['phone'],
@@ -45,7 +45,7 @@ class AuthController extends Controller
     {
         $data = $loginRequest->validated();
 
-        $user = Users::whereEmail($data['email'])->firstOrFail();
+        $user = User::whereEmail($data['email'])->firstOrFail();
         Log::info($user);
 
         if (!Hash::check($data['password'], $user->password)) {

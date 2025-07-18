@@ -9,15 +9,12 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class AI_ModelFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
         return [
-            //
+            'model_name' => $this->faker->unique()->word(),
+            'model_fullname' => $this->faker->words(3, true),
+            'model_info' => $this->faker->paragraph(),
         ];
     }
 }

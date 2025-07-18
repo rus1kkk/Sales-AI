@@ -9,15 +9,19 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class MessageFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
+
+        $chat = \App\Models\Chat::factory()->create();
+        $user = \App\Models\User::factory()->create();
+
         return [
-            //
+            'id' => $this->faker->unique()->numberBetween(1, 999999),
+            'id_chat' => $chat->id_chat,
+            'id_user' => $user->id_user,
+            'message_text' => $this->faker->paragraph(),
+            'message_type' => $this->faker->randomElement(['user', 'bot']),
+            'timestamp' => now(),
         ];
     }
 }
