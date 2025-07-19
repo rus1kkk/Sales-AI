@@ -11,13 +11,13 @@ class ChatController extends Controller
     // Получение истории генераций
     public function history()
     {
-        $chats = Chat::orderByDesc('timestamp')->get();
+        $chats = Chat::orderByDesc('created_at')->get();
 
         $result = $chats->map(fn($chat) => [
             'id' => $chat->id_chat,
             'name' => $chat->chat_name,
-            'status' => $chat->status,
-            'date' => $chat->timestamp->format('d.m.Y'),
+            'chat_status' => $chat->status,
+            'date' => $chat->created_at->format('d.m.Y'),
         ]);
 
         return response()->json($result);
@@ -28,14 +28,14 @@ class ChatController extends Controller
     {
         $validated = $request->validate([
             'chat_name' => 'required|string',
-            'id_model' => 'required|exists:ai_models,id',
-            'status' => 'nullable|string',
+            'id_model' => 'required|exists:models,id_model',
+            'chat_status' => 'nullable|in:active,closed,archived',
         ]);
 
         $chat = Chat::create([
             'chat_name' => $validated['chat_name'],
             'id_model' => $validated['id_model'],
-            'status' => $validated['status'] ?? 'ожидает генерацию',
+            'chat_status' => $validated['chat_status'] ?? 'active',
             'timestamp' => now(),
         ]);
 
