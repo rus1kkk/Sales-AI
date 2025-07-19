@@ -12,13 +12,12 @@ class Chat extends Model
     use HasFactory;
 
     protected $primaryKey = 'id_chat';
-    public $timestamps = false;
+    public $timestamps = true;
 
     protected $fillable = [
         'id_model',
         'chat_name',
         'status',
-        'timestamp'
     ];
 
     protected $casts = [
@@ -28,5 +27,10 @@ class Chat extends Model
     public function model()
     {
         return $this->belongsTo(AI_model::class, 'id_model');
+    }
+
+    public function userChats()
+    {
+        return $this->hasMany(ChatUser::class, 'id_chat');
     }
 }

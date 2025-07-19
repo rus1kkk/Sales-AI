@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RequirementController;
-use App\Http\Controllers\ChatController;
+use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\API\Auth\AuthController;
 use App\Http\Controllers\MessageController;
 
@@ -22,11 +22,10 @@ Route::post('/requirements/generate', [RequirementController::class, 'generate']
 Route::get('/test', function () {
     return response()->json(['message' => 'API работает']);
 });
-Route::get('/history', [ChatController::class, 'history']);
-Route::post('/chats', [ChatController::class, 'store']);
-Route::put('/chats/{id}', [ChatController::class, 'update']);
-Route::delete('/chats/{id}', [ChatController::class, 'destroy']);
+Route::get('/history', [HistoryController::class, 'history']);
+Route::post('/chats', [HistoryController::class, 'store']);
+Route::put('/chats/{id}', [HistoryController::class, 'update']);
+Route::delete('/chats/{id}', [HistoryController::class, 'destroy']);
 
-Route::get('/messages/{chatId}', [MessageController::class, 'index']);
+Route::get('/messages/{chatId}', [MessageController::class, 'index']); //TODO: обернуть в sanctum
 Route::post('/messages', [MessageController::class, 'store']);
-

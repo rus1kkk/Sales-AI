@@ -5,19 +5,28 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Chat;
 use Illuminate\Http\Request;
+use App\Models\User;
 
-class ChatController extends Controller
+class HistoryController extends Controller
 {
     // Получение истории генераций
-    public function history()
+    public function history(Request $request)
     {
-        $chats = Chat::orderByDesc('timestamp')->get();
+        $userId = $request->query('id_user'); // ! Временно
+
+        // TODO: После внедрения Sanctum — заменить на $request->user()->id
+
+        $user = User::findOrFail($userId);
+
+        $chats = $user->chats()
+            ->orderByDesc('updated_at')
+            ->get();
 
         $result = $chats->map(fn($chat) => [
             'id' => $chat->id_chat,
             'name' => $chat->chat_name,
-            'status' => $chat->status,
-            'date' => $chat->timestamp->format('d.m.Y'),
+            'status' => $chat->chat_status,
+            'updated_at' => optional($chat->updated_at)->format('d.m.Y'),
         ]);
 
         return response()->json($result);

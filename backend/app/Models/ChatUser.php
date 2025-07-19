@@ -15,4 +15,14 @@ class ChatUser extends Model
     public $incrementing = false;
     protected $primaryKey = ['id_chat', 'id_user'];
     protected $keyType = 'array';
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id_user');
+    }
+
+    public function chat()
+    {
+        return $this->belongsTo(Chat::class, 'id_chat');
+    }
 }
