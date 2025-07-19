@@ -29,7 +29,7 @@
   background: transparent;
   transition: background-color 0.5s ease;
   cursor: pointer;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 20px;
   text-align: center;
 }
@@ -85,7 +85,7 @@
 
 .send-button {
   all: unset;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 20px;
   width: 100%;
   cursor: pointer;
@@ -172,8 +172,13 @@
     padding: 13px 36px;
   }
 
+  .login-form {
+    width: 95%;
+  }
+
   .send-button {
     padding: 10px 0;
+    font-size: 16px;
   }
 }
 
@@ -195,5 +200,38 @@
   .login-form {
     padding: 46px 24px;
     gap: 26px;
+  }
+
+  .send-button {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 361px) {
+  .form-buttons > button {
+    padding: 10px 0;
+    font-size: 12px;
+  }
+
+  .form-input {
+    gap: 15px;
+  }
+
+  .base-input {
+    padding: 10px 24px;
+    font-size: 10px;
+  }
+
+  .login-form {
+    padding: 36px 24px;
+    gap: 26px;
+  }
+
+  .error-text {
+    font-size: 10px;
+  }
+
+  .send-button {
+    font-size: 12px;
   }
 }
