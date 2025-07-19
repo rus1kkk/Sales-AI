@@ -12,17 +12,16 @@ class Chat extends Model
     use HasFactory;
 
     protected $primaryKey = 'id_chat';
-    public $timestamps = false;
 
     protected $fillable = [
         'id_model',
         'chat_name',
-        'status',
+        'chat_status',
         'timestamp'
     ];
 
     protected $casts = [
-        'timestamp' => 'datetime',
+        'created_at' => 'datetime',
     ];
 
     public function model()
