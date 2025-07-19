@@ -120,7 +120,7 @@
     </transition>
 
     <button class="send-button" :disabled="hasErrors || isSubmitting">
-      {{ isSubmitting ? 'ПОДОЖДИТЕ...' : mode === 'login' ? 'ВОЙТИ' : 'ЗАРЕГИСТРИРОВАТЬСЯ' }}
+      {{ isSubmitting ? 'Подождите...' : mode === 'login' ? 'Войти' : 'Зарегистрироваться' }}
     </button>
   </form>
 </template>

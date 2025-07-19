@@ -16,6 +16,6 @@ import LoginForm from '../components/Login/LoginForm.vue'
   height: 90vh;
   overflow-y: auto;
   box-sizing: border-box;
-  padding: 10px;
+  padding-bottom: 10px;
 }
 </style>
