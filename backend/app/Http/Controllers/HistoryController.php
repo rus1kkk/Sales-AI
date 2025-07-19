@@ -37,14 +37,14 @@ class HistoryController extends Controller
     {
         $validated = $request->validate([
             'chat_name' => 'required|string',
-            'id_model' => 'required|exists:ai_models,id',
-            'status' => 'nullable|string',
+            'id_model' => 'required|exists:models,id_model',
+            'chat_status' => 'nullable|in:active,closed,archived',
         ]);
 
         $chat = Chat::create([
             'chat_name' => $validated['chat_name'],
             'id_model' => $validated['id_model'],
-            'status' => $validated['status'] ?? 'ожидает генерацию',
+            'chat_status' => $validated['chat_status'] ?? 'active',
             'timestamp' => now(),
         ]);
 

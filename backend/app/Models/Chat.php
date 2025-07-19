@@ -21,7 +21,7 @@ class Chat extends Model
     ];
 
     protected $casts = [
-        'timestamp' => 'datetime',
+        'created_at' => 'datetime',
     ];
 
     public function model()

@@ -12,4 +12,10 @@ class AI_model extends Model
     protected $primaryKey = 'id_model';
     protected $table = 'models';
     public $timestamps = false;
+
+    protected $fillable = [
+        'model_name',
+        'model_fullname',
+        'model_info'
+    ];
 }
