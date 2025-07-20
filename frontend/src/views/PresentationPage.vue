@@ -250,4 +250,5 @@ const Data = {
 
 <style scoped>
 @import '@/assets/styles/Presentation/presentation.css';
+@import '@/assets/styles/Presentation/PresentationFigures.css';
 </style>

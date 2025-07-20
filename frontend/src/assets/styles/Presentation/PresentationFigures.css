@@ -1,0 +1,196 @@
+.cover,
+.work-card,
+.price-card,
+.problem-and-solution,
+.cases-block {
+  position: relative;
+}
+
+.custom-shape {
+  position: absolute;
+  z-index: -1;
+}
+
+.right {
+  width: 110vw;
+  right: -43vw;
+  top: -39vw;
+  animation:
+    fadeIn 4s ease-out forwards,
+    float 60s infinite cubic-bezier(0.45, 0.05, 0.55, 0.95);
+  animation-delay: 0s, 4s;
+}
+
+.left {
+  width: 110vw;
+  left: -44vw;
+  bottom: -40vw;
+  animation:
+    fadeIn 4s ease-out forwards,
+    float-mirrored 60s infinite cubic-bezier(0.45, 0.05, 0.55, 0.95);
+  animation-delay: 0s, 6s;
+}
+
+.middle {
+  width: 135%;
+  top: -30%;
+  left: -18%;
+  animation:
+    fadeIn 4s ease-out forwards,
+    float-middle 70s infinite cubic-bezier(0.45, 0.05, 0.55, 0.95);
+  animation-delay: 0s, 4s;
+}
+
+.calendar {
+  width: 250%;
+  transform: translate(-70%, -70%);
+  animation:
+    fadeIn 4s ease-out forwards,
+    float-calendar 55s infinite ease-in-out;
+  animation-delay: 0s, 4s;
+}
+
+.coin {
+  width: 250%;
+  transform: translate(10%, -71%);
+  animation:
+    fadeIn 5s ease-out forwards,
+    float-coin 55s infinite ease-in-out;
+  animation-delay: 0s, 5s;
+}
+
+svg {
+  top: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  position: absolute;
+  z-index: -1;
+  filter: blur(250px);
+  width: 1466px;
+  height: 3037px;
+  animation: blinkBlur 5s infinite ease-in-out;
+}
+
+@keyframes blinkBlur {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  25% {
+    transform: translate(-4vw, -2vw) rotate(5deg) scale(0.97);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translate(2vw, -1vw) rotate(-5deg) scale(1);
+    opacity: 1;
+  }
+  75% {
+    transform: translate(0vw, 1vw) rotate(5deg) scale(0.98);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes float-mirrored {
+  0% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  25% {
+    transform: translate(4vw, -2vw) rotate(-5deg) scale(0.97);
+    opacity: 0.9;
+  }
+  50% {
+    transform: translate(-2vw, -1vw) rotate(5deg) scale(1);
+    opacity: 0.7;
+  }
+  75% {
+    transform: translate(2vw, 1vw) rotate(-5deg) scale(0.98);
+    opacity: 0.9;
+  }
+  100% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes float-middle {
+  0% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  25% {
+    transform: translate(-4vw, 2vw) rotate(-5deg) scale(0.95);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translate(2vw, -1vw) rotate(5deg) scale(0.98);
+    opacity: 1;
+  }
+  75% {
+    transform: translate(-2vw, 1vw) rotate(-5deg) scale(0.97);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes float-calendar {
+  0%,
+  100% {
+    transform: translate(-70%, -70%) rotate(0deg) scale(1);
+    opacity: 0.95;
+  }
+
+  30% {
+    transform: translate(-68%, -71%) rotate(-6deg) scale(1.02);
+    opacity: 1;
+  }
+
+  70% {
+    transform: translate(-72%, -71%) rotate(8deg) scale(0.98);
+    opacity: 0.7;
+  }
+}
+
+@keyframes float-coin {
+  0%,
+  100% {
+    transform: translate(10%, -71%) rotate(0deg) scale(1);
+    opacity: 0.95;
+  }
+
+  30% {
+    transform: translate(8%, -72%) rotate(6deg) scale(0.98);
+    opacity: 0.7;
+  }
+
+  70% {
+    transform: translate(12%, -72%) rotate(-8deg) scale(1.02);
+    opacity: 1;
+  }
+}
