@@ -6,6 +6,7 @@ import SubscriptionPage from '../views/SubscriptionPage.vue'
 import ProfileView from '../views/ProfileView.vue'
 import HistoryPage from '../views/HistoryPage.vue'
 import LoginPage from '../views/LoginPage.vue'
+import ChatWindow from '../components/ChatTest/ChatWindow.vue'
 
 const routes = [
   {
@@ -37,6 +38,12 @@ const routes = [
     path: '/login',
     name: 'LoginPage',
     component: LoginPage,
+  },
+  {
+    path: '/chat/:id',
+    name: 'ChatWindow',
+    component: ChatWindow,
+    props: true, // чтобы параметр chatId попадал в компонент как пропс
   },
 ]
 
