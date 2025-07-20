@@ -15,5 +15,6 @@ class Message extends Model
         'id_user',
         'message_text',
         'message_type',
+        'created_at',
     ];
 }
