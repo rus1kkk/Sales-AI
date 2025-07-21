@@ -24,7 +24,7 @@ defineProps({
     <p v-if="description">{{ description }}</p>
     <div class="small-list">
       <h3>{{ subtitle }}</h3>
-      <input v-for="(item, index) in items" :key="index" class="input" type="text" :value="item" />
+      <p v-for="(item, index) in items" :key="index" class="input">{{ item }}</p>
     </div>
     <p>{{ caption }}</p>
   </div>

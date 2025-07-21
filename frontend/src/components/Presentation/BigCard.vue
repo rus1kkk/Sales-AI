@@ -24,7 +24,7 @@ defineProps({
     <h1>{{ title }}</h1>
     <div class="big-list">
       <h3 v-if="subtitle">{{ subtitle }}</h3>
-      <input v-for="(item, index) in items" :key="index" class="input" type="text" :value="item" />
+      <p v-for="(item, index) in items" :key="index" class="input">{{ item }}</p>
     </div>
     <div v-if="images.length > 0" class="card-img">
       <div v-for="(image, index) in images" :key="index" class="team-img">
