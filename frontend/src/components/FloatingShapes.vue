@@ -1,4 +1,4 @@
-<template>
+<template> 
   <div class="shapes-container">
     <img
       v-if="$route.name === 'MainPage'"
@@ -6,6 +6,7 @@
       :src="mainFigure"
       alt="Main Figure"
     />
+    
     <img
       v-if="$route.name === 'GeneratePage'"
       class="custom-shape top-right"
@@ -17,6 +18,19 @@
       class="custom-shape bottom-left"
       :src="generateFigure_2"
       alt="Generate Figure 2"
+    />
+    
+    <img
+      v-if="$route.name === 'PaymentPage'"
+      class="custom-shape top-right"
+      :src="generateFigure_1"
+      alt="Payment Figure Top"
+    />
+    <img
+      v-if="$route.name === 'PaymentPage'"
+      class="custom-shape bottom-left"
+      :src="generateFigure_2"
+      alt="Payment Figure Bottom"
     />
   </div>
 </template>

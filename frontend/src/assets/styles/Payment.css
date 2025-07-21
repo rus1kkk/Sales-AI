@@ -1,0 +1,227 @@
+@import url('./main.css');
+
+/* .payment-page {
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #0a0f2c, #1a2b4c);
+  color: white;
+  font-family: sans-serif;
+} */
+
+.payment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 40px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: bold;
+  color: #60a5fa;
+}
+
+.nav-links a {
+  margin: 0 12px;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: inherit;
+}
+
+.nav-links a:hover,
+.login-button:hover {
+  color: white;
+}
+
+.payment-main {
+  max-width: 1024px;
+  margin: 64px auto;
+  padding: 0 16px;
+}
+
+/* .payment-container {
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  border-radius: 24px;
+  padding: 32px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+} */
+
+.product-box {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 32px;
+}
+
+.product-count {
+  font-size: 14px;
+  color: #ccc;
+  margin-bottom: 4px;
+}
+
+.product-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.product-title {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.product-desc {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.product-price {
+  text-align: right;
+}
+
+.quantity-buttons {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.quantity-buttons button {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.price {
+  margin-top: 8px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.form-block {
+  margin-bottom: 32px;
+}
+
+.form-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.form-fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.form-fields input {
+  padding: 12px 24px;
+  border-radius: 999px;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.form-fields input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.payment-methods h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.card-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 16px 24px;
+  border-radius: 16px;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.card-item.active {
+  border-color: #60a5fa;
+}
+
+.card-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.card-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.3);
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-mask {
+  font-size: 16px;
+}
+
+.add-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 16px 24px;
+  border-radius: 16px;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.plus-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.pay-button {
+  width: 100%;
+  padding: 16px;
+  background-color: #3b82f6;
+  color: white;
+  font-size: 18px;
+  font-weight: 600;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  margin-top: 32px;
+}
+
+.pay-button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.pay-button:hover:enabled {
+  background-color: #2563eb;
+}
