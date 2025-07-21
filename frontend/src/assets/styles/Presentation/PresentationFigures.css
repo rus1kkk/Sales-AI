@@ -9,6 +9,9 @@
 .custom-shape {
   position: absolute;
   z-index: -1;
+  display: block; /* Делает SVG блочным элементом, как <img> */
+  width: 100%; /* Позволяет CSS управлять шириной */
+  height: auto; /* Сохраняет пропорции */
 }
 
 .right {
@@ -59,7 +62,7 @@
   animation-delay: 0s, 5s;
 }
 
-svg {
+.blur {
   top: 5%;
   left: 50%;
   transform: translateX(-50%);
@@ -165,12 +168,10 @@ svg {
     transform: translate(-70%, -70%) rotate(0deg) scale(1);
     opacity: 0.95;
   }
-
   30% {
     transform: translate(-68%, -71%) rotate(-6deg) scale(1.02);
     opacity: 1;
   }
-
   70% {
     transform: translate(-72%, -71%) rotate(8deg) scale(0.98);
     opacity: 0.7;
@@ -183,12 +184,10 @@ svg {
     transform: translate(10%, -71%) rotate(0deg) scale(1);
     opacity: 0.95;
   }
-
   30% {
     transform: translate(8%, -72%) rotate(6deg) scale(0.98);
     opacity: 0.7;
   }
-
   70% {
     transform: translate(12%, -72%) rotate(-8deg) scale(1.02);
     opacity: 1;
