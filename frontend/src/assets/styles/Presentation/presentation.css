@@ -52,8 +52,30 @@
   /*height: 100%;*/
 }
 
+@media (max-width: 1200px) {
+.problem-and-solution {
+   flex-direction: column;
+}
+
+.work-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+  margin-left: 0;
+  justify-content: center;
+}
+
+.price-card {
+  width: 100%;
+  justify-content: center;
+}
+
+}
+
 @media (max-width: 1000px) {
 .presentation-content {
   margin: 36px;
 }
 }
+
