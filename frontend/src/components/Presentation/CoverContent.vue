@@ -139,7 +139,7 @@ h3 {
 
 .vertical-line {
   width: 1px;
-  background-color:  rgba(255, 255, 255, 0.60);
+  background-color: rgba(255, 255, 255, 0.6);
   flex-shrink: 0;
 }
 
@@ -162,47 +162,44 @@ h3 {
 }
 
 @media (max-width: 900px) {
+  .from-someone,
+  .to-someone {
+    width: 300px;
+  }
 
-.from-someone,
-.to-someone {
-  width: 300px;
-}
-
-.from-someone-to-someone {
-  gap: 49px;
-}
-
+  .from-someone-to-someone {
+    gap: 49px;
+  }
 }
 
 @media (max-width: 720px) {
-  h3{
-      padding-bottom: 0px;
+  h3 {
+    padding-bottom: 0px;
   }
-.cover-photo-list {
-  flex-direction: column;
-}
+  .cover-photo-list {
+    flex-direction: column;
+  }
 
-.from-someone-to-someone {
-  flex-direction: column;
-   align-items: center;
+  .from-someone-to-someone {
+    flex-direction: column;
+    align-items: center;
     gap: 24px;
-}
+  }
 
-.vertical-line {
-  height: 1px;
-  width: 100%;
-  padding: 0 24px;
-  flex-shrink: 0;
-}
+  .vertical-line {
+    height: 1px;
+    width: 100%;
+    padding: 0 24px;
+    flex-shrink: 0;
+  }
 
-.from-someone,
-.to-someone {
-  align-items: center;
-}
+  .from-someone,
+  .to-someone {
+    align-items: center;
+  }
 
-.cover-content {
-  padding: 30px 0;
+  .cover-content {
+    padding: 30px 0;
+  }
 }
-}
-
 </style>

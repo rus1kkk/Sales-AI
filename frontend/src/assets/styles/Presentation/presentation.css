@@ -53,29 +53,64 @@
 }
 
 @media (max-width: 1200px) {
-.problem-and-solution {
-   flex-direction: column;
-}
+  .problem-and-solution {
+    flex-direction: column;
+  }
 
-.work-card {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: auto;
-  margin-left: 0;
-  justify-content: center;
-}
+  .work-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    margin-left: 0;
+  }
 
-.price-card {
-  width: 100%;
-  justify-content: center;
-}
-
+  .price-card {
+    width: auto;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .product-card,
+  .do-it,
+  .next-steps {
+    padding: 0;
+    display: flex;
+    justify-content: center;
+  }
+  .stages-of-work {
+    width: auto;
+  }
+  .price-of-work {
+    width: auto;
+  }
 }
 
 @media (max-width: 1000px) {
-.presentation-content {
-  margin: 36px;
-}
+  .presentation-content {
+    margin: 36px;
+  }
+
+  .stages-of-work,
+  .work-card {
+    flex-direction: column;
+  }
+  .problem-card {
+    width: auto;
+  }
 }
 
+@media (max-width: 767px) {
+  .presentation-content {
+    margin: 13px;
+  }
+
+  .stages-of-work,
+  .work-card {
+    flex-direction: column;
+  }
+}
+@media (max-width: 400px) {
+  .presentation-content {
+    margin: 23px;
+  }
+}

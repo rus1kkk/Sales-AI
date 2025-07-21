@@ -54,4 +54,9 @@ h1 {
   object-fit: cover;
   display: block;
 }
+@media (max-width: 1200px) {
+  .cases {
+    max-width: 698px;
+  }
+}
 </style>

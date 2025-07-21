@@ -146,10 +146,36 @@ h1 {
   object-position: center;
 }
 
-
 @media (max-width: 1200px) {
-.small-card,
-.big-card {
-width: 698px;
+  .small-card,
+  .big-card {
+    width: 698px;
+  }
+  .big-list .input {
+    width: 100%;
+  }
+  .team-img {
+    width: 90px;
+    height: 90px;
+  }
 }
+@media (max-width: 767px) {
+  .small-card,
+  .big-card {
+    width: 456px;
+  }
+  .team-img {
+    width: 54px;
+    height: 54px;
+  }
+}
+@media (max-width: 400px) {
+  .small-card,
+  .big-card {
+    width: 312px;
+  }
+  .team-img {
+    width: 30px;
+    height: 30px;
+  }
 }
