@@ -32,11 +32,23 @@
               :hasError="!!validationErrors[index]"
               @update:value="handleInputChange(index, $event)"
               @blur="handleBlur(index)"
-              :aria-describedby="errorMessage ? 'error-message' : null"
+              :aria-describedby="validationErrors[index] ? `error-message-${index}` : null"
             />
+            <div
+              v-if="validationErrors[index]"
+              class="error-message"
+              :class="{ 'error-visible': validationErrors[index] }"
+              :id="`error-message-${index}`"
+            >
+              {{ validationErrors[index] }}
+            </div>
           </div>
-          <div class="error-message" :class="{ 'error-visible': errorMessage }" id="error-message">
-            {{ errorMessage || '' }}
+          <div
+            v-if="serverError"
+            class="server-error-message"
+            :class="{ 'error-visible': serverError }"
+          >
+            {{ serverError }}
           </div>
         </div>
       </div>
@@ -56,6 +68,7 @@
 <script>
 import InputModal from './InputModal.vue'
 import CustomButton from '../CustomButton.vue'
+import { ValidationHelpers } from '@/utils/ValidationModule.js'
 
 export default {
   name: 'ModalForm',
@@ -82,6 +95,7 @@ export default {
       touchedFields: [],
       isSubmitting: false,
       serverError: '',
+      debounceTimeouts: [], // Для дебаунсинга
     }
   },
   computed: {
@@ -92,11 +106,6 @@ export default {
         this.validationErrors.every((error) => !error)
       )
     },
-    errorMessage() {
-      if (this.serverError) return this.serverError
-      const errorIndex = this.validationErrors.findIndex((error) => error)
-      return errorIndex !== -1 ? this.validationErrors[errorIndex] : ''
-    },
   },
   watch: {
     inputs: {
@@ -104,6 +113,7 @@ export default {
         this.inputValues = this.inputs.map((input) => input.value || '')
         this.validationErrors = new Array(this.inputs.length).fill('')
         this.touchedFields = new Array(this.inputs.length).fill(false)
+        this.debounceTimeouts = new Array(this.inputs.length).fill(null)
         this.serverError = ''
       },
       immediate: true,
@@ -122,142 +132,157 @@ export default {
       }
 
       this.serverError = ''
-      this.validateField(index, value)
+      // Очищаем ошибку для текущего поля при вводе
+      this.setFieldError(index, '')
+
+      // Для поля подтверждения пароля используем специальную обработку
+      if (this.field === 'password' && index === 1) {
+        // Для подтверждения пароля только проверяем совпадение
+        this.validatePasswordConfirmation()
+      } else {
+        // Валидация на input (недопустимые символы)
+        this.validateOnInput(index, value)
+
+        // Дебаунсинг для валидации длины и формата
+        this.debouncedValidation(index, value)
+      }
     },
 
     handleBlur(index) {
       const newTouched = [...this.touchedFields]
       newTouched[index] = true
       this.touchedFields = newTouched
-      this.validateField(index, this.inputValues[index])
+
+      // Очищаем дебаунс при blur
+      if (this.debounceTimeouts[index]) {
+        clearTimeout(this.debounceTimeouts[index])
+        this.debounceTimeouts[index] = null
+      }
+
+      // Для поля подтверждения пароля используем специальную валидацию
+      if (this.field === 'password' && index === 1) {
+        this.validatePasswordConfirmation()
+      } else {
+        // Полная валидация при blur для остальных полей
+        this.validateOnBlur(index, this.inputValues[index])
+      }
     },
 
-    validateField(index, value) {
-      const newErrors = [...this.validationErrors]
-      const rules = this.getValidationRules(index, this.field)
+    validateOnInput(index, value) {
+      const fieldType = this.getFieldType(index)
+      if (!fieldType) return
 
-      let currentError = ''
+      const result = ValidationHelpers.validateOnInput(fieldType, value)
 
-      for (const rule of rules) {
-        if (!rule.validator(value)) {
-          currentError = rule.message
-          break
+      if (!result.success) {
+        const firstError = Object.values(result.errors)[0]?.[0]
+        this.setFieldError(index, firstError || '')
+      }
+    },
+
+    debouncedValidation(index, value) {
+      const fieldType = this.getFieldType(index)
+      if (!fieldType) return
+
+      // Очищаем предыдущий timeout
+      if (this.debounceTimeouts[index]) {
+        clearTimeout(this.debounceTimeouts[index])
+      }
+
+      // Устанавливаем новый timeout
+      this.debounceTimeouts[index] = setTimeout(() => {
+        // Сначала проверяем input валидацию
+        const inputResult = ValidationHelpers.validateOnInput(fieldType, value)
+
+        if (!inputResult.success) {
+          // Если есть ошибка на input уровне, показываем её
+          const firstError = Object.values(inputResult.errors)[0]?.[0]
+          this.setFieldError(index, firstError || '')
+        } else {
+          // Если input валидация прошла, проверяем debounced
+          const debouncedResult = ValidationHelpers.validateOnDebounced(fieldType, value)
+
+          if (!debouncedResult.success) {
+            const firstError = Object.values(debouncedResult.errors)[0]?.[0]
+            this.setFieldError(index, firstError || '')
+          } else {
+            this.setFieldError(index, '')
+          }
+        }
+
+        // Дополнительная проверка для подтверждения пароля
+        if (this.field === 'password' && index === 0 && this.inputValues[1]) {
+          this.validatePasswordConfirmation()
+        }
+      }, 1000)
+    },
+
+    validateOnBlur(index, value) {
+      const fieldType = this.getFieldType(index)
+      if (!fieldType) return
+
+      const result = ValidationHelpers.validateOnBlur(fieldType, value)
+
+      if (!result.success) {
+        const firstError = Object.values(result.errors)[0]?.[0]
+        this.setFieldError(index, firstError || '')
+      } else {
+        this.setFieldError(index, '')
+      }
+
+      // Дополнительная проверка для подтверждения пароля
+      if (this.field === 'password') {
+        if (index === 0 && this.inputValues[1]) {
+          this.validatePasswordConfirmation()
+        } else if (index === 1) {
+          this.validatePasswordConfirmation()
         }
       }
-
-      newErrors[index] = currentError
-
-      if (this.field === 'password' && index === 0 && this.inputValues[1]) {
-        newErrors[1] =
-          this.inputValues[1].trim() === ''
-            ? 'Подтвердите пароль'
-            : this.inputValues[0] !== this.inputValues[1]
-              ? 'Пароли не совпадают'
-              : ''
-      }
-
-      this.validationErrors = newErrors
     },
 
-    getValidationRules(index, field) {
-      switch (field) {
-        case 'name':
-          return [
-            {
-              validator: (value) => /^[а-яёА-ЯЁa-zA-Z]+$/.test(value),
-              message: 'Имя должно состоять только из букв',
-            },
-            {
-              validator: (value) => value.trim() !== '',
-              message: 'Имя не может быть пустым',
-            },
-            {
-              validator: (value) => value.trim().length >= 2,
-              message: 'Имя должно содержать минимум 2 символа',
-            },
-          ]
-        case 'phone':
-          return [
-            {
-              validator: (value) => /^(\+?[\d\s\-()]+)$/.test(value),
-              message: 'Только цифры, +, -, (), пробелы',
-            },
-            {
-              validator: (value) => {
-                const plusCount = (value.match(/\+/g) || []).length
-                return plusCount <= 1 && (plusCount === 0 || value.indexOf('+') === 0)
-              },
-              message: 'Знак + может быть только в начале номера',
-            },
-            {
-              validator: (value) => value.trim() !== '',
-              message: 'Номер телефона не может быть пустым',
-            },
-            {
-              validator: (value) => {
-                const cleanPhone = value.replace(/[^\d]/g, '')
-                return cleanPhone.length === 11
-              },
-              message: 'Номер должен содержать 11 цифр',
-            },
-          ]
-        case 'email':
-          return [
-            {
-              validator: (value) => /^[^\s@]*@?[^\s@]*\.?[^\s@]*$/.test(value),
-              message: 'Недопустимые символы в email',
-            },
-            {
-              validator: (value) => value.trim() !== '',
-              message: 'Email не может быть пустым',
-            },
-            {
-              validator: (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value),
-              message: 'Введите корректный email адрес',
-            },
-          ]
-        case 'password':
-          if (index === 0) {
-            return [
-              {
-                validator: (value) => /^[a-zA-Z0-9!@#$%^&*]*$/.test(value),
-                message: 'Только буквы, цифры и специальные символы',
-              },
-              {
-                validator: (value) => value.trim() !== '',
-                message: 'Пароль не может быть пустым',
-              },
-              {
-                validator: (value) => value.length >= 6,
-                message: 'Пароль должен содержать минимум 6 символов',
-              },
-              {
-                validator: (value) => /(?=.*[a-zA-Z])(?=.*\d)/.test(value),
-                message: 'Пароль должен содержать хотя бы одну букву и одну цифру',
-              },
-            ]
-          } else if (index === 1) {
-            return [
-              {
-                validator: (value) => value.trim() !== '',
-                message: 'Подтвердите пароль',
-              },
-              {
-                validator: (value) => value === this.inputValues[0],
-                message: 'Пароли не совпадают',
-              },
-            ]
-          }
-          return []
-        default:
-          return []
+    validatePasswordConfirmation() {
+      if (this.field !== 'password' || this.inputValues.length < 2) return
+
+      const password = this.inputValues[0]
+      const confirmPassword = this.inputValues[1]
+
+      if (confirmPassword.trim() === '') {
+        this.setFieldError(1, 'Подтвердите пароль')
+      } else if (password !== confirmPassword) {
+        this.setFieldError(1, 'Пароли не совпадают')
+      } else {
+        this.setFieldError(1, '')
       }
+    },
+
+    getFieldType(index) {
+      if (this.field === 'password') {
+        if (index === 0) {
+          return 'password' // Первое поле - новый пароль
+        } else if (index === 1) {
+          return null // Второе поле - подтверждение пароля, обрабатывается отдельно
+        }
+      }
+      return this.field
+    },
+
+    setFieldError(index, error) {
+      const newErrors = [...this.validationErrors]
+      newErrors[index] = error
+      this.validationErrors = newErrors
     },
 
     async handleSubmit() {
       this.touchedFields = new Array(this.inputs.length).fill(true)
+
+      // Валидируем все поля при отправке
       this.inputValues.forEach((value, index) => {
-        this.validateField(index, value)
+        if (this.field === 'password' && index === 1) {
+          // Для подтверждения пароля используем специальную валидацию
+          this.validatePasswordConfirmation()
+        } else {
+          this.validateOnBlur(index, value)
+        }
       })
 
       if (this.isFormValid) {
@@ -282,6 +307,15 @@ export default {
       }
       return errorMessages[field] || 'Ошибка при сохранении данных'
     },
+  },
+
+  beforeUnmount() {
+    // Очищаем все таймауты при уничтожении компонента
+    this.debounceTimeouts.forEach((timeout) => {
+      if (timeout) {
+        clearTimeout(timeout)
+      }
+    })
   },
 }
 </script>

@@ -6,6 +6,7 @@ import SubscriptionPage from '../views/SubscriptionPage.vue'
 import ProfileView from '../views/ProfileView.vue'
 import HistoryPage from '../views/HistoryPage.vue'
 import LoginPage from '../views/LoginPage.vue'
+import ChatPage from '../views/ChatPage.vue'
 
 const routes = [
   {
@@ -27,6 +28,12 @@ const routes = [
     path: '/profile',
     name: 'profile',
     component: ProfileView,
+  },
+  {
+    path: '/chat/:chatId?',
+    name: 'ChatPage',
+    component: ChatPage, // Импортируешь нужный компонент
+    props: true,
   },
   {
     path: '/history',
