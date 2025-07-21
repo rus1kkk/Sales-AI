@@ -51,3 +51,9 @@
   width: 50%;
   /*height: 100%;*/
 }
+
+@media (max-width: 1000px) {
+.presentation-content {
+  margin: 36px;
+}
+}

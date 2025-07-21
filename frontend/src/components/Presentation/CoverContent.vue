@@ -14,7 +14,7 @@ const props = defineProps({
   },
   toSomeone: {
     type: String,
-    default: 'Лучшая обвуь РФ',
+    default: 'Лучшая обувь РФ',
   },
   images: {
     type: Array,
@@ -62,15 +62,13 @@ const isCenter = (index) => {
 <style scoped>
 .cover-content {
   display: flex;
-  /*width: 1128px;
-  height: 985px;
-  padding: 36px;*/
   padding: 132px 0;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 24px;
 }
+
 h1 {
   color: var(--actient-color, #71abeb);
   font-weight: 600;
@@ -97,7 +95,7 @@ h3 {
   font-style: normal;
   font-weight: 500;
   line-height: 120%;
-  padding-bottom: 24px;
+  padding-bottom: 14px;
 }
 
 .cover-photo-list {
@@ -141,7 +139,7 @@ h3 {
 
 .vertical-line {
   width: 1px;
-  background-color: white;
+  background-color:  rgba(255, 255, 255, 0.60);
   flex-shrink: 0;
 }
 
@@ -162,4 +160,49 @@ h3 {
   align-items: flex-end;
   gap: 24px;
 }
+
+@media (max-width: 900px) {
+
+.from-someone,
+.to-someone {
+  width: 300px;
+}
+
+.from-someone-to-someone {
+  gap: 49px;
+}
+
+}
+
+@media (max-width: 720px) {
+  h3{
+      padding-bottom: 0px;
+  }
+.cover-photo-list {
+  flex-direction: column;
+}
+
+.from-someone-to-someone {
+  flex-direction: column;
+   align-items: center;
+    gap: 24px;
+}
+
+.vertical-line {
+  height: 1px;
+  width: 100%;
+  padding: 0 24px;
+  flex-shrink: 0;
+}
+
+.from-someone,
+.to-someone {
+  align-items: center;
+}
+
+.cover-content {
+  padding: 30px 0;
+}
+}
+
 </style>

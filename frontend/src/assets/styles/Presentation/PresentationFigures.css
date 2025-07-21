@@ -193,3 +193,63 @@
     opacity: 1;
   }
 }
+
+@media (max-width: 1000px) {
+  
+.right {
+  width: 125vw;
+  right: -40vw;
+  top: -30vw;
+}
+
+.left {
+  width: 125vw;
+  left: -44vw;
+  bottom: -15vw;
+}
+}
+
+@media (max-width: 900px) {
+  
+.right {
+  width: 160vw;
+  right: -70vw;
+  top: -40vw;
+}
+
+.left {
+  width: 155vw;
+  left: -50vw;
+  bottom: -15vw;
+}
+}
+
+@media (max-width: 500px) {
+  
+.right {
+  width: 250vw;
+  right: -140vw;
+  top: -61vw;
+}
+
+.left {
+  width: 240vw;
+  left: -73vw;
+  bottom: 60vw;
+}
+}
+
+@media (max-width: 360px) {
+  
+.right {
+  width: 300vw;
+  right: -180vw;
+  top: -70vw;
+}
+
+.left {
+  width: 310vw;
+  left: -93vw;
+  bottom: 110vw;
+}
+}
