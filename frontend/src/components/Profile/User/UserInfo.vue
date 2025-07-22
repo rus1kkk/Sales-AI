@@ -125,6 +125,7 @@ export default {
         case 'password':
           title = 'Изменение пароля'
           inputs = [
+            { placeholder: 'Старый пароль', type: 'password', value: '' },
             { placeholder: 'Новый пароль', type: 'password', value: '' },
             { placeholder: 'Повторите пароль', type: 'password', value: '' },
           ]

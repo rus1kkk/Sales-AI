@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\Auth;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rules\Password;
 
 class RegisterRequest extends FormRequest
@@ -42,5 +44,13 @@ class RegisterRequest extends FormRequest
                     ->symbols()
             ]
         ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+       Log::error('Validation failed', [
+           'errors' => $validator->errors()->toArray(),
+           'input' => $this->all()
+       ]);
     }
 }
