@@ -65,7 +65,7 @@ h3 {
   gap: 16px;
 }
 
-.small-list h3{
+.small-list h3 {
   text-align: left;
 }
 
@@ -163,7 +163,7 @@ h1 {
     height: 90px;
   }
 }
-@media (max-width: 767px) {
+@media (max-width: 740px) {
   .small-card,
   .big-card {
     width: 456px;
@@ -173,7 +173,7 @@ h1 {
     height: 54px;
   }
 }
-@media (max-width: 400px) {
+@media (max-width: 500px) {
   .small-card,
   .big-card {
     width: 312px;

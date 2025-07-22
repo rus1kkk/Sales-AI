@@ -83,6 +83,12 @@
   .price-of-work {
     width: auto;
   }
+  .price-card {
+    margin-bottom: 673px;
+  }
+  .work-card {
+    margin-top: 673px;
+  }
 }
 
 @media (max-width: 1000px) {
@@ -107,6 +113,12 @@
   .stages-of-work,
   .work-card {
     flex-direction: column;
+  }
+  .price-card {
+    margin-bottom: 631px;
+  }
+  .work-card {
+    margin-top: 631px;
   }
 }
 @media (max-width: 400px) {
