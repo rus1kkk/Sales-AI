@@ -23,15 +23,16 @@
     <img
       v-if="$route.name === 'PaymentPage'"
       class="custom-shape top-right"
-      :src="generateFigure_1"
-      alt="Payment Figure Top"
+      :src="generateFigure_2"
+      alt="Generate Figure 2"
     />
     <img
       v-if="$route.name === 'PaymentPage'"
       class="custom-shape bottom-left"
-      :src="generateFigure_2"
-      alt="Payment Figure Bottom"
+      :src="historyFigure_1"
+      alt="History Figure 1"
     />
+    
     <img
       v-if="$route.name === 'HistoryPage'"
       class="custom-shape top-right"

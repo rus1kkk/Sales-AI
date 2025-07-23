@@ -1,5 +1,6 @@
 <template>
   <div class="payment-page">
+        <FloatingShapes />
     <main class="payment-main">
       <div class="payment-container">
         <div class="product-box">
@@ -31,18 +32,21 @@
               type="text"
               placeholder="Имя"
               :class="{ invalid: showErrors && !isNameValid }"
+              @input="validateField('name', name)"
             />
             <input
               v-model="phone"
               type="tel"
               placeholder="Телефон"
               :class="{ invalid: showErrors && !isPhoneValid }"
+              @input="validateField('phone', phone)"
             />
             <input
               v-model="email"
               type="email"
               placeholder="Почта"
               :class="{ invalid: showErrors && !isEmailValid }"
+              @input="validateField('email', email)"
             />
           </div>
           <p v-if="showErrors && !formValid" class="error-message">
@@ -50,35 +54,34 @@
           </p>
         </div>
 
-        <button class="pay-button" @click="submitPayment">
-          Оплатить
-        </button>
+        <button @click="submitPayment" class="pay-button">Оплатить</button>
       </div>
     </main>
+    <SuccessModal v-if="showSuccess" @close="showSuccess = false" />
+    <FailModal v-if="showFailure" @close="showFailure = false" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+import { ValidationHelpers } from '@/utils/ValidationModule.js' 
+import SuccessModal from '@/views/SuccessModal.vue'
+import FailModal from '@/views/FailModal.vue'
+import FloatingShapes from '@/components/FloatingShapes.vue' 
 
-type Card = {
-  id: string
-  mask: string
-  icon: string
-}
+const showSuccess = ref(false)
+const showFailure = ref(false)
 
 const name = ref('')
 const phone = ref('')
 const email = ref('')
-const selectedCard = ref('')
 
-const cards = ref<Card[]>([])
+const showErrors = ref(false)
 
-const showAddCardForm = ref(false)
-const cardName = ref('')
-const cardNumber = ref('')
-const cardExpiry = ref('')
-const cardCVV = ref('')
+// Локальные флаги валидности (будут обновляться при вводе)
+const isNameValid = ref(true)
+const isPhoneValid = ref(true)
+const isEmailValid = ref(true)
 
 const quantity = ref(1)
 const pricePerUnit = 990
@@ -91,42 +94,35 @@ const decreaseQuantity = () => {
   if (quantity.value > 1) quantity.value--
 }
 
-const isNameValid = computed(() => name.value.trim().length > 1)
-const isPhoneValid = computed(() => phone.value.trim().length > 7)
-const isEmailValid = computed(() => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value))
-const isCardSelected = computed(() => selectedCard.value !== '')
-
-const formValid = computed(() => {
-  return isNameValid.value && isPhoneValid.value && isEmailValid.value && isCardSelected.value
-})
-
-const showErrors = ref(false)
-
-const handleAddCard = () => {
-  if (cardNumber.value.length < 4) return
-
-  const last4 = cardNumber.value.slice(-4)
-  const newCard: Card = {
-    id: 'card' + (cards.value.length + 1),
-    mask: '**' + last4,
-    icon: '💳'
-  }
-
-  cards.value.push(newCard)
-  selectedCard.value = newCard.id
-  showAddCardForm.value = false
-
-  cardName.value = ''
-  cardNumber.value = ''
-  cardExpiry.value = ''
-  cardCVV.value = ''
+// Функция валидации по твоему ValidationModule.js
+function validateField(field: 'name' | 'phone' | 'email', value: string) {
+  const result = ValidationHelpers.validateOnInput(field, value)
+  const valid = result.success
+  if (field === 'name') isNameValid.value = valid
+  if (field === 'phone') isPhoneValid.value = valid
+  if (field === 'email') isEmailValid.value = valid
+  return valid
 }
 
-const submitPayment = () => {
-  showErrors.value = true
+// Полная валидация при сабмите
+function validateAllFields() {
+  const nameValid = validateField('name', name.value)
+  const phoneValid = validateField('phone', phone.value)
+  const emailValid = validateField('email', email.value)
+  return nameValid && phoneValid && emailValid
+}
 
-  if (formValid.value) {
-    alert(`Оплата успешно отправлена с карты: ${selectedCard.value} на сумму ${totalPrice.value} ₽`)
+function submitPayment() {
+  showErrors.value = true
+  if (validateAllFields()) {
+    const isSuccess = Math.random() > 0.5
+    setTimeout(() => {
+      if (isSuccess) {
+        showSuccess.value = true
+      } else {
+        showFailure.value = true
+      }
+    }, 1000)
   }
 }
 </script>
@@ -161,13 +157,21 @@ const submitPayment = () => {
 }
 
 input.invalid {
-  border: 2px solid red;
+  border: none;
+  background-color: #FF000033;
   outline: none;
 }
 
 .error-message {
-  color: red;
+  color: #FF000066;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 120%;
+  letter-spacing: 0;
   margin-top: 6px;
-  font-weight: bold;
+  font-style: normal;
+  text-align: center;
+  user-select: none;
 }
 </style>

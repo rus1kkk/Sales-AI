@@ -7,6 +7,7 @@ import ProfileView from '../views/ProfileView.vue'
 import HistoryPage from '../views/HistoryPage.vue'
 import LoginPage from '../views/LoginPage.vue'
 import ChatPage from '../views/ChatPage.vue'
+import PaymentPage from '../views/PaymentPage.vue'
 
 const routes = [
   {
@@ -45,6 +46,11 @@ const routes = [
     name: 'LoginPage',
     component: LoginPage,
   },
+  {
+    path: '/payment',
+  name: 'PaymentPage',
+  component: PaymentPage,
+}
 ]
 
 const router = createRouter({
