@@ -130,7 +130,7 @@ import { ref, computed, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { ValidationHelpers } from '@/utils/ValidationModule'
 import LoginMessageModal from './LoginMessageModal.vue'
-import authService from '@/services/authService.js';
+import authService from '@/services/authService.js'
 
 const router = useRouter()
 const mode = ref('login')
@@ -253,7 +253,7 @@ async function submitForm() {
           phone: fields.value.phone,
           email: fields.value.emailRegister,
           password: fields.value.passwordRegister,
-          password_confirmation: fields.value.confirmPassword
+          password_confirmation: fields.value.confirmPassword,
         }
 
   // заглушка для работы формы
@@ -263,7 +263,7 @@ async function submitForm() {
         ? await authService.login(sendData)
         : await authService.register(sendData)
 
-    const isSuccess = response.success;
+    const isSuccess = response.success
 
     if (!isSuccess) {
       error.value = 'Некорректные данные.'

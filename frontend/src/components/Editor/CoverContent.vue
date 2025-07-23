@@ -25,7 +25,13 @@ const props = defineProps({
   },
 })
 
-const emit = defineEmits(['update:title', 'update:date', 'update:fromSomeone', 'update:toSomeone', 'update:images'])
+const emit = defineEmits([
+  'update:title',
+  'update:date',
+  'update:fromSomeone',
+  'update:toSomeone',
+  'update:images',
+])
 
 // Реф для скрытого input файла
 const fileInput = ref(null)
@@ -46,9 +52,9 @@ const handleImageClick = (index) => {
 // Функция для обработки выбора файла
 const handleFileChange = (event) => {
   const file = event.target.files[0]
-  
+
   if (file && currentImageIndex.value !== -1) {
-    const imageUrl = URL.createObjectURL(file)    // Создаем URL для превью
+    const imageUrl = URL.createObjectURL(file) // Создаем URL для превью
     const newImages = [...props.images]
     newImages[currentImageIndex.value] = imageUrl
     emit('update:images', newImages)
@@ -62,7 +68,7 @@ const handleFileChange = (event) => {
   <div class="cover-content">
     <h1>SALES AI</h1>
     <h3>Коммерческое предложение</h3>
-    
+
     <!-- Скрытый input для выбора файла -->
     <input
       ref="fileInput"
@@ -71,7 +77,7 @@ const handleFileChange = (event) => {
       style="display: none"
       @change="handleFileChange"
     />
-    
+
     <div class="title-edit">
       <textarea
         :value="title"
@@ -164,8 +170,8 @@ h1 {
   font-family: Montserrat;
   resize: none;
   width: 100%;
-  min-height: 38px; 
-  overflow: hidden; 
+  min-height: 38px;
+  overflow: hidden;
 }
 
 h3,
@@ -277,18 +283,18 @@ textarea {
   padding-bottom: 24px;
 }
 
-.title-edit .input-icon{
-   margin-top: 10px;
+.title-edit .input-icon {
+  margin-top: 10px;
 }
 
-.date-edit{
+.date-edit {
   justify-content: center;
   max-width: 132px;
 }
-.date-edit .input-icon{
+.date-edit .input-icon {
   margin: 0;
 }
-.date-edit input{
+.date-edit input {
   text-align: start;
 }
 

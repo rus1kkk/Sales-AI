@@ -1,13 +1,13 @@
 <template>
   <div class="presentation-content">
     <section class="cover">
-    <CoverContent
-      v-model:title="Data.cover.title"
-      v-model:date="Data.cover.date"
-      v-model:fromSomeone="Data.cover.fromSomeone"
-      v-model:toSomeone="Data.cover.toSomeone"
-      v-model:images="Data.cover.images"
-    />
+      <CoverContent
+        v-model:title="Data.cover.title"
+        v-model:date="Data.cover.date"
+        v-model:fromSomeone="Data.cover.fromSomeone"
+        v-model:toSomeone="Data.cover.toSomeone"
+        v-model:images="Data.cover.images"
+      />
       <right-figure />
       <left-figure />
     </section>
@@ -78,7 +78,7 @@
     </section>
     <section class="cases-section">
       <div class="cases-block">
-        <CaseContent :items="Data.cases.items" />
+        <CaseContent v-model:items="Data.cases.items" />
         <svg
           class="blur"
           xmlns="http://www.w3.org/2000/svg"
@@ -270,16 +270,16 @@ const Data = reactive({
 @import '@/assets/styles/Presentation/presentation.css';
 @import '@/assets/styles/Presentation/PresentationFigures.css';
 
-.problem-card{
+.problem-card {
   width: 747px;
 }
 
-.solution-card{
+.solution-card {
   width: 638px;
 }
 .product-card,
 .do-it,
-.next-steps{
+.next-steps {
   margin: 0;
 }
 </style>

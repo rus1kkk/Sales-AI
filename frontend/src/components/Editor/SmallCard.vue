@@ -107,7 +107,13 @@ const clearCaption = () => {
         rows="1"
       ></textarea>
       <img v-if="description" :src="pencilIcon" alt="Pencil Icon" class="input-icon" />
-      <img v-if="description" :src="trashlIcon" alt="Trash Icon" class="input-icon clear-icon trash-icon" @click="clearDescription" />
+      <img
+        v-if="description"
+        :src="trashlIcon"
+        alt="Trash Icon"
+        class="input-icon clear-icon trash-icon"
+        @click="clearDescription"
+      />
     </div>
 
     <div class="small-list">
@@ -120,7 +126,13 @@ const clearCaption = () => {
           rows="1"
         ></textarea>
         <img v-if="subtitle" :src="pencilIcon" alt="Pencil Icon" class="input-icon" />
-        <img v-if="subtitle" :src="trashlIcon" alt="Trash Icon" class="input-icon clear-icon trash-icon" @click="clearSubtitle" />
+        <img
+          v-if="subtitle"
+          :src="trashlIcon"
+          alt="Trash Icon"
+          class="input-icon clear-icon trash-icon"
+          @click="clearSubtitle"
+        />
       </div>
 
       <!-- Существующие пункты списка -->
@@ -133,7 +145,12 @@ const clearCaption = () => {
           rows="1"
         ></textarea>
         <img :src="pencilIcon" alt="Pencil Icon" class="input-icon" />
-        <img :src="trashlIcon" alt="Trash Icon" class="input-icon trash-icon" @click="removeItem(index)" />
+        <img
+          :src="trashlIcon"
+          alt="Trash Icon"
+          class="input-icon trash-icon"
+          @click="removeItem(index)"
+        />
       </div>
 
       <!-- Поле для добавления нового пункта -->
@@ -159,7 +176,13 @@ const clearCaption = () => {
         rows="1"
       ></textarea>
       <img v-if="caption" :src="pencilIcon" alt="Pencil Icon" class="input-icon" />
-      <img v-if="caption" :src="trashlIcon" alt="Trash Icon" class="input-icon clear-icon trash-icon" @click="clearCaption" />
+      <img
+        v-if="caption"
+        :src="trashlIcon"
+        alt="Trash Icon"
+        class="input-icon clear-icon trash-icon"
+        @click="clearCaption"
+      />
     </div>
   </div>
 </template>
@@ -220,7 +243,11 @@ h3 {
 }
 
 /* Editable elements */
-.title-edit, .description-edit, .subtitle-edit, .item-edit, .caption-edit {
+.title-edit,
+.description-edit,
+.subtitle-edit,
+.item-edit,
+.caption-edit {
   display: flex;
   width: 100%;
   gap: 10px;
@@ -248,7 +275,8 @@ h3 {
   text-align: left;
 }
 
-.description-textarea, .caption-textarea {
+.description-textarea,
+.caption-textarea {
   font-size: 16px;
   font-weight: 400;
   line-height: 120%;
@@ -288,7 +316,7 @@ h3 {
   transition: opacity 0.2s ease;
 }
 
-.trash-icon{
+.trash-icon {
   width: 20px;
   height: 24px;
   cursor: pointer;
@@ -297,7 +325,7 @@ h3 {
   opacity: 1;
 }
 
-.blank{
+.blank {
   width: 58px;
 }
 
