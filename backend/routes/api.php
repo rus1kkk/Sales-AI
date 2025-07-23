@@ -7,6 +7,7 @@ use App\Http\Controllers\RequirementController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\API\Auth\AuthController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\ImageGenerationController;
 
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
