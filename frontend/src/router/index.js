@@ -32,7 +32,7 @@ const routes = [
   {
     path: '/chat/:chatId?',
     name: 'ChatPage',
-    component: ChatPage, // Импортируешь нужный компонент
+    component: ChatPage,
     props: true,
   },
   {

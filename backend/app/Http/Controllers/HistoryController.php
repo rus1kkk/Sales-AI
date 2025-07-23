@@ -75,4 +75,17 @@ class HistoryController extends Controller
 
         return response()->json(['message' => 'Чат удален']);
     }
+
+    public function show($id)
+    {
+        $chat = Chat::find($id);
+        if (!$chat) {
+            return response()->json(['error' => 'Чат не найден'], 404);
+        }
+        return response()->json([
+            'id_chat' => $chat->id_chat,
+            'chat_name' => $chat->chat_name,
+        ]);
+    }
+
 }
