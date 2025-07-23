@@ -1,6 +1,6 @@
 .notification-modal-block {
   display: flex;
-  align-items: center;
+  align-items: start;
   justify-content: space-between;
   padding: 36px;
   border-radius: 60px;
@@ -26,4 +26,17 @@
   font-weight: 500;
   color: var(--actient-color);
   text-decoration: underline;
+}
+
+@media (max-width: 800px) {
+  .info-block {
+    flex-direction: column;
+    align-items: start;
+  }
+}
+@media (max-width: 570px) {
+  .datetime-task-name-block {
+    flex-direction: column;
+    gap: 0px;
+  }
 }

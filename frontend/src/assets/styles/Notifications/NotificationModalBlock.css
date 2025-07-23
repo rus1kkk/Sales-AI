@@ -2,7 +2,7 @@
   position: fixed;
   bottom: 50px;
   right: 50px;
-  width: 95%;
+  width: 90%;
   max-width: 800px;
   z-index: 1000;
   display: flex;
@@ -35,4 +35,12 @@
 .fade-slide-leave-to {
   opacity: 0;
   transform: translateY(-20px);
+}
+
+@media (max-width: 800px) {
+  .notification-stack {
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+  }
 }
