@@ -1,4 +1,5 @@
 <template>
+  <NotificationModalBlock></NotificationModalBlock>
   <section class="notifications-section">
     <h1 class="fade-up" style="animation-delay: 0.2s">Уведомления</h1>
 
@@ -39,6 +40,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import NotificationElement from '../Notifications/NotificationElement.vue'
+import NotificationModalBlock from '../Notifications/NotificationModalBlock.vue'
 
 const newNotifications = ref([])
 const readNotifications = ref([])
