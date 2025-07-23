@@ -5,7 +5,7 @@ declare(strict_types=1);
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RequirementController;
 use App\Http\Controllers\HistoryController;
-use App\Http\Controllers\API\Auth\AuthController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MessageController;
 
 Route::post('/register', [AuthController::class, 'register'])->name('register');
