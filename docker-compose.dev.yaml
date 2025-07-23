@@ -31,12 +31,14 @@ services:
         build:
             context: frontend/docker
             target: development
+        tty: true
         container_name: sales_ai_frontend
         restart: unless-stopped
         ports:
             - "3000:3000"
         volumes:
             - ./frontend/:/frontend/
+            - /frontend/node_modules
         networks:
             - network
 

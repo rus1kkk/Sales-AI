@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\API\Auth;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\ChangePasswordRequest;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
@@ -19,6 +18,8 @@ class AuthController extends Controller
 {
     public function register(RegisterRequest $registerRequest): JsonResponse
     {
+        Log::info('register');
+
         $data = $registerRequest->validated();
 
         $user = User::create([
@@ -35,7 +36,6 @@ class AuthController extends Controller
             'message' => 'User registered successfully',
             'data' => [
                 'token' => $token,
-                'token_type' => 'Bearer',
                 'user' => $user,
             ]
         ], 201);
@@ -43,7 +43,11 @@ class AuthController extends Controller
 
     public function login(LoginRequest $loginRequest): JsonResponse
     {
+        Log::info('login');
+
         $data = $loginRequest->validated();
+
+        Log::info('login');
 
         $user = User::whereEmail($data['email'])->firstOrFail();
         Log::info($user);
@@ -64,7 +68,6 @@ class AuthController extends Controller
             'message' => 'User logged successfully',
             'data' => [
                 'token' => $token,
-                'token_type' => 'Bearer',
                 'user' => $user,
             ]
         ]);
