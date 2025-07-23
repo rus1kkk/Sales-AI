@@ -1,0 +1,42 @@
+.notifications-section {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: center;
+  max-width: 1130px;
+  width: 90%;
+}
+
+.notifications-section h1 {
+  font-size: 32px;
+  font-weight: 500;
+}
+
+.new-notifications-section,
+.read-notifications-section {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 100%;
+}
+
+.new-notifications-section h2,
+.read-notifications-section h2 {
+  font-size: 24px;
+  font-weight: 500;
+  color: rgba(168, 169, 175, 1);
+  text-align: center;
+}
+
+.notifications-block {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.notifications-section hr {
+  min-height: 0.5px;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.2);
+  border: none;
+}

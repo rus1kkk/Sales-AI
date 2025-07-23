@@ -22,6 +22,6 @@ defineProps({
 })
 </script>
 
-<style>
+<style scoped>
 @import '../../assets/styles/Notifications/NotificationElement.css';
 </style>
