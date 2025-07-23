@@ -14,36 +14,41 @@
     <section class="problem-and-solution">
       <div class="problem-card">
         <SmallCard
-          :title="Data.problem.title"
-          :description="Data.problem.description"
-          :subtitle="Data.problem.subtitle"
-          :items="Data.problem.items"
-          :caption="Data.problem.caption"
+          v-model:title="Data.problem.title"
+          v-model:description="Data.problem.description"
+          v-model:subtitle="Data.problem.subtitle"
+          v-model:items="Data.problem.items"
+          v-model:caption="Data.problem.caption"
         />
       </div>
       <div class="solution-card">
         <SmallCard
-          :title="Data.solution.title"
-          :description="Data.solution.description"
-          :items="Data.solution.items"
-          :caption="Data.solution.caption"
+          v-model:title="Data.solution.title"
+          v-model:description="Data.solution.description"
+          v-model:subtitle="Data.solution.subtitle"
+          v-model:items="Data.solution.items"
+          v-model:caption="Data.solution.caption"
         />
       </div>
       <middle-figure />
     </section>
     <div class="product-card">
       <BigCard
-        :title="Data.product.title"
-        :items="Data.product.items"
-        :caption="Data.product.caption"
+        v-model:title="Data.product.title"
+        v-model:subtitle="Data.product.subtitle"
+        v-model:items="Data.product.items"
+        v-model:images="Data.product.images"
+        v-model:caption="Data.product.caption"
       />
     </div>
     <section class="stages-of-work">
       <div class="work-card">
         <SmallCard
-          :title="Data.stages.title"
-          :items="Data.stages.items"
-          :caption="Data.stages.caption"
+          v-model:title="Data.stages.title"
+          v-model:description="Data.stages.description"
+          v-model:subtitle="Data.stages.subtitle"
+          v-model:items="Data.stages.items"
+          v-model:caption="Data.stages.caption"
         />
         <calendar-figure />
       </div>
@@ -51,11 +56,11 @@
     <section class="price-of-work">
       <div class="price-card">
         <SmallCard
-          :title="Data.price.title"
-          :description="Data.price.description"
-          :subtitle="Data.price.subtitle"
-          :items="Data.price.items"
-          :caption="Data.price.caption"
+          v-model:title="Data.price.title"
+          v-model:description="Data.price.description"
+          v-model:subtitle="Data.price.subtitle"
+          v-model:items="Data.price.items"
+          v-model:caption="Data.price.caption"
         />
         <coin-figure />
       </div>
@@ -63,11 +68,11 @@
     <section class="who-will-do-it">
       <div class="do-it">
         <BigCard
-          :title="Data.team.title"
-          :subtitle="Data.team.subtitle"
-          :items="Data.team.items"
-          :images="Data.team.images"
-          :caption="Data.team.caption"
+          v-model:title="Data.team.title"
+          v-model:subtitle="Data.team.subtitle"
+          v-model:items="Data.team.items"
+          v-model:images="Data.team.images"
+          v-model:caption="Data.team.caption"
         />
       </div>
     </section>
@@ -120,9 +125,11 @@
     </section>
     <section class="next-steps">
       <BigCard
-        :title="Data.nextSteps.title"
-        :items="Data.nextSteps.items"
-        :caption="Data.nextSteps.caption"
+        v-model:title="Data.nextSteps.title"
+        v-model:subtitle="Data.nextSteps.subtitle"
+        v-model:items="Data.nextSteps.items"
+        v-model:images="Data.nextSteps.images"
+        v-model:caption="Data.nextSteps.caption"
       />
     </section>
   </div>
@@ -139,7 +146,6 @@ import MiddleFigure from './Figures/MiddleFigure.vue'
 import CalendarFigure from './Figures/CalendarFigure.vue'
 import CoinFigure from './Figures/CoinFigure.vue'
 import { reactive } from 'vue'
-
 // Данные для компонентов
 const Data = reactive({
   cover: {
@@ -263,4 +269,17 @@ const Data = reactive({
 <style scoped>
 @import '@/assets/styles/Presentation/presentation.css';
 @import '@/assets/styles/Presentation/PresentationFigures.css';
+
+.problem-card{
+  width: 747px;
+}
+
+.solution-card{
+  width: 638px;
+}
+.product-card,
+.do-it,
+.next-steps{
+  margin: 0;
+}
 </style>
