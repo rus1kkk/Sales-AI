@@ -14,7 +14,7 @@
 
 .modal-content {
   display: flex;
-  width: 100%;
+  width: 95%;
   max-width: 777px;
   min-height: 263px;
   padding: 36px;
@@ -48,4 +48,26 @@
 .modal-fade-leave-to {
   opacity: 0;
   transform: translateY(-20px);
+}
+
+@media (max-width: 560px) {
+  .modal-message {
+    font-size: 26px;
+  }
+
+  .modal-content {
+    padding: 26px;
+    min-height: 200px;
+  }
+}
+
+@media (max-width: 361px) {
+  .modal-message {
+    font-size: 16px;
+  }
+
+  .modal-content {
+    padding: 16px;
+    min-height: 180px;
+  }
 }
