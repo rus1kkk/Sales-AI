@@ -180,3 +180,36 @@
 .price-action:disabled svg path {
   stroke: var(--muted-color);
 }
+
+@media (max-width: 1480px) {
+  .pricing-card {
+    min-width: 400px;
+  }
+}
+@media (max-width: 1260px) {
+  .pricing-card {
+    max-width: 400px;
+  }
+}
+@media (max-width: 1000px) {
+  .pricing-card {
+    max-width: 506px;
+    /*height: 600px;*/
+  }
+}
+@media (max-width: 460px) {
+  .pricing-card {
+    max-width: 300px;
+    min-width: 250px;
+    padding: 30px 20px;
+    height: 470px;
+  }
+  .subtitle {
+    font-size: 12px;
+  }
+  .feature-text,
+  .price-description,
+  .price-action {
+    font-size: 14px;
+  }
+}

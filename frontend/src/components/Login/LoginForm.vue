@@ -1,4 +1,6 @@
 <template>
+  <LoginMessageModal :visible="!!error" :message="error" />
+
   <form @submit.prevent="submitForm" class="login-form fade-up">
     <div class="form-buttons">
       <button
@@ -16,146 +18,132 @@
         РЕГИСТРАЦИЯ
       </button>
     </div>
+
     <transition name="expand" mode="out-in">
       <div class="form-input" :key="mode">
         <transition-group name="fade-field" tag="div" class="form-input">
-          <input
-            v-if="mode === 'register'"
-            key="name"
-            placeholder="Имя"
-            v-model="fields.name"
-            @blur="touch('name')"
-            :class="['base-input', { 'error-input': fields.name && validate('name') }]"
-          />
+          <div v-if="mode === 'register'" class="input-wrapper">
+            <input
+              key="name"
+              autocomplete="name"
+              placeholder="Имя"
+              v-model="fields.name"
+              @input="validateInput('name')"
+              @blur="touch('name')"
+              :class="['base-input', { 'error-input': errors.name }]"
+            />
+            <p class="error-text">{{ errors.name }}</p>
+          </div>
 
-          <input
-            v-if="mode === 'login'"
-            key="emailLogin"
-            placeholder="Email"
-            v-model="fields.emailLogin"
-            @blur="touch('emailLogin')"
-            :class="['base-input', { 'error-input': fields.emailLogin && validate('emailLogin') }]"
-          />
+          <div v-if="mode === 'login'" class="input-wrapper">
+            <input
+              key="emailLogin"
+              autocomplete="email"
+              placeholder="Email"
+              v-model="fields.emailLogin"
+              @input="validateInput('email', 'emailLogin')"
+              @blur="touch('emailLogin')"
+              :class="['base-input', { 'error-input': errors.emailLogin }]"
+            />
+            <p class="error-text">{{ errors.emailLogin }}</p>
+          </div>
 
-          <input
-            v-if="mode === 'register'"
-            key="emailRegister"
-            placeholder="Email"
-            v-model="fields.emailRegister"
-            @blur="touch('emailRegister')"
-            :class="[
-              'base-input',
-              { 'error-input': fields.emailRegister && validate('emailRegister') },
-            ]"
-          />
+          <div v-if="mode === 'register'" class="input-wrapper">
+            <input
+              key="emailRegister"
+              autocomplete="email"
+              placeholder="Email"
+              v-model="fields.emailRegister"
+              @input="validateInput('email', 'emailRegister')"
+              @blur="touch('emailRegister')"
+              :class="['base-input', { 'error-input': errors.emailRegister }]"
+            />
+            <p class="error-text">{{ errors.emailRegister }}</p>
+          </div>
 
-          <input
-            v-if="mode === 'register'"
-            key="phone"
-            type="phone"
-            placeholder="Телефон"
-            v-model="fields.phone"
-            @blur="touch('phone')"
-            :class="['base-input', { 'error-input': fields.phone && validate('phone') }]"
-          />
+          <div v-if="mode === 'register'" class="input-wrapper">
+            <input
+              key="phone"
+              type="tel"
+              autocomplete="tel"
+              placeholder="Телефон"
+              v-model="fields.phone"
+              @input="validateInput('phone')"
+              @blur="touch('phone')"
+              :class="['base-input', { 'error-input': errors.phone }]"
+            />
+            <p class="error-text">{{ errors.phone }}</p>
+          </div>
 
-          <input
-            v-if="mode === 'login'"
-            key="passwordLogin"
-            type="password"
-            placeholder="Пароль"
-            v-model="fields.passwordLogin"
-            @blur="touch('passwordLogin')"
-            :class="[
-              'base-input',
-              { 'error-input': fields.passwordLogin && validate('passwordLogin') },
-            ]"
-          />
+          <div v-if="mode === 'login'" class="input-wrapper">
+            <input
+              key="passwordLogin"
+              type="password"
+              autocomplete="current-password"
+              placeholder="Пароль"
+              v-model="fields.passwordLogin"
+              @blur="touch('passwordLogin')"
+              :class="['base-input', { 'error-input': errors.passwordLogin }]"
+            />
+            <p class="error-text">{{ errors.passwordLogin }}</p>
+          </div>
 
-          <input
-            v-if="mode === 'register'"
-            key="passwordRegister"
-            type="password"
-            placeholder="Пароль"
-            v-model="fields.passwordRegister"
-            @blur="touch('passwordRegister')"
-            :class="[
-              'base-input',
-              { 'error-input': fields.passwordRegister && validate('passwordRegister') },
-            ]"
-          />
+          <div v-if="mode === 'register'" class="input-wrapper">
+            <input
+              key="passwordRegister"
+              type="password"
+              autocomplete="new-password"
+              placeholder="Пароль"
+              v-model="fields.passwordRegister"
+              @input="validateInput('password', 'passwordRegister')"
+              @blur="touch('passwordRegister')"
+              :class="['base-input', { 'error-input': errors.passwordRegister }]"
+            />
+            <p class="error-text">{{ errors.passwordRegister }}</p>
+          </div>
 
-          <input
-            v-if="mode === 'register'"
-            key="confirmPassword"
-            type="password"
-            placeholder="Повторите пароль"
-            v-model="fields.confirmPassword"
-            @blur="touch('confirmPassword')"
-            :class="[
-              'base-input',
-              { 'error-input': fields.confirmPassword && validate('confirmPassword') },
-            ]"
-          />
-          <p key="error" class="error-text">{{ error }}</p>
+          <div v-if="mode === 'register'" class="input-wrapper">
+            <input
+              key="confirmPassword"
+              type="password"
+              autocomplete="new-password"
+              placeholder="Повторите пароль"
+              v-model="fields.confirmPassword"
+              @input="validateInput('confirmPassword')"
+              @blur="touch('confirmPassword')"
+              :class="['base-input', { 'error-input': errors.confirmPassword }]"
+            />
+            <p class="error-text">{{ errors.confirmPassword }}</p>
+          </div>
         </transition-group>
       </div>
     </transition>
 
-    <button class="send-button" :disabled="hasErrors">
-      {{ mode === 'login' ? 'ВОЙТИ' : 'ЗАРЕГИСТРИРОВАТЬСЯ' }}
+    <button class="send-button" :disabled="hasErrors || isSubmitting">
+      {{ isSubmitting ? 'ПОДОЖДИТЕ...' : mode === 'login' ? 'ВОЙТИ' : 'ЗАРЕГИСТРИРОВАТЬСЯ' }}
     </button>
   </form>
 </template>
 
 <script setup>
-import { ref, watch, computed, onMounted } from 'vue'
-import { z } from 'zod'
+import { ref, computed, watch } from 'vue'
+import { useRouter } from 'vue-router'
+import { ValidationHelpers } from '@/utils/ValidationModule'
+import LoginMessageModal from './LoginMessageModal.vue'
 
+const router = useRouter()
 const mode = ref('login')
-
-const fields = ref({
-  emailLogin: '',
-  passwordLogin: '',
-  name: '',
-  emailRegister: '',
-  passwordRegister: '',
-  confirmPassword: '',
-  phone: '',
-})
-
+const fields = ref(defaultFields())
 const touched = ref({})
 const errors = ref({})
+const error = ref('')
+const isSubmitting = ref(false)
 
-const loginSchema = z.object({
-  emailLogin: z.email('Некорректный email'),
-  passwordLogin: z.string().min(6, 'Пароль слишком короткий'),
-})
-
-const registerSchema = z
-  .object({
-    name: z.string().min(2, 'Слишком короткое имя'),
-    confirmPassword: z.string(),
-    emailRegister: z.email('Некорректный email'),
-    passwordRegister: z.string().min(6, 'Пароль слишком короткий'),
-    phone: z
-      .string()
-      .refine((val) => (val.includes('+') ? val.startsWith('+') : true), {
-        message: 'Символ + допустим только в начале',
-      })
-      .refine((val) => val.replace(/\D/g, '').length === 11, {
-        message: 'Номер должен содержать 11 цифр',
-      })
-      .refine((val) => /^[+\d\s\-()]+$/.test(val), {
-        message: 'Телефон может содержать только цифры и +',
-      }),
-  })
-  .refine((data) => data.passwordRegister === data.confirmPassword, {
-    path: ['confirmPassword'],
-    message: 'Пароли не совпадают',
-  })
-
-const getSchema = computed(() => (mode.value === 'login' ? loginSchema : registerSchema))
+function showModal() {
+  setTimeout(() => {
+    error.value = ''
+  }, 1500)
+}
 
 const requiredFields = computed(() =>
   mode.value === 'login'
@@ -163,53 +151,74 @@ const requiredFields = computed(() =>
     : ['name', 'emailRegister', 'phone', 'passwordRegister', 'confirmPassword'],
 )
 
-function validate(field) {
-  const value = fields.value[field]
-
-  if (!value || !value.trim()) {
-    return ''
+function validateInput(schemaField, formField = schemaField) {
+  if (schemaField === 'confirmPassword') {
+    if (!fields.value[formField]) {
+      errors.value[formField] = 'Повторите пароль'
+      return
+    }
+    errors.value[formField] =
+      fields.value.confirmPassword === fields.value.passwordRegister ? '' : 'Пароли не совпадают'
+    return
   }
 
-  const schema = getSchema.value
-  const result = schema.safeParse(fields.value)
+  const result = ValidationHelpers.validateOnInput(schemaField, fields.value[formField])
+  errors.value[formField] = result.success
+    ? ''
+    : result.errors.root?.[result.errors.root.length - 1] || ''
+}
 
-  if (!result.success) {
-    const issue = result.error.issues.find((i) => i.path[0] === field)
-    return issue?.message || ''
+function validateBlur(field) {
+  if (field === 'confirmPassword') {
+    if (!fields.value[field]) {
+      errors.value[field] = 'Повторите пароль'
+      return
+    }
+    errors.value[field] =
+      fields.value.confirmPassword === fields.value.passwordRegister ? '' : 'Пароли не совпадают'
+    return
   }
 
-  return ''
+  if (field === 'confirmPassword') {
+    errors.value[field] =
+      fields.value.confirmPassword === fields.value.passwordRegister ? '' : 'Пароли не совпадают'
+    return
+  }
+
+  const schemaField =
+    field === 'emailLogin' || field === 'emailRegister'
+      ? 'email'
+      : field === 'passwordLogin'
+        ? 'passwordLogin'
+        : field === 'passwordRegister'
+          ? 'password'
+          : field
+  const result = ValidationHelpers.validateOnBlur(schemaField, fields.value[field])
+  errors.value[field] = result.success ? '' : result.errors.root?.[0] || ''
 }
 
 function touch(field) {
   touched.value[field] = true
-  errors.value[field] = validate(field)
+  validateBlur(field)
 }
 
-onMounted(() => {
-  for (const field of Object.keys(fields.value)) {
-    touched.value[field] = false
-    errors.value[field] = ''
-
-    watch(
-      () => fields.value[field],
-      (val) => {
-        if (!touched.value[field] && val.trim()) {
-          touched.value[field] = true
-        }
-        if (touched.value[field]) {
-          errors.value[field] = validate(field)
-        }
-      },
-    )
-  }
-})
+watch(
+  fields.value,
+  () => {
+    requiredFields.value.forEach((field) => {
+      if (touched.value[field]) {
+        validateBlur(field)
+      }
+    })
+  },
+  { deep: true },
+)
 
 const hasErrors = computed(() =>
   requiredFields.value.some((f) => !fields.value[f] || errors.value[f]),
 )
 
-const error = computed(() => {
+const errorMessage = computed(() => {
   if (!requiredFields.value.some((f) => touched.value[f])) return ''
   for (const f of requiredFields.value) {
     if (touched.value[f] && errors.value[f]) return errors.value[f]
@@ -217,28 +226,71 @@ const error = computed(() => {
   return ''
 })
 
-function submitForm() {
+async function submitForm() {
   requiredFields.value.forEach((field) => {
     touched.value[field] = true
-
-    const schema = getSchema.value.pick({ [field]: true })
-    const result = schema.safeParse({ [field]: fields.value[field] })
-    if (!result.success) {
-      const issue = result.error.issues.find((i) => i.path[0] === field)
-      errors.value[field] = issue?.message || ''
-    } else {
-      errors.value[field] = ''
-    }
+    validateBlur(field)
   })
 
-  if (!hasErrors.value) {
-    alert(mode.value === 'login' ? 'Вход выполнен' : 'Регистрация завершена')
+  if (hasErrors.value) {
+    error.value = errorMessage.value
+    showModal()
+    return
+  }
+
+  error.value = ''
+  isSubmitting.value = true
+
+  const sendData =
+    mode.value === 'login'
+      ? {
+          email: fields.value.emailLogin,
+          password: fields.value.passwordLogin,
+        }
+      : {
+          name: fields.value.name,
+          email: fields.value.emailRegister,
+          phone: fields.value.phone,
+          password: fields.value.passwordRegister,
+        }
+
+  // заглушка для работы формы
+  try {
+    await new Promise((resolve) => setTimeout(resolve, 2000))
+
+    const isSuccess =
+      mode.value === 'login'
+        ? sendData.email && sendData.password === '123'
+        : sendData.email && sendData.password && sendData.name && sendData.phone
+
+    if (!isSuccess) {
+      error.value = 'Некорректные данные.'
+      showModal()
+      return
+    }
+
+    setTimeout(() => {
+      router.push('/profile')
+    }, 1500)
+  } catch (err) {
+    error.value = 'Произошла ошибка.'
+    console.log(err)
+    showModal()
+  } finally {
+    isSubmitting.value = false
   }
 }
 
 function switchMode(newMode) {
   mode.value = newMode
-  fields.value = {
+  fields.value = defaultFields()
+  touched.value = {}
+  errors.value = {}
+  error.value = ''
+}
+
+function defaultFields() {
+  return {
     name: '',
     emailLogin: '',
     emailRegister: '',
@@ -251,162 +303,5 @@ function switchMode(newMode) {
 </script>
 
 <style>
-@keyframes fadeUp {
-  0% {
-    opacity: 0;
-    transform: translateY(-40px);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.fade-up {
-  opacity: 0;
-  animation: fadeUp 0.8s ease-out forwards;
-}
-
-.login-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 55px;
-  border-radius: 60px;
-  padding: 46px;
-  width: 90%;
-  max-width: 630px;
-  background-color: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(6px);
-  box-sizing: border-box;
-  margin: auto 0;
-}
-
-.form-buttons {
-  display: flex;
-  width: 100%;
-  box-sizing: border-box;
-  border-radius: 60px;
-  overflow: hidden;
-  border: 3px solid var(--actient-color);
-}
-
-.form-buttons > button {
-  all: unset;
-  flex: 1;
-  padding: 10px 20px;
-  border: none;
-  background: transparent;
-  transition: background-color 0.5s ease;
-  cursor: pointer;
-  font-weight: 500;
-  font-size: 20px;
-  width: 50%;
-  cursor: pointer;
-  text-align: center;
-  padding: 23px 0px 23px 0px;
-}
-
-.form-buttons > button:disabled {
-  background-color: var(--actient-color);
-  color: white;
-}
-
-.form-input {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  box-sizing: border-box;
-  gap: 30px;
-}
-
-.base-input {
-  all: unset;
-  cursor: pointer;
-  padding: 23px 0px 23px 0px;
-  background-color: rgba(255, 255, 255, 0.2);
-  border-radius: 60px;
-  padding: 25px 36px 25px 36px;
-  transition: background-color 0.5s ease;
-}
-
-.base-input::placeholder {
-  color: var(--muted-color);
-}
-
-.error-text {
-  color: rgba(252, 134, 134, 0.8);
-  font-size: 16px;
-  text-align: center;
-  height: 19px;
-  transition: opacity 0.5s ease;
-}
-
-.send-button {
-  all: unset;
-  font-weight: 500;
-  font-size: 20px;
-  width: 100%;
-  cursor: pointer;
-  text-align: center;
-  background-color: var(--actient-color);
-  box-sizing: border-box;
-  padding: 23px 0px 23px 0px;
-  border-radius: 60px;
-}
-
-.send-button:disabled {
-  cursor: default;
-}
-
-.error-input {
-  background-color: rgba(252, 134, 134, 0.5);
-}
-
-.error-input::placeholder {
-  color: var(--white-color);
-}
-
-.expand-enter-active,
-.expand-leave-active {
-  transition:
-    max-height 0.8s ease-in-out,
-    opacity 0.6s ease-in-out,
-    transform 0.6s ease-in-out;
-  overflow: hidden;
-}
-
-.expand-enter-from,
-.expand-leave-to {
-  max-height: 0;
-  opacity: 0;
-  transform: translateY(-30px);
-}
-
-.expand-enter-to,
-.expand-leave-from {
-  max-height: 1000px;
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.fade-field-enter-active,
-.fade-field-leave-active {
-  transition:
-    opacity 0.5s ease,
-    transform 0.5s ease;
-}
-
-.fade-field-enter-from,
-.fade-field-leave-to {
-  opacity: 0;
-  transform: translateY(10px);
-}
-
-.fade-field-enter-to,
-.fade-field-leave-from {
-  opacity: 1;
-  transform: translateY(0);
-}
+@import '../../assets/styles/Login/LoginForm.css';
 </style>

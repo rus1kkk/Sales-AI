@@ -29,6 +29,9 @@ export default {
   width: 100%;
   margin: 0;
   padding: 0;
+}
+
+.app-container.no-scroll {
   overflow: hidden;
 }
 
