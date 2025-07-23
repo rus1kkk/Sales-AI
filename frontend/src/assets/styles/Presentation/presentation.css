@@ -1,0 +1,128 @@
+.presentation-content {
+  display: flex;
+  flex-direction: column;
+  gap: 120px;
+  margin: 120px;
+}
+
+/* обложка */
+.cover {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/*problem & solution section*/
+.problem-and-solution {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 120px;
+  margin: 0 auto;
+}
+
+.problem-card {
+  width: 698px;
+}
+
+.product-card,
+.do-it,
+.next-steps {
+  padding: 0 160px;
+  margin: 0 auto;
+}
+
+/*Стадии работы и оплата*/
+.stages-of-work,
+.price-of-work {
+  width: 1225px;
+  /*height: 690px;*/
+  margin: 0 auto;
+  display: flex;
+}
+
+.work-card {
+  width: 50%;
+  margin-left: auto;
+  height: 100%;
+}
+
+.price-card {
+  width: 50%;
+  /*height: 100%;*/
+}
+
+@media (max-width: 1200px) {
+  .problem-and-solution {
+    flex-direction: column;
+  }
+
+  .work-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    margin-left: 0;
+  }
+
+  .price-card {
+    width: auto;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .product-card,
+  .do-it,
+  .next-steps {
+    padding: 0;
+    display: flex;
+    justify-content: center;
+  }
+  .stages-of-work {
+    width: auto;
+  }
+  .price-of-work {
+    width: auto;
+  }
+  .price-card {
+    margin-bottom: 673px;
+  }
+  .work-card {
+    margin-top: 673px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .presentation-content {
+    margin: 36px;
+  }
+
+  .stages-of-work,
+  .work-card {
+    flex-direction: column;
+  }
+  .problem-card {
+    width: auto;
+  }
+}
+
+@media (max-width: 767px) {
+  .presentation-content {
+    margin: 13px;
+  }
+
+  .stages-of-work,
+  .work-card {
+    flex-direction: column;
+  }
+  .price-card {
+    margin-bottom: 631px;
+  }
+  .work-card {
+    margin-top: 631px;
+  }
+}
+@media (max-width: 400px) {
+  .presentation-content {
+    margin: 23px;
+  }
+}
