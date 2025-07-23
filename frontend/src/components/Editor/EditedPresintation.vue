@@ -1,13 +1,13 @@
 <template>
   <div class="presentation-content">
     <section class="cover">
-      <CoverContent
-        v-model:title="Data.cover.title"
-        v-model:date="Data.cover.date"
-        v-model:fromSomeone="Data.cover.fromSomeone"
-        v-model:toSomeone="Data.cover.toSomeone"
-        :images="Data.cover.images"
-        />
+    <CoverContent
+      v-model:title="Data.cover.title"
+      v-model:date="Data.cover.date"
+      v-model:fromSomeone="Data.cover.fromSomeone"
+      v-model:toSomeone="Data.cover.toSomeone"
+      v-model:images="Data.cover.images"
+    />
       <right-figure />
       <left-figure />
     </section>
@@ -138,9 +138,10 @@ import LeftFigure from './Figures/LeftFigure.vue'
 import MiddleFigure from './Figures/MiddleFigure.vue'
 import CalendarFigure from './Figures/CalendarFigure.vue'
 import CoinFigure from './Figures/CoinFigure.vue'
+import { reactive } from 'vue'
 
 // Данные для компонентов
-const Data = {
+const Data = reactive({
   cover: {
     title: 'Разработка сайта для магазина спортивной обуви',
     date: 'Июль 2025',
@@ -256,7 +257,7 @@ const Data = {
     caption:
       'Мы объясним каждый этап, покажем макет, поможем после запуска. Всё будет понятно, без сложных слов — просто нормальный рабочий сайт под ваш магазин.',
   },
-}
+})
 </script>
 
 <style scoped>

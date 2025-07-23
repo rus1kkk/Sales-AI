@@ -1,4 +1,5 @@
 <script setup>
+import { ref } from 'vue'
 import pencilIcon from '@/assets/images/pencil.svg'
 
 const props = defineProps({
@@ -24,7 +25,11 @@ const props = defineProps({
   },
 })
 
-const emit = defineEmits(['update:title', 'update:date', 'update:fromSomeone', 'update:toSomeone'])
+const emit = defineEmits(['update:title', 'update:date', 'update:fromSomeone', 'update:toSomeone', 'update:images'])
+
+// Реф для скрытого input файла
+const fileInput = ref(null)
+const currentImageIndex = ref(-1)
 
 const isCenter = (index) => {
   const total = props.images.length
@@ -32,20 +37,48 @@ const isCenter = (index) => {
   const centerIndex = Math.floor(total / 2)
   return isOdd && index === centerIndex
 }
+
+const handleImageClick = (index) => {
+  currentImageIndex.value = index
+  fileInput.value.click()
+}
+
+// Функция для обработки выбора файла
+const handleFileChange = (event) => {
+  const file = event.target.files[0]
+  
+  if (file && currentImageIndex.value !== -1) {
+    const imageUrl = URL.createObjectURL(file)    // Создаем URL для превью
+    const newImages = [...props.images]
+    newImages[currentImageIndex.value] = imageUrl
+    emit('update:images', newImages)
+    currentImageIndex.value = -1
+    event.target.value = ''
+  }
+}
 </script>
 
 <template>
   <div class="cover-content">
     <h1>SALES AI</h1>
     <h3>Коммерческое предложение</h3>
+    
+    <!-- Скрытый input для выбора файла -->
+    <input
+      ref="fileInput"
+      type="file"
+      accept="image/*"
+      style="display: none"
+      @change="handleFileChange"
+    />
+    
     <div class="title-edit">
-      <input
+      <textarea
         :value="title"
         @input="$emit('update:title', $event.target.value)"
         class="editable-input title-input"
-        type="text"
-      />
-       <img :src="pencilIcon" alt="Pencil Icon" class="input-icon" />
+      ></textarea>
+      <img :src="pencilIcon" alt="Pencil Icon" class="input-icon" />
     </div>
     <div class="cover-photo-list">
       <div
@@ -53,6 +86,7 @@ const isCenter = (index) => {
         :key="index"
         class="cover-photo"
         :class="{ 'center-image': isCenter(index) }"
+        @click="handleImageClick(index)"
       >
         <img :src="image.src || image" :alt="image.alt || ''" :title="image.title || ''" />
       </div>
@@ -84,12 +118,15 @@ const isCenter = (index) => {
         </div>
       </div>
     </div>
-    <input
-      :value="date"
-      @input="$emit('update:date', $event.target.value)"
-      class="editable-input date-input"
-      type="text"
-    />
+    <div class="date-edit">
+      <input
+        :value="date"
+        @input="$emit('update:date', $event.target.value)"
+        class="editable-input date-input"
+        type="text"
+      />
+      <img :src="pencilIcon" alt="Pencil Icon" class="input-icon" />
+    </div>
   </div>
 </template>
 
@@ -121,10 +158,18 @@ h1 {
   font-style: normal;
   font-weight: 500;
   line-height: 120%;
-
+  background: none;
+  outline: none;
+  border: none;
+  font-family: Montserrat;
+  resize: none;
+  width: 100%;
+  min-height: 38px; 
+  overflow: hidden; 
 }
 
-h3, .from-to-input  {
+h3,
+.from-to-input {
   color: #fff;
   text-align: center;
   font-size: 24px;
@@ -133,7 +178,7 @@ h3, .from-to-input  {
   line-height: 120%;
 }
 
-h3{
+h3 {
   padding-bottom: 14px;
 }
 
@@ -153,6 +198,7 @@ h3{
   border: 0.6px solid rgba(255, 255, 255, 0.6);
   overflow: hidden;
   flex-shrink: 0;
+  cursor: pointer;
 }
 
 .cover-photo.center-image {
@@ -191,16 +237,17 @@ h3{
   gap: 24px;
 }
 
-.from-someone input{
+.from-someone input {
   text-align: start;
 }
 
-input{
+input,
+textarea {
   width: 100%;
   font-size: 16px;
   background: none;
   outline: none;
-  color:white;
+  color: white;
   border: none;
   font-family: Montserrat;
   text-align: center;
@@ -216,16 +263,40 @@ input{
   gap: 24px;
 }
 
-.to-someone input{
+.to-someone input {
   text-align: end;
 }
 
-.title-edit, .from-edit, .to-edit{
+.title-edit,
+.from-edit,
+.to-edit,
+.date-edit {
   display: flex;
   width: 100%;
-  gap:10px;
-  align-items: center;
+  gap: 10px;
   padding-bottom: 24px;
+}
+
+.title-edit .input-icon{
+   margin-top: 10px;
+}
+
+.date-edit{
+  justify-content: center;
+  max-width: 132px;
+}
+.date-edit .input-icon{
+  margin: 0;
+}
+.date-edit input{
+  text-align: start;
+}
+
+.input-icon {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  margin-top: 5.5px;
 }
 
 @media (max-width: 900px) {
@@ -263,6 +334,11 @@ input{
   .from-someone,
   .to-someone {
     align-items: center;
+  }
+
+  .from-someone input,
+  .to-someone input {
+    text-align: center;
   }
 
   .cover-content {
