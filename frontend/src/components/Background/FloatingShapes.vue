@@ -7,34 +7,34 @@
       alt="Main Figure"
     />
     <img
-      v-if="
-        $route.name === 'GeneratePage' ||
-        $route.name === 'ChatPage' ||
-        $route.name === 'NotificationsPage'
-      "
+      v-if="$route.name === 'GeneratePage' || $route.name === 'ChatPage'"
       class="custom-shape top-right"
       :src="generateFigure_1"
       alt="Generate Figure"
       id="flower-figure"
     />
     <img
-      v-if="
-        $route.name === 'GeneratePage' ||
-        $route.name === 'ChatPage' ||
-        $route.name === 'NotificationsPage'
-      "
+      v-if="$route.name === 'GeneratePage' || $route.name === 'ChatPage'"
       class="custom-shape bottom-left"
       :src="generateFigure_2"
       alt="Generate Figure 2"
     />
     <img
-      v-if="$route.name === 'profile' || $route.name === 'HistoryPage'"
+      v-if="
+        $route.name === 'profile' ||
+        $route.name === 'HistoryPage' ||
+        $route.name === 'NotificationsPage'
+      "
       class="custom-shape top-right"
       :src="sharedFigure_1"
       alt="Shared Figure 1"
     />
     <img
-      v-if="$route.name === 'profile' || $route.name === 'HistoryPage'"
+      v-if="
+        $route.name === 'profile' ||
+        $route.name === 'HistoryPage' ||
+        $route.name === 'NotificationsPage'
+      "
       class="custom-shape bottom-left chain"
       :src="sharedFigure_2"
       alt="Shared Figure 2"
