@@ -8,6 +8,7 @@ import HistoryPage from '../views/HistoryPage.vue'
 import LoginPage from '../views/LoginPage.vue'
 import PresentationPage from '../views/PresentationPage.vue'
 import ChatPage from '../views/ChatPage.vue'
+import EditorPage from '../views/EditorPage.vue'
 
 const routes = [
   {
@@ -51,6 +52,11 @@ const routes = [
     name: 'PresentationPage',
     component: PresentationPage,
   },
+  {
+    path:'/edit',
+    name: 'EditorPage',
+    component:EditorPage,
+  }
 ]
 
 const router = createRouter({
