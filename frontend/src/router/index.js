@@ -4,6 +4,9 @@ import MainPage from '../views/MainPage.vue'
 import GeneratePage from '../views/GeneratePage.vue'
 import SubscriptionPage from '../views/SubscriptionPage.vue'
 import ProfileView from '../views/ProfileView.vue'
+import HistoryPage from '../views/HistoryPage.vue'
+import LoginPage from '../views/LoginPage.vue'
+import ChatPage from '../views/ChatPage.vue'
 
 const routes = [
   {
@@ -25,6 +28,22 @@ const routes = [
     path: '/profile',
     name: 'profile',
     component: ProfileView,
+  },
+  {
+    path: '/chat/:chatId?',
+    name: 'ChatPage',
+    component: ChatPage, // Импортируешь нужный компонент
+    props: true,
+  },
+  {
+    path: '/history',
+    name: 'HistoryPage',
+    component: HistoryPage,
+  },
+  {
+    path: '/login',
+    name: 'LoginPage',
+    component: LoginPage,
   },
 ]
 

@@ -8,13 +8,13 @@
     />
     
     <img
-      v-if="$route.name === 'GeneratePage'"
+      v-if="$route.name === 'GeneratePage' || $route.name === 'ChatPage'"
       class="custom-shape top-right"
       :src="generateFigure_1"
       alt="Generate Figure"
     />
     <img
-      v-if="$route.name === 'GeneratePage'"
+      v-if="$route.name === 'GeneratePage' || $route.name === 'ChatPage'"
       class="custom-shape bottom-left"
       :src="generateFigure_2"
       alt="Generate Figure 2"
@@ -32,6 +32,18 @@
       :src="generateFigure_2"
       alt="Payment Figure Bottom"
     />
+    <img
+      v-if="$route.name === 'HistoryPage'"
+      class="custom-shape top-right"
+      :src="historyFigure_1"
+      alt="History Figure 1"
+    />
+    <img
+      v-if="$route.name === 'HistoryPage'"
+      class="custom-shape bottom-left"
+      :src="historyFigure_2"
+      alt="History Figure 2"
+    />
   </div>
 </template>
 
@@ -39,6 +51,8 @@
 import mainFigure from '@/assets/images/figure2.png'
 import generateFigure_1 from '@/assets/images/figure3.png'
 import generateFigure_2 from '@/assets/images/figure4.png'
+import historyFigure_1 from '@/assets/images/figure5.png'
+import historyFigure_2 from '@/assets/images/figure6.png'
 
 export default {
   data() {
@@ -46,6 +60,8 @@ export default {
       mainFigure,
       generateFigure_1,
       generateFigure_2,
+      historyFigure_1,
+      historyFigure_2,
     }
   },
 }
