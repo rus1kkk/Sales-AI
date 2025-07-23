@@ -6,21 +6,40 @@
   gap: 24px;
   background-color: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(20px);
+  margin-right: 5px;
 }
 
-time {
+.datetime-task-name-block,
+.datetime-block {
+  display: flex;
+  gap: 24px;
+}
+
+.notification-block time {
   font-size: 16px;
   color: rgba(168, 169, 175, 1);
 }
 
-h2 {
+.notification-block h2 {
   font-size: 16px;
   font-weight: 500;
   color: var(--actient-color);
   text-decoration: underline;
 }
 
-a {
+.notification-block a {
   all: unset;
   cursor: pointer;
+}
+
+@media (max-width: 760px) {
+  .notification-block {
+    flex-direction: column;
+    align-items: start;
+  }
+}
+@media (max-width: 540px) {
+  .datetime-task-name-block {
+    flex-direction: column;
+  }
 }

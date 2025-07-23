@@ -5,6 +5,8 @@
   align-items: center;
   max-width: 1130px;
   width: 90%;
+  margin-top: 30px;
+  overflow-x: hidden;
 }
 
 .notifications-section h1 {
@@ -32,6 +34,21 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
+  overflow-y: auto;
+  max-height: 380px;
+}
+
+.notifications-block::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background: transparent;
+}
+.notifications-block::-webkit-scrollbar-track {
+  background: transparent;
+}
+.notifications-block::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.32);
+  border-radius: 4px;
 }
 
 .notifications-section hr {
@@ -39,4 +56,16 @@
   width: 100%;
   background-color: rgba(255, 255, 255, 0.2);
   border: none;
+}
+
+@media (max-width: 768px) {
+  .notifications-section {
+    margin: 86px;
+  }
+}
+
+@media (max-width: 540px) {
+  .notifications-block {
+    max-height: 420px;
+  }
 }

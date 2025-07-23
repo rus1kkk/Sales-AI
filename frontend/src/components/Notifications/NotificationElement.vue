@@ -1,13 +1,17 @@
 <template>
   <article class="notification-block">
-    <time :datetime="date">{{ date }}</time>
-    <time :datetime="time">{{ time }}</time>
-    <a :href="taskLink">
-      <h2>
-        Задача "<span>{{ title }}</span
-        >"
-      </h2>
-    </a>
+    <div class="datetime-task-name-block">
+      <div class="datetime-block">
+        <time :datetime="date">{{ date }}</time>
+        <time :datetime="time">{{ time }}</time>
+      </div>
+      <a :href="taskLink">
+        <h2>
+          Задача "<span>{{ title }}</span
+          >"
+        </h2>
+      </a>
+    </div>
     <p>{{ description }}</p>
   </article>
 </template>
