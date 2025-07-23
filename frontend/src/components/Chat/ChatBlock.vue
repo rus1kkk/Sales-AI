@@ -10,153 +10,106 @@
       />
     </div>
 
-    <InputPrompt :onSubmit="handlePrompt" />
+    <InputPrompt :onSubmit="handlePromptSubmit" />
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { ref, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
+import axios from 'axios'
 import ChatMessages from '../Chat/ChatMessage.vue'
 import InputPrompt from '../Generate/InputPrompt.vue'
 
-const messages = ref([]) // история сообщений
-const chatName = ref('Новый чат')
-const answers = ref([]) // ответы пользователя
-const route = useRoute()
+// --- РЕАКТИВНЫЕ ПЕРЕМЕННЫЕ ---
 
-// пока статические аватарки
+const messages = ref([]) // История сообщений
+const chatName = ref('Новый чат')
+
+const route = useRoute()
+const chatId = ref(route.params.chatId ? Number(route.params.chatId) : null)
+
+//! Пока жестко заданный текущий пользователь (заменить на авторизацию)
+
+const currentUserId = 9
+
+//! Статичные аватарки
+
 const userAvatarUrl = '/ChatPhoto/user_avatar.png'
 const modelAvatarUrl = '/ChatPhoto/model_avatar.png'
 
-const router = useRouter()
-
-const chatId = ref(route.params.chatId || null)
-const initialPrompt = ref(route.query.prompt || null)
-
-const SpecificationsDocument = ref(null) // id ТЗ
-const sectionQueue = ref([]) // секции брифинга
-const currentSectionIndex = ref(0)
-const currentQuestionIndex = ref(0)
-
-onMounted(async () => {
-  if (!chatId.value && initialPrompt.value) {
-    await handlePrompt(initialPrompt.value)
-  } else if (chatId.value) {
-    // тут логика для загрузки чата из истории
-    addMessage('model', 'Загрузка сохранённого чата...')
+// --- ФУНКЦИЯ ЗАГРУЗКИ СООБЩЕНИЙ С СЕРВЕРА ---
+async function fetchMessages() {
+  if (!chatId.value) return
+  try {
+    const res = await axios.get(`/api/messages/${chatId.value}`)
+    messages.value = res.data.map((m) => ({
+      sender: m.message_type === 'user' ? 'user' : m.message_type === 'ai' ? 'model' : 'system',
+      text: m.message_text,
+      id: m.id,
+    }))
+  } catch (error) {
+    console.error('Ошибка загрузки сообщений:', error)
   }
-})
+}
 
-onBeforeUnmount(() => {
-  window.removeEventListener('beforeunload', sendChatDataToServer)
-})
+// --- ФУНКЦИЯ ЗАГРУЗКИ ИМЕНИ ЧАТА ---
+async function fetchChatName() {
+  if (!chatId.value) return
+  try {
+    const res = await axios.get(`/api/chats/${chatId.value}`)
+    chatName.value = res.data.chat_name || 'Без имени'
+  } catch (e) {
+    console.error('Ошибка загрузки имени чата:', e)
+  }
+}
 
-async function handlePrompt(promptText) {
-  addMessage('user', promptText)
-
-  // заглушка для названия чата
-  if (messages.value.length === 1) {
-    chatName.value = `Чат: ${promptText.slice(0, 30)}${promptText.length > 30 ? '...' : ''}`
-    await startChat(promptText)
+// --- ФУНКЦИЯ ОТПРАВКИ СООБЩЕНИЯ НА БЭКЕНД ---
+async function sendMessageToBackend(messageText) {
+  if (!chatId.value) {
+    console.warn('chatId не задан')
     return
   }
 
-  // текущая секция и вопрос из этой секции
-  const section = sectionQueue.value[currentSectionIndex.value]
-  const question = section?.questions[currentQuestionIndex.value]
-
-  // добавление ответа
-  if (question) {
-    answers.value.push({
-      sectionId: section.id,
-      sectionTitle: section.title,
-      questionId: question.id,
-      questionText: question.text,
-      answer: promptText,
-      answer_formatted: null,
-      initialPrompt: initialPrompt.value,
+  try {
+    await axios.post('/api/messages/with-ai', {
+      id_chat: chatId.value,
+      id_user: currentUserId,
+      message_text: messageText,
     })
+  } catch (error) {
+    console.error('Ошибка при отправке сообщения на backend:', error)
   }
-
-  await advanceToNextQuestion()
 }
 
-function addMessage(sender, text) {
-  messages.value.push({ sender, text })
+// --- ОБРАБОТЧИК ОТПРАВКИ СООБЩЕНИЯ ИЗ InputPrompt ---
+async function handlePromptSubmit(messageText) {
+  // Добавляем временное сообщение с отрицательным ID
+  const tempId = Date.now() * -1
+  messages.value.push({ sender: 'user', text: messageText, id: tempId })
+
+  await sendMessageToBackend(messageText)
 }
 
-async function startChat() {
-  // произвольные айдшники заглушки
-  chatId.value = 'chat_' + Math.random().toString(36).substring(2, 10)
-  SpecificationsDocument.value = 'doc_' + Math.random().toString(36).substring(2, 10)
+// --- ИНИЦИАЛИЗАЦИЯ ПРИ ЗАГРУЗКЕ КОМПОНЕНТА ---
+onMounted(async () => {
+  if (!chatId.value) return
 
-  // url по айдишнику чата
-  await router.replace({ name: 'ChatPage', params: { chatId: chatId.value }, query: {} })
+  fetchChatName()
+  await fetchMessages()
 
-  // статический список секций
-  sectionQueue.value = [
-    {
-      id: 's1',
-      title: 'Целевая аудитория',
-      questions: [{ id: 'q1', text: 'Кто ваши клиенты?' }],
-    },
-    {
-      id: 's2',
-      title: 'Функциональность',
-      questions: [{ id: 'q2', text: 'Какие функции важны в продукте?' }],
-    },
-  ]
+  window.Echo.channel(`chat.${chatId.value}`).listen('MessageSent', (e) => {
+    const m = e.message
 
-  await modelSay(`Начнём брифинг! Первая секция: "${sectionQueue.value[0].title}"`)
-  await modelSay(sectionQueue.value[0].questions[0].text)
-}
+    const newMsg = {
+      sender: m.message_type === 'user' ? 'user' : m.message_type === 'ai' ? 'model' : 'system',
+      text: m.message_text,
+      id: m.id,
+    }
 
-async function advanceToNextQuestion() {
-  const section = sectionQueue.value[currentSectionIndex.value]
-  if (!section) return
-
-  currentQuestionIndex.value++
-
-  if (currentQuestionIndex.value >= section.questions.length) {
-    currentSectionIndex.value++
-    currentQuestionIndex.value = 0
-
-    const nextSection = sectionQueue.value[currentSectionIndex.value]
-    if (nextSection) await modelSay(`Следующая секция: "${nextSection.title}"`)
-  }
-
-  const nextQuestion = getCurrentQuestion()
-  nextQuestion ? await modelSay(nextQuestion.text) : await finishBriefing()
-}
-
-function getCurrentQuestion() {
-  return (
-    sectionQueue.value[currentSectionIndex.value]?.questions[currentQuestionIndex.value] || null
-  )
-}
-
-async function finishBriefing() {
-  await modelSay(`Все вопросы завершены. ТЗ: ${JSON.stringify(answers.value)}`)
-}
-
-// для задержки
-async function modelSay(text) {
-  await new Promise((resolve) => setTimeout(resolve, 600))
-  addMessage('model', text)
-}
-
-async function sendChatDataToServer() {
-  const chatData = {
-    chatId: chatId.value,
-    chatName: chatName.value,
-    messages: messages.value,
-    answers: answers.value,
-  }
-
-  // отправка на сервер
-  console.log(chatData)
-}
+    messages.value.push(newMsg)
+  })
+})
 </script>
 
 <style scoped>
