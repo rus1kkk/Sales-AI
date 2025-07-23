@@ -8,6 +8,7 @@ import HistoryPage from '../views/HistoryPage.vue'
 import LoginPage from '../views/LoginPage.vue'
 import PresentationPage from '../views/PresentationPage.vue'
 import ChatPage from '../views/ChatPage.vue'
+import NotificationsPage from '../views/NotificationsPage.vue'
 
 const routes = [
   {
@@ -50,6 +51,11 @@ const routes = [
     path: '/presentation',
     name: 'PresentationPage',
     component: PresentationPage,
+  },
+  {
+    path: '/notifications',
+    name: 'NotificationsPage',
+    component: NotificationsPage,
   },
 ]
 
