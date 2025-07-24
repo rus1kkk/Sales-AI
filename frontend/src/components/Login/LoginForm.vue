@@ -120,7 +120,7 @@
     </transition>
 
     <button class="send-button" :disabled="hasErrors || isSubmitting">
-      {{ isSubmitting ? 'ПОДОЖДИТЕ...' : mode === 'login' ? 'ВОЙТИ' : 'ЗАРЕГИСТРИРОВАТЬСЯ' }}
+      {{ isSubmitting ? 'Подождите...' : mode === 'login' ? 'Войти' : 'Зарегистрироваться' }}
     </button>
   </form>
 </template>
@@ -130,6 +130,7 @@ import { ref, computed, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { ValidationHelpers } from '@/utils/ValidationModule'
 import LoginMessageModal from './LoginMessageModal.vue'
+import authService from '@/services/authService.js';
 
 const router = useRouter()
 const mode = ref('login')
@@ -249,19 +250,20 @@ async function submitForm() {
         }
       : {
           name: fields.value.name,
-          email: fields.value.emailRegister,
           phone: fields.value.phone,
+          email: fields.value.emailRegister,
           password: fields.value.passwordRegister,
+          password_confirmation: fields.value.confirmPassword
         }
 
   // заглушка для работы формы
   try {
-    await new Promise((resolve) => setTimeout(resolve, 2000))
-
-    const isSuccess =
+    const response =
       mode.value === 'login'
-        ? sendData.email && sendData.password === '123'
-        : sendData.email && sendData.password && sendData.name && sendData.phone
+        ? await authService.login(sendData)
+        : await authService.register(sendData)
+
+    const isSuccess = response.success;
 
     if (!isSuccess) {
       error.value = 'Некорректные данные.'

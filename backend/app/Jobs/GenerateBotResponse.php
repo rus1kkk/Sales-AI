@@ -29,7 +29,7 @@ class GenerateBotResponse implements ShouldQueue
 
         $botMessage = Message::create([
             'id_chat' => $this->userMessage->id_chat,
-            'id_user' => 0, // 0 — бот
+            'id_user' => 77777, // 77777 - заглушка-бот
             'message_text' => $responseText,
             'message_type' => 'ai',
             'timestamp' => now(),

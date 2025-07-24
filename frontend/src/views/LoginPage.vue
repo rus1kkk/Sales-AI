@@ -1,5 +1,15 @@
 <script setup>
 import LoginForm from '../components/Login/LoginForm.vue'
+
+import { onMounted, onUnmounted } from 'vue'
+
+onMounted(() => {
+  document.querySelector('.app-container')?.classList.add('no-scroll')
+})
+
+onUnmounted(() => {
+  document.querySelector('.app-container')?.classList.remove('no-scroll')
+})
 </script>
 
 <template>
@@ -12,10 +22,10 @@ import LoginForm from '../components/Login/LoginForm.vue'
 .form-container {
   display: grid;
   place-items: center;
-  min-height: 90vh;
-  height: 90vh;
+  max-height: calc(100vh - 103px);
+  min-height: calc(100vh - 103px);
   overflow-y: auto;
   box-sizing: border-box;
-  padding: 10px;
+  padding-bottom: 10px;
 }
 </style>

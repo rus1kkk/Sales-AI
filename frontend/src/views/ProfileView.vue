@@ -47,6 +47,9 @@ import PurchaseHistory from '@/components/Profile/History/PurchaseHistory.vue'
 import ModalForm from '@/components/Profile/Modals/ModalForm.vue'
 import userPhoto from '@/assets/images/user-photo.png'
 import ModalInfo from '@/components/Profile/Modals/ModalInfo.vue'
+import authService from '@/services/authService.js';
+
+const currentUser = await authService.getMe();
 
 export default {
   name: 'ProfileView',
@@ -54,9 +57,9 @@ export default {
   data() {
     return {
       userInfo: {
-        name: 'Денис',
-        phone: '+79783405384',
-        email: 'lol.ogo@mail.ru',
+        name: currentUser.name,
+        phone: currentUser.phone,
+        email: currentUser.email,
         plan: 'PRO',
         validUntil: '23.09.2025',
         photoUrl: userPhoto,
@@ -142,7 +145,7 @@ export default {
       this.infoModal.purchase = null
     },
     async handleSubmit(values) {
-      const value = this.modal.field === 'password' ? values[0] : values[0]
+      const value = this.modal.field === 'password' ? values : values[0]
       await this.updateUserField(this.modal.field, value)
       this.closeModal()
     },
@@ -173,24 +176,18 @@ export default {
       }
     },
     async saveUserData(field, value) {
-      //Сохранение данных профиля
-      //метод заглушка
-      console.log(`Сохранение поля ${field} со значением:`, value)
-      if (this.mockServerError) {
-        await new Promise((resolve) => setTimeout(resolve, 2000))
-        throw new Error('Произошла ошибка при сохранении данных')
+      if (field === 'password') {
+        await authService.changePassword(value)
+      } else {
+        await authService.updateProfile(field, value)
       }
       // Имитация серверной задержки
       await new Promise((resolve) => setTimeout(resolve, 2000))
     },
     async logout() {
-      //выход из профиля
-      //метод заглушка
       try {
-        if (this.mockServerError) {
-          await new Promise((resolve) => setTimeout(resolve, 2000))
-          throw new Error('Произошла ошибка при выходе из профиля')
-        }
+        await authService.logout()
+
         this.$router.push('/')
       } catch (error) {
         alert(error.message)

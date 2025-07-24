@@ -232,26 +232,26 @@ export default {
 
       // Дополнительная проверка для подтверждения пароля
       if (this.field === 'password') {
-        if (index === 0 && this.inputValues[1]) {
+        if (index === 1 && this.inputValues[2]) {
           this.validatePasswordConfirmation()
-        } else if (index === 1) {
+        } else if (index === 2) {
           this.validatePasswordConfirmation()
         }
       }
     },
 
     validatePasswordConfirmation() {
-      if (this.field !== 'password' || this.inputValues.length < 2) return
+      if (this.field !== 'password' || this.inputValues.length < 3) return
 
-      const password = this.inputValues[0]
-      const confirmPassword = this.inputValues[1]
+      const password = this.inputValues[1]
+      const confirmPassword = this.inputValues[2]
 
       if (confirmPassword.trim() === '') {
-        this.setFieldError(1, 'Подтвердите пароль')
+        this.setFieldError(2, 'Подтвердите пароль')
       } else if (password !== confirmPassword) {
-        this.setFieldError(1, 'Пароли не совпадают')
+        this.setFieldError(2, 'Пароли не совпадают')
       } else {
-        this.setFieldError(1, '')
+        this.setFieldError(2, '')
       }
     },
 
