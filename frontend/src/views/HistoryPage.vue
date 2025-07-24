@@ -46,7 +46,7 @@ export default {
   components: { HistoryItem, Modal },
   data() {
     return {
-      userId: null, 
+      userId: null,
       items: [], // массив для данных чатов
       isLoading: false, // состояние загрузки
       modal: {
@@ -60,40 +60,40 @@ export default {
     }
   },
   async created() {
-    await this.initializePage();
+    await this.initializePage()
   },
   methods: {
     async initializePage() {
-      this.isLoading = true;
+      this.isLoading = true
       try {
-        await this.getUserId();
-        await this.loadChatList();
+        await this.getUserId()
+        await this.loadChatList()
       } catch (error) {
-        console.error('Ошибка при инициализации страницы:', error);
-        this.$router.push('/login'); // Перенаправление на логин при ошибке
+        console.error('Ошибка при инициализации страницы:', error)
+        this.$router.push('/login') // Перенаправление на логин при ошибке
       } finally {
-        this.isLoading = false;
+        this.isLoading = false
       }
     },
     async getUserId() {
       try {
-        const currentUser = await authService.getMe();
-        this.userId = currentUser.id_user;
+        const currentUser = await authService.getMe()
+        this.userId = currentUser.id_user
       } catch (error) {
-        console.error('Ошибка при получении ID пользователя:', error);
-        throw error; // Пробрасываем ошибку, чтобы обработать в initializePage
+        console.error('Ошибка при получении ID пользователя:', error)
+        throw error // Пробрасываем ошибку, чтобы обработать в initializePage
       }
     },
     async loadChatList() {
       try {
-        this.items = await historyService.getHistory(this.userId);
+        this.items = await historyService.getHistory(this.userId)
       } catch (error) {
-        console.error('Ошибка при загрузке истории:', error);
-        throw error; // Пробрасываем ошибку, чтобы обработать в initializePage
+        console.error('Ошибка при загрузке истории:', error)
+        throw error // Пробрасываем ошибку, чтобы обработать в initializePage
       }
     },
     openModal(mode, item) {
-      const title = mode === 'edit' ? 'Редактировать чат' : 'Удалить чат';
+      const title = mode === 'edit' ? 'Редактировать чат' : 'Удалить чат'
       this.modal = {
         isOpen: true,
         title,
@@ -102,30 +102,30 @@ export default {
         currentItemName: item.name,
         currentItem: item,
         value: item.name,
-      };
+      }
     },
     closeModal() {
-      this.modal.isOpen = false;
+      this.modal.isOpen = false
     },
     async handleModalSubmit(value) {
       try {
-        await historyService.updateChat(this.modal.currentItem.id, value);
-        const index = this.items.findIndex((item) => item.id === this.modal.currentItem.id);
+        await historyService.updateChat(this.modal.currentItem.id, value)
+        const index = this.items.findIndex((item) => item.id === this.modal.currentItem.id)
         if (index !== -1) {
-          this.items[index].name = value;
+          this.items[index].name = value
         }
-        this.closeModal();
+        this.closeModal()
       } catch (error) {
-        console.error('Ошибка при обновлении чата:', error);
+        console.error('Ошибка при обновлении чата:', error)
       }
     },
     async handleModalDelete() {
       try {
-        await historyService.deleteChat(this.modal.currentItem.id);
-        this.items = this.items.filter((item) => item.id !== this.modal.currentItem.id);
-        this.closeModal();
+        await historyService.deleteChat(this.modal.currentItem.id)
+        this.items = this.items.filter((item) => item.id !== this.modal.currentItem.id)
+        this.closeModal()
       } catch (error) {
-        console.error('Ошибка при удалении чата:', error);
+        console.error('Ошибка при удалении чата:', error)
       }
     },
   },
@@ -224,7 +224,6 @@ export default {
   transform: translateY(-20px);
 }
 
-
 .loading-spinner {
   display: flex;
   flex-direction: column;
@@ -246,7 +245,11 @@ export default {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 </style>

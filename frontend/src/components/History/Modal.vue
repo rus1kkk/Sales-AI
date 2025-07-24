@@ -61,14 +61,14 @@ watch(
   () => props.value,
   (newVal) => {
     localValue.value = newVal
-  }
+  },
 )
 
 watch(
   () => props.inputs,
   (newInputs) => {
     localValue.value = newInputs?.[0]?.value || props.value || ''
-  }
+  },
 )
 
 const handleClose = () => {
@@ -88,7 +88,6 @@ const handleDelete = () => {
   handleClose()
 }
 </script>
-
 
 <style scoped>
 .modal-overlay {
