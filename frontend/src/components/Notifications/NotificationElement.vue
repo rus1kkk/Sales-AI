@@ -7,8 +7,8 @@
       </div>
       <a :href="taskLink">
         <h2>
-          Задача "<span>{{ title }}</span
-          >"
+          Задача «<span>{{ title }}</span
+          >»
         </h2>
       </a>
     </div>

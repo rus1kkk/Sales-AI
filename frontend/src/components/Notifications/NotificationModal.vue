@@ -6,14 +6,15 @@
           <time :datetime="date">{{ date }}</time>
           <time :datetime="time">{{ time }}</time>
         </div>
-        <h2>
-          Задача "<span>{{ title }}</span
-          >"
-        </h2>
+        <a :href="taskLink">
+          <h2>
+            Задача «<span>{{ title }}</span
+            >»
+          </h2>
+        </a>
       </div>
       <p>{{ description }}</p>
     </div>
-
     <CustomButton type="icon" @click="$emit('close')">
       <template #icon>
         <svg

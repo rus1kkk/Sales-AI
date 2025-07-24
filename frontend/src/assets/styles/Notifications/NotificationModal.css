@@ -28,6 +28,11 @@
   text-decoration: underline;
 }
 
+a {
+  all: unset;
+  cursor: pointer;
+}
+
 @media (max-width: 800px) {
   .info-block {
     flex-direction: column;
