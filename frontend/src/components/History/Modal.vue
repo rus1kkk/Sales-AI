@@ -49,18 +49,26 @@ const props = defineProps({
     validator: (value) => ['edit', 'delete'].includes(value),
   },
   currentItemName: String,
+  inputs: Array,
 })
 
 const emit = defineEmits(['update:isOpen', 'update:value', 'submit', 'delete'])
 
-const localValue = ref(props.value)
+const localValue = ref(props.inputs?.[0]?.value || props.value || '')
 const isClosing = ref(false)
 
 watch(
   () => props.value,
   (newVal) => {
     localValue.value = newVal
-  },
+  }
+)
+
+watch(
+  () => props.inputs,
+  (newInputs) => {
+    localValue.value = newInputs?.[0]?.value || props.value || ''
+  }
 )
 
 const handleClose = () => {
@@ -70,7 +78,6 @@ const handleClose = () => {
     isClosing.value = false
   }, 500)
 }
-
 const handleSubmit = () => {
   emit('submit', localValue.value)
   handleClose()
@@ -81,6 +88,7 @@ const handleDelete = () => {
   handleClose()
 }
 </script>
+
 
 <style scoped>
 .modal-overlay {
