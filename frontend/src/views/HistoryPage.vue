@@ -82,8 +82,26 @@ const handleModalDelete = () => {
 }
 
 .history-wrap {
-  width: 50vw;
+  width: 95vw;
+  max-width: 1130px;
   height: fit-content;
+}
+
+@media (max-width: 1060px) {
+  .history-wrap {
+    width: 85vw;
+    margin-top: 82px;
+  }
+
+  .history-page-section {
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 600px) {
+  .history-wrap {
+    width: 95vw;
+  }
 }
 
 .history-page-section h1 {
@@ -96,7 +114,7 @@ const handleModalDelete = () => {
 }
 
 .history-table {
-  max-height: 296px;
+  max-height: 320px;
   margin-bottom: 24px;
   background-color: rgba(255, 255, 255, 0.2);
   border-radius: 60px;
@@ -105,16 +123,19 @@ const handleModalDelete = () => {
   box-shadow: inset 0px 0px 68px 0px rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);
 }
+
 .history-table::-webkit-scrollbar {
   width: 8px;
   height: 8px;
   background: transparent;
 }
+
 .history-table::-webkit-scrollbar-track {
   background: transparent;
   margin-top: 48px;
   margin-bottom: 48px;
 }
+
 .history-table::-webkit-scrollbar-thumb {
   background-color: rgba(255, 255, 255, 0.32);
   border-radius: 4px;
@@ -129,11 +150,11 @@ const handleModalDelete = () => {
   line-height: 120%;
   font-weight: 400;
   cursor: pointer;
-  font-family: 'Montserrat', sans-serif;
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
 .history-page-section .button > * {
   text-decoration: none;
   color: var(--white-color);
@@ -143,11 +164,13 @@ const handleModalDelete = () => {
   opacity: 0;
   animation: fadeUp 0.8s ease-out forwards;
 }
+
 @keyframes fadeUp {
   0% {
     opacity: 0;
     transform: translateY(-40px);
   }
+
   100% {
     opacity: 1;
     transform: translateY(0);
@@ -158,11 +181,13 @@ const handleModalDelete = () => {
   opacity: 1;
   animation: fadeOut 0.5s ease-out forwards;
 }
+
 @keyframes fadeOut {
   0% {
     opacity: 1;
     transform: translateY(0px);
   }
+
   100% {
     opacity: 0;
     transform: translateY(-40px);

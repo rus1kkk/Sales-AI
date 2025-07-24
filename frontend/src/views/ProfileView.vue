@@ -32,9 +32,9 @@ import ProfileCard from '../components/Profile/User/ProfileCard.vue'
 import PurchaseHistory from '@/components/Profile/History/PurchaseHistory.vue'
 import ModalForm from '@/components/Profile/Modals/ModalForm.vue'
 import userPhoto from '@/assets/images/user-photo.png'
-import authService from '@/services/authService.js';
+import authService from '@/services/authService.js'
 
-const currentUser = await authService.getMe();
+const currentUser = await authService.getMe()
 
 export default {
   name: 'ProfileView',
