@@ -6,6 +6,7 @@
         style="animation-delay: 0.3s"
         ref="userPhoto"
         :photoUrl="userInfo.photoUrl"
+        :isSaving="isSaving"
         @photo-changed="$emit('photo-changed', $event)"
       />
       <CustomButton
@@ -16,12 +17,14 @@
         @click="$emit('logout')"
       />
     </div>
-    <UserInfo
-      class="fade-up"
-      style="animation-delay: 0.4s"
-      :userInfo="userInfo"
-      @open-modal="$emit('open-modal', $event)"
-    />
+    <div class="right-part">
+      <UserInfo
+        class="fade-up"
+        style="animation-delay: 0.4s"
+        :userInfo="userInfo"
+        @open-modal="$emit('open-modal', $event)"
+      />
+    </div>
   </div>
 </template>
 
@@ -36,6 +39,10 @@ export default {
     userInfo: {
       type: Object,
       required: true,
+    },
+    isSaving: {
+      type: Boolean,
+      default: false,
     },
   },
   components: { UserPhoto, UserInfo, CustomButton },
@@ -69,6 +76,16 @@ export default {
   gap: 24px;
 }
 
+.right-part {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 16px;
+  align-self: stretch;
+}
+
 .fade-up {
   opacity: 0;
   transform: translateY(30px);
@@ -79,6 +96,28 @@ export default {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .profile-card {
+    min-width: 0;
+    max-width: 90vw;
+  }
+}
+
+@media (max-width: 668px) {
+  .profile-card {
+    flex-direction: column;
+    max-width: 410px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-card {
+    flex-direction: column;
+    max-width: 349px;
   }
 }
 </style>

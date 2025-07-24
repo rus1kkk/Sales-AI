@@ -8,6 +8,7 @@
       :isCurrent="index === 0"
       class="fade-up"
       :style="{ 'animation-delay': `${0.4 + index * 0.2}s` }"
+      @open-info="openInfoModal"
     />
   </div>
 </template>
@@ -32,6 +33,11 @@ export default {
             'quantity' in purchase &&
             'expiryDate' in purchase,
         ),
+    },
+  },
+  methods: {
+    openInfoModal(purchase) {
+      this.$emit('open-info-modal', purchase)
     },
   },
 }
@@ -67,6 +73,18 @@ export default {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .history {
+    min-width: 0;
+  }
+}
+
+@media (max-width: 360px) {
+  .history {
+    padding: 0px 6.5px;
   }
 }
 </style>
