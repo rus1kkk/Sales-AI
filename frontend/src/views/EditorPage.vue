@@ -130,7 +130,6 @@ export default {
       },
     })
 
-    
     const initialData = ref(JSON.parse(JSON.stringify(Data)))
 
     const changedFields = ref({})
@@ -162,7 +161,7 @@ export default {
       changedFields.value = detectChanges(initialData.value, Data)
     }
 
-    // Log changed fields or all data
+    // Выводим измененные поля
     const logChangedData = () => {
       if (Object.keys(changedFields.value).length > 0) {
         console.log('Измененные поля:', changedFields.value)
