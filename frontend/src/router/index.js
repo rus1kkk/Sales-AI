@@ -6,8 +6,11 @@ import SubscriptionPage from '../views/SubscriptionPage.vue'
 import ProfileView from '../views/ProfileView.vue'
 import HistoryPage from '../views/HistoryPage.vue'
 import LoginPage from '../views/LoginPage.vue'
+import PresentationPage from '../views/PresentationPage.vue'
 import ChatPage from '../views/ChatPage.vue'
 import PaymentPage from '../views/PaymentPage.vue'
+import TzPage from '../views/TzPage.vue'
+
 
 const routes = [
   {
@@ -33,7 +36,7 @@ const routes = [
   {
     path: '/chat/:chatId?',
     name: 'ChatPage',
-    component: ChatPage, // Импортируешь нужный компонент
+    component: ChatPage,
     props: true,
   },
   {
@@ -55,6 +58,16 @@ const routes = [
   path: '/manager',
   name: 'ManagerPage',
   component: () => import('@/views/ManagerPage.vue')
+    },
+  {
+    path: '/presentation',
+    name: 'PresentationPage',
+    component: PresentationPage,
+  },
+  {
+    path: '/editTZ',
+    name: 'TzPage',
+    component: TzPage,
   }
 ]
 

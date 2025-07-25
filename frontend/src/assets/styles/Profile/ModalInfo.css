@@ -1,0 +1,103 @@
+@import url('../main.css');
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(15, 0, 0, 0.25);
+  backdrop-filter: blur(12.5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+.modal {
+  display: flex;
+  padding: 36px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 24px;
+  border-radius: 61px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 0 60px;
+}
+.modal-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  width: 100%;
+}
+.title-row {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+.purchase-info {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+.data-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  align-self: stretch;
+}
+.property {
+  color: var(--muted-color);
+
+  /* Основной текст */
+  font-family: Montserrat;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 125%; /* 20px */
+}
+.value {
+  color: var(--standart-color);
+
+  /* Основной текст */
+  font-family: Montserrat;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 125%; /* 20px */
+}
+
+.button-row {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  gap: 24px;
+  align-self: stretch;
+}
+.title {
+  color: var(--white-color);
+  text-align: center;
+
+  /* Подзаголовок */
+  font-family: Montserrat;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 120%; /* 28.8px */
+}
+@media (max-width: 480px) {
+  .modal {
+    margin: 0 8px;
+  }
+}
+
+@media (max-width: 360px) {
+  .modal {
+    margin: 0 3.5px;
+  }
+}

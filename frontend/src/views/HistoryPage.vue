@@ -1,74 +1,134 @@
 <template>
   <section class="history-page-section">
-    <div class="history-wrap">
+    <div v-if="isLoading" class="loading-spinner">
+      <div class="spinner"></div>
+    </div>
+    <div v-else class="history-wrap">
       <h1 class="fade-up" style="animation-delay: 0.2s">История генераций</h1>
       <div class="history-table fade-up" style="animation-delay: 0.4s">
         <HistoryItem
           v-for="item in items"
           :key="item.id"
           :item="item"
-          @edit="handleEditClick"
-          @delete="handleDeleteClick"
+          @edit="openModal('edit', item)"
+          @delete="openModal('delete', item)"
         />
       </div>
       <div class="button fade-up" style="animation-delay: 0.6s">
         <router-link to="/generate">Генерировать</router-link>
       </div>
     </div>
+    <transition name="modal-fade">
+      <Modal
+        v-if="modal.isOpen"
+        v-model:isOpen="modal.isOpen"
+        :title="modal.title"
+        :value="modal.value"
+        :inputs="modal.inputs"
+        :mode="modal.field"
+        :currentItemName="modal.currentItemName"
+        :onClose="closeModal"
+        :onSubmit="handleModalSubmit"
+        :onDelete="handleModalDelete"
+      />
+    </transition>
   </section>
-  <Modal
-    v-model:isOpen="isModalOpen"
-    v-model:value="currentItemName"
-    :mode="modalMode"
-    :currentItemName="currentItemName"
-    @submit="handleModalSubmit"
-    @delete="handleModalDelete"
-  />
 </template>
 
-<script setup>
+<script>
 import HistoryItem from '../components/History/HistoryItem.vue'
 import Modal from '@/components/History/Modal.vue'
-import { ref } from 'vue'
-//временное решение без бэка
-const items = ref([
-  { id: 1, name: 'Зоомагазин', date: '01.07.2025', status: 'готово' },
-  { id: 2, name: 'Магазин детских игрушек', date: '02.07.2025', status: 'отправлено менеджеру' },
-  { id: 3, name: 'Упаковки "Цветной жираф"', date: '03.07.2025', status: 'ожидает генерацию' },
-  { id: 4, name: 'Кофейня', date: '04.07.2025', status: 'готово' },
-  { id: 5, name: 'Новый запрос', date: '05.07.2025', status: 'ожидает генерацию' },
-])
+import historyService from '@/services/historyService.js'
+import authService from '@/services/authService.js'
 
-const isModalOpen = ref(false)
-const currentItem = ref(null)
-const currentItemName = ref('')
-const modalMode = ref('edit')
-
-const handleEditClick = (item) => {
-  modalMode.value = 'edit'
-  currentItem.value = item
-  currentItemName.value = item.name
-  isModalOpen.value = true
-}
-
-const handleDeleteClick = (item) => {
-  modalMode.value = 'delete'
-  currentItem.value = item
-  currentItemName.value = item.name
-  isModalOpen.value = true
-}
-
-const handleModalSubmit = (newVal) => {
-  //временное решение, без бэка
-  const index = items.value.findIndex((item) => item.id === currentItem.value.id)
-  if (index !== -1) {
-    items.value[index].name = newVal
-  }
-}
-
-const handleModalDelete = () => {
-  //временное решение, без бэка
-  items.value = items.value.filter((item) => item.id !== currentItem.value.id)
+export default {
+  name: 'HistoryPage',
+  components: { HistoryItem, Modal },
+  data() {
+    return {
+      userId: null,
+      items: [], // массив для данных чатов
+      isLoading: false, // состояние загрузки
+      modal: {
+        isOpen: false,
+        title: '',
+        inputs: [],
+        field: '',
+        currentItemName: '',
+        currentItem: null,
+      },
+    }
+  },
+  async created() {
+    await this.initializePage()
+  },
+  methods: {
+    async initializePage() {
+      this.isLoading = true
+      try {
+        await this.getUserId()
+        await this.loadChatList()
+      } catch (error) {
+        console.error('Ошибка при инициализации страницы:', error)
+        this.$router.push('/login') // Перенаправление на логин при ошибке
+      } finally {
+        this.isLoading = false
+      }
+    },
+    async getUserId() {
+      try {
+        const currentUser = await authService.getMe()
+        this.userId = currentUser.id_user
+      } catch (error) {
+        console.error('Ошибка при получении ID пользователя:', error)
+        throw error // Пробрасываем ошибку, чтобы обработать в initializePage
+      }
+    },
+    async loadChatList() {
+      try {
+        this.items = await historyService.getHistory(this.userId)
+      } catch (error) {
+        console.error('Ошибка при загрузке истории:', error)
+        throw error // Пробрасываем ошибку, чтобы обработать в initializePage
+      }
+    },
+    openModal(mode, item) {
+      const title = mode === 'edit' ? 'Редактировать чат' : 'Удалить чат'
+      this.modal = {
+        isOpen: true,
+        title,
+        inputs: mode === 'edit' ? [{ label: 'Название чата', value: item.name, key: 'name' }] : [],
+        field: mode,
+        currentItemName: item.name,
+        currentItem: item,
+        value: item.name,
+      }
+    },
+    closeModal() {
+      this.modal.isOpen = false
+    },
+    async handleModalSubmit(value) {
+      try {
+        await historyService.updateChat(this.modal.currentItem.id, value)
+        const index = this.items.findIndex((item) => item.id === this.modal.currentItem.id)
+        if (index !== -1) {
+          this.items[index].name = value
+        }
+        this.closeModal()
+      } catch (error) {
+        console.error('Ошибка при обновлении чата:', error)
+      }
+    },
+    async handleModalDelete() {
+      try {
+        await historyService.deleteChat(this.modal.currentItem.id)
+        this.items = this.items.filter((item) => item.id !== this.modal.currentItem.id)
+        this.closeModal()
+      } catch (error) {
+        console.error('Ошибка при удалении чата:', error)
+      }
+    },
+  },
 }
 </script>
 
@@ -154,18 +214,42 @@ const handleModalDelete = () => {
   }
 }
 
-.fade-out {
-  opacity: 1;
-  animation: fadeOut 0.5s ease-out forwards;
+.modal-fade-enter-active,
+.modal-fade-leave-active {
+  transition: all 0.4s ease;
 }
-@keyframes fadeOut {
+.modal-fade-enter-from,
+.modal-fade-leave-to {
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+.loading-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--white-color);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 18px;
+}
+
+.spinner {
+  width: 56px;
+  height: 56px;
+  border: 5px solid rgba(255, 255, 255, 0.3); /* Полупрозрачная дуга (оставшаяся часть) */
+  border-top: 5px solid var(--white-color); /* Основная видимая часть дуги */
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16px;
+}
+
+@keyframes spin {
   0% {
-    opacity: 1;
-    transform: translateY(0px);
+    transform: rotate(0deg);
   }
   100% {
-    opacity: 0;
-    transform: translateY(-40px);
+    transform: rotate(360deg);
   }
 }
 </style>

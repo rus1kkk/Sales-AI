@@ -1,0 +1,18 @@
+{
+  "name": "ws-soketi",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@soketi/soketi": "^1.6.1"
+  },
+  "volta": {
+    "node": "18.16.0"
+  }
+}

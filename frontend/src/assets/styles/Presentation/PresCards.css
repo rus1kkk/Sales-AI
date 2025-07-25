@@ -1,0 +1,185 @@
+h1 {
+  color: var(--actient-color, #71abeb);
+  font-family: Montserrat;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 120%; /* 43.2px */
+  /*text-transform: uppercase;*/
+  text-align: center;
+}
+
+h2 {
+  color: #fff;
+  text-align: center;
+
+  /* Заголовок */
+  font-family: Montserrat;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 120%; /* 38.4px */
+}
+
+h3 {
+  color: #fff;
+  text-align: center;
+
+  /* Подзаголовок */
+  font-family: Montserrat;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 120%; /* 28.8px */
+}
+/*small-card*/
+.small-card,
+.big-card {
+  display: flex;
+  flex-direction: column;
+  padding: 36px;
+  /*align-items: center;*/
+  border-radius: 60px;
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0px 0px 68px 0px rgba(255, 255, 255, 0.05) inset;
+  backdrop-filter: blur(22.5px);
+  gap: 16px;
+  text-align: left;
+  width: 100%;
+  height: auto;
+}
+
+.small-card h1 {
+  text-align: left;
+}
+
+.small-card p {
+  font-size: 16px;
+}
+
+.small-list {
+  display: flex;
+  padding: 24px 0px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.small-list h3 {
+  text-align: left;
+}
+
+/*input*/
+.input {
+  width: 100%;
+  padding: 25px 36px;
+  border-radius: 60px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(7.5px);
+  border: none;
+  color: var(--standart-color);
+  font-size: 16px;
+  outline: none;
+  font-family: Montserrat;
+  transition: background 0.5s ease;
+  will-change: background;
+}
+
+.input::placeholder {
+  font-family: Montserrat;
+  color: var(--standart-color);
+}
+
+.input-error {
+  background: rgba(252, 134, 134, 0.5);
+}
+
+/*big-card*/
+.big-list {
+  display: flex;
+  flex-direction: row;
+  padding: 24px 0;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.big-list h3,
+h1 {
+  width: 100%;
+  text-align: left;
+}
+.big-card-p {
+  margin-bottom: 24px;
+}
+
+.big-list .input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.big-list .input {
+  width: calc(50% - 8px);
+  display: inline-flex;
+}
+
+/* Последний input занимает всю ширину */
+.big-list .input:last-child {
+  width: 100%;
+  margin-left: 0;
+}
+
+.card-img {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.team-img {
+  width: 150px;
+  height: 150px;
+  border-radius: 1000px;
+  overflow: hidden;
+}
+
+.team-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+@media (max-width: 1200px) {
+  .small-card,
+  .big-card {
+    width: 698px;
+  }
+  .big-list .input {
+    width: 100%;
+  }
+  .team-img {
+    width: 90px;
+    height: 90px;
+  }
+}
+@media (max-width: 740px) {
+  .small-card,
+  .big-card {
+    width: 456px;
+  }
+  .team-img {
+    width: 54px;
+    height: 54px;
+  }
+}
+@media (max-width: 500px) {
+  .small-card,
+  .big-card {
+    width: 312px;
+  }
+  .team-img {
+    width: 30px;
+    height: 30px;
+  }
+}

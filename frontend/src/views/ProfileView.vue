@@ -6,12 +6,18 @@
         style="animation-delay: 0.2s"
         ref="profileCard"
         :userInfo="userInfo"
+        :isSaving="isSaving"
         @open-modal="openModal"
         @update-user-field="updateUserField"
         @photo-changed="handlePhotoChange"
         @logout="logout"
       />
-      <PurchaseHistory class="fade-up" style="animation-delay: 0.3s" :purchases="purchases" />
+      <PurchaseHistory
+        class="fade-up"
+        style="animation-delay: 0.3s"
+        :purchases="purchases"
+        @open-info-modal="openInfoModal"
+      />
     </div>
     <transition name="modal-fade">
       <ModalForm
@@ -24,6 +30,14 @@
         :onSubmit="handleSubmit"
       />
     </transition>
+    <transition name="modal-fade">
+      <ModalInfo
+        v-if="infoModal.isOpen"
+        :isOpen="infoModal.isOpen"
+        :purchase="infoModal.purchase"
+        :onClose="closeInfoModal"
+      />
+    </transition>
   </div>
 </template>
 
@@ -32,20 +46,25 @@ import ProfileCard from '../components/Profile/User/ProfileCard.vue'
 import PurchaseHistory from '@/components/Profile/History/PurchaseHistory.vue'
 import ModalForm from '@/components/Profile/Modals/ModalForm.vue'
 import userPhoto from '@/assets/images/user-photo.png'
+import ModalInfo from '@/components/Profile/Modals/ModalInfo.vue'
+import authService from '@/services/authService.js';
+
+const currentUser = await authService.getMe();
 
 export default {
   name: 'ProfileView',
-  components: { ProfileCard, PurchaseHistory, ModalForm },
+  components: { ProfileCard, PurchaseHistory, ModalForm, ModalInfo },
   data() {
     return {
       userInfo: {
-        name: 'Денис',
-        phone: '+79783405384',
-        email: 'lol.ogo@mail.ru',
+        name: currentUser.name,
+        phone: currentUser.phone,
+        email: currentUser.email,
         plan: 'PRO',
         validUntil: '23.09.2025',
         photoUrl: userPhoto,
       },
+      isSaving: false, // Состояние сохранения изображения
       isAddingCard: false, // Состояние показа формы добавления карты
       pendingRemovals: [], // Очередь для удаления карт (хранит объекты { card, index })
       mockServerError: false, // true - для имитации ошибки
@@ -53,38 +72,41 @@ export default {
         {
           id: 1,
           date: '12.04.2025',
-          title: 'Тариф “Pro”',
+          title: 'Pro',
           quantity: '1',
           expiryDate: '12.05.2025',
         },
         {
           id: 2,
           date: '12.03.2025',
-          title: 'Тариф “Pro”',
+          title: 'Pro',
           quantity: '1',
           expiryDate: '12.04.2025',
         },
         {
           id: 3,
           date: '12.02.2025',
-          title: 'Тариф “Pro”',
+          title: 'Pro',
           quantity: '1',
           expiryDate: '12.03.2025',
         },
         {
           id: 4,
           date: '12.12.2024',
-          title: 'Тариф “Pro”',
+          title: 'Pro',
           quantity: '2',
           expiryDate: '12.02.2025',
         },
       ],
-
       modal: {
         isOpen: false,
         title: '',
         inputs: [],
         field: '',
+      },
+      infoModal: {
+        isOpen: false,
+        purchase: null,
       },
     }
   },
@@ -112,8 +134,18 @@ export default {
     closeModal() {
       this.modal.isOpen = false
     },
+    openInfoModal(purchase) {
+      this.infoModal = {
+        isOpen: true,
+        purchase,
+      }
+    },
+    closeInfoModal() {
+      this.infoModal.isOpen = false
+      this.infoModal.purchase = null
+    },
     async handleSubmit(values) {
-      const value = this.modal.field === 'password' ? values[0] : values[0]
+      const value = this.modal.field === 'password' ? values : values[0]
       await this.updateUserField(this.modal.field, value)
       this.closeModal()
     },
@@ -127,6 +159,7 @@ export default {
     async handlePhotoChange({ file, url }) {
       //Cмена фотографии
       console.log('Выбранное фото:', { file, url })
+      this.isSaving = true // Устанавливаем isSaving перед серверной обработкой
       try {
         await this.saveUserData('photoUrl', url)
         this.userInfo.photoUrl = url
@@ -138,25 +171,23 @@ export default {
           console.error('Фото не найдено')
         }
         throw error
+      } finally {
+        this.isSaving = false // Сбрасываем isSaving после завершения
       }
     },
     async saveUserData(field, value) {
-      //Сохранение данных профиля
-      //метод заглушка
-      console.log(`Сохранение поля ${field} со значением:`, value)
-      if (this.mockServerError) {
-        await new Promise((resolve) => setTimeout(resolve, 2000))
-        throw new Error('Произошла ошибка при сохранении данных')
+      if (field === 'password') {
+        await authService.changePassword(value)
+      } else {
+        await authService.updateProfile(field, value)
       }
+      // Имитация серверной задержки
+      await new Promise((resolve) => setTimeout(resolve, 2000))
     },
     async logout() {
-      //выход из профиля
-      //метод заглушка
       try {
-        if (this.mockServerError) {
-          await new Promise((resolve) => setTimeout(resolve, 2000))
-          throw new Error('Произошла ошибка при выходе из профиля')
-        }
+        await authService.logout()
+
         this.$router.push('/')
       } catch (error) {
         alert(error.message)
@@ -200,7 +231,6 @@ export default {
   }
 }
 
-/* Анимация для модального окна */
 .modal-fade-enter-active,
 .modal-fade-leave-active {
   transition: all 0.4s ease;
@@ -209,5 +239,44 @@ export default {
 .modal-fade-leave-to {
   opacity: 0;
   transform: translateY(-20px);
+}
+
+@media (max-width: 1280px) {
+  .top-block {
+    grid-template-columns: minmax(562px, 647px);
+    grid-template-rows: auto;
+    gap: 24px;
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .top-block {
+    grid-template-columns: minmax(80vw, 95vw);
+    grid-template-rows: auto;
+    gap: 24px;
+    width: 100%;
+    justify-content: center;
+  }
+  .user-profile {
+    padding: 0px 60.5px;
+  }
+}
+@media (max-width: 600px) {
+  .user-profile {
+    padding: 0px 32px;
+  }
+}
+@media (max-width: 480px) {
+  .user-profile {
+    padding: 0px 12px;
+  }
+}
+
+@media (max-width: 360px) {
+  .user-profile {
+    padding: 0px 5.5px;
+  }
 }
 </style>
