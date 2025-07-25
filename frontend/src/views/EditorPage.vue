@@ -1,11 +1,29 @@
 <template>
   <div class="editor">
-    <div class="switch">переключатель</div>
-    <div class="edited">
-      <EditedPresintation :data="Data" @update:data="handleDataUpdate" />
+    <div class="switch">
+      <div class="switch-buttons">
+        <button class="tz-button" :disabled="mode === 'tz'" @click="mode = 'tz'">ТЗ</button>
+        <button
+          class="presentation-button"
+          :disabled="mode === 'presentation'"
+          @click="mode = 'presentation'"
+        >
+          ПРЕЗЕНТАЦИЯ
+        </button>
+      </div>
     </div>
-    <div class="check-res">
-      <CustomButton type="default" label="Просмотреть результат" @click="logChangedData" />
+
+    <div v-if="mode === 'tz'" class="tz-content">
+      <div class="placeholder">
+        <h2>Техническое задание</h2>
+      </div>
+    </div>
+
+    <div v-if="mode === 'presentation'" class="edited">
+      <EditedPresintation :data="Data" @update:data="handleDataUpdate" />
+      <div class="check-res">
+        <CustomButton type="default" label="Просмотреть результат" @click="logChangedData" />
+      </div>
     </div>
   </div>
 </template>
@@ -19,6 +37,8 @@ export default {
   name: 'EditorPage',
   components: { EditedPresintation, CustomButton },
   setup() {
+    const mode = ref('tz')
+
     //  Централизация мокдаты
     const Data = reactive({
       cover: {
@@ -170,12 +190,19 @@ export default {
       }
     }
 
-    return { Data, handleDataUpdate, logChangedData }
+    return {
+      mode,
+      Data,
+      handleDataUpdate,
+      logChangedData,
+    }
   },
 }
 </script>
 
-<style>
+<style scoped>
+@import '../assets/styles/main.css';
+
 .editor {
   display: flex;
   flex-direction: column;
@@ -183,15 +210,70 @@ export default {
 }
 
 .switch {
-  text-align: center;
+  margin: 139px 120px 120px;
+  padding: 0px 160px;
+  display: flex;
+  justify-content: center;
 }
+
 .check-res {
   margin: 0px 120px 120px;
   padding: 0px 160px;
   display: flex;
   justify-content: center;
 }
+
 .check-res button {
   width: 100%;
+}
+
+.switch-buttons {
+  display: flex;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 60px;
+  overflow: hidden;
+  border: 3px solid var(--actient-color);
+}
+
+.switch-buttons > button {
+  all: unset;
+  flex: 1;
+  padding: 23px 0;
+  background: transparent;
+  transition: background-color 0.5s ease;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 20px;
+  text-align: center;
+  color: var(--actient-color);
+}
+
+.switch-buttons > button:disabled {
+  background-color: var(--actient-color);
+  color: white;
+  cursor: default;
+}
+
+.switch-buttons > button:not(:disabled):hover {
+  background-color: rgba(var(--actient-color-rgb), 0.1);
+}
+
+.tz-content {
+  margin: 40px 120px;
+  padding: 40px;
+}
+
+.placeholder {
+  text-align: center;
+  padding: 60px 40px;
+  border-radius: 12px;
+}
+
+.placeholder h2 {
+  margin: 0 0 16px 0;
+  color: #666;
+  font-size: 24px;
+  font-weight: 600;
 }
 </style>
