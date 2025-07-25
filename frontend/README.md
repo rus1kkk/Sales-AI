@@ -2,34 +2,35 @@
 
 This template should help get you started developing with Vue 3 in Vite.
 
-## Recommended IDE Setup
+### Рекомендованная среда разработки
 
 [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
 
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
+## Установка проекта
 
 ```sh
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+### Компиляция и автообновление для разработки
 
 ```sh
 npm run dev
 ```
 
-### Compile and Minify for Production
+### Компиляция и минимизация для продакшена
 
 ```sh
 npm run build
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+### Проверка кода с помощью [ESLint](https://eslint.org/)
 
 ```sh
 npm run lint
 ```
+### Установка Laravel Echo и Pusher-js
+```sh
+npm install --save laravel-echo pusher-js
+```
+Обратите внимание, что переменные окружения нужно задать в вашем .env файле Laravel.
