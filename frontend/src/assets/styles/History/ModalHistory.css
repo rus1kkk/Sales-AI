@@ -1,0 +1,140 @@
+.modal-overlay {
+  align-items: center;
+  backdrop-filter: blur(10px);
+  background: rgba(0, 0, 0, 0.25);
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 1000;
+}
+
+.modal-section {
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 60px;
+  max-width: 777px;
+  padding: 36px;
+  width: 95vw;
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.name-close-block {
+  display: flex;
+  justify-content: space-between;
+}
+
+.name-close-block h2 {
+  display: inline-block;
+  font-weight: 400;
+  white-space: normal;
+  word-break: break-word;
+}
+
+.close-img {
+  cursor: pointer;
+}
+
+.edit-form,
+.info-form {
+  align-items: end;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.delete-form {
+  align-items: end;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.delete-message {
+  width: 100%;
+}
+
+.modal-content .buttons {
+  display: flex;
+  gap: 24px;
+}
+
+button {
+  all: unset;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+}
+
+.actient-color-button {
+  color: var(--actient-color);
+}
+
+input {
+  all: unset;
+  background-color: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(12px);
+  border-radius: 60px;
+  box-shadow: inset 0px 0px 68px 0px rgba(255, 255, 255, 0.05);
+  box-sizing: border-box;
+  color: var(--muted-color);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  padding: 25px 36px;
+  width: 100%;
+}
+
+.info-section {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.info-section h2 {
+  color: rgba(168, 169, 175, 1);
+  font-size: 16px;
+  font-weight: 500;
+  margin-right: 5px;
+  white-space: nowrap;
+}
+
+.info-section p {
+  text-align: right;
+  word-wrap: break-word;
+}
+
+path {
+  transition: fill 0.3s ease-in-out;
+}
+
+path:hover {
+  cursor: pointer;
+  fill: var(--actient-color);
+}
+
+@media (max-width: 400px) {
+  .modal-content h2 {
+    max-width: 260px;
+    text-align: center;
+  }
+
+  .delete-message {
+    text-align: center;
+  }
+}
+
+@media (max-width: 360px) {
+  .info-section h2,
+  .info-section p {
+    font-size: 12px;
+  }
+}

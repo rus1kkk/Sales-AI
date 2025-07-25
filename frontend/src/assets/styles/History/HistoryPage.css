@@ -1,0 +1,133 @@
+.history-page-section {
+  align-items: center;
+  display: flex;
+  height: 90vh;
+  justify-content: center;
+  width: 100vw;
+}
+
+.history-wrap {
+  height: fit-content;
+  max-width: 1130px;
+  width: 95vw;
+}
+
+.history-page-section h1 {
+  color: var(--white-color);
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 120%;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.history-page-section .button {
+  align-items: center;
+  background-color: var(--actient-color);
+  border-radius: 34px;
+  cursor: pointer;
+  display: flex;
+  font-size: 24px;
+  font-weight: 400;
+  height: 67px;
+  justify-content: center;
+  line-height: 120%;
+  width: 100%;
+}
+
+.history-page-section .button > * {
+  color: var(--white-color);
+  text-decoration: none;
+}
+
+.history-table {
+  backdrop-filter: blur(10px);
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 60px;
+  box-shadow: inset 0px 0px 68px 0px rgba(255, 255, 255, 0.05);
+  margin-bottom: 24px;
+  max-height: 320px;
+  overflow: auto;
+  overflow-y: auto;
+}
+
+.history-table::-webkit-scrollbar {
+  background: transparent;
+  height: 8px;
+  width: 8px;
+}
+
+.history-table::-webkit-scrollbar-track {
+  background: transparent;
+  margin-bottom: 48px;
+  margin-top: 48px;
+}
+
+.history-table::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.32);
+  border-radius: 4px;
+}
+
+.fade {
+  animation: fade 0.5s ease-out forwards;
+  opacity: 0;
+}
+
+.fade-close {
+  animation: fade-close 0.5s ease-out forwards;
+  opacity: 1;
+}
+
+.fade-up {
+  animation: fadeUp 0.8s ease-out forwards;
+  opacity: 0;
+}
+
+@keyframes fade {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-close {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(-40px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 1060px) {
+  .history-page-section {
+    align-items: flex-start;
+  }
+
+  .history-wrap {
+    margin-top: 82px;
+    width: 85vw;
+  }
+}
+
+@media (max-width: 600px) {
+  .history-wrap {
+    width: 95vw;
+  }
+}
