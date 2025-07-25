@@ -9,6 +9,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ImageGenerationController;
 use App\Http\Controllers\PresentationController;
+use App\Http\Controllers\DifyController;
 
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
@@ -37,3 +38,4 @@ Route::post('/messages', [MessageController::class, 'store']);
 Route::post('/messages/with-ai', [MessageController::class, 'storeWithAIResponse']);
 
 Route::get('/presentation/{chatId}', [PresentationController::class, 'show']);
+Route::post('/dify-chat', [DifyController::class, 'chat']);
