@@ -28,7 +28,9 @@ const handleFileChange = (event) => {
     const imageUrl = URL.createObjectURL(file) // Создаем URL для превью
     const newItems = [...props.items] // Копия массива items
     newItems[currentImageIndex.value] = {
-      ...(typeof newItems[currentImageIndex.value] === 'object' ? newItems[currentImageIndex.value] : {}),
+      ...(typeof newItems[currentImageIndex.value] === 'object'
+        ? newItems[currentImageIndex.value]
+        : {}),
       src: imageUrl,
       alt: newItems[currentImageIndex.value]?.alt || '',
       title: newItems[currentImageIndex.value]?.title || '',
@@ -51,7 +53,12 @@ const handleFileChange = (event) => {
       style="display: none"
       @change="handleFileChange"
     />
-    <div v-for="(item, index) in props.items" :key="index" class="cases" @click="handleImageClick(index)">
+    <div
+      v-for="(item, index) in props.items"
+      :key="index"
+      class="cases"
+      @click="handleImageClick(index)"
+    >
       <img
         :src="item.src || item || 'https://via.placeholder.com/1024x1024'"
         :alt="item.alt || 'Кейс ' + (index + 1)"
