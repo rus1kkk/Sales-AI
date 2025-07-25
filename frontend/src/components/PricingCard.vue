@@ -30,6 +30,7 @@ defineProps({
   },
 })
 </script>
+
 <template>
   <div class="pricing-card">
     <!-- Заголовок -->
@@ -76,22 +77,24 @@ defineProps({
           <div class="price-description">{{ priceDescription }}</div>
         </div>
         <div class="price-action" v-if="showAction">
-          Оформить подписку
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="21"
-            height="12"
-            viewBox="0 0 21 12"
-            fill="none"
-          >
-            <path
-              d="M1 6H21M21 6L16 1M21 6L16 11"
-              stroke="#E6E9ED"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
+          <router-link to="/payment" class="price-action-link">
+            Оформить подписку
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="21"
+              height="12"
+              viewBox="0 0 21 12"
+              fill="none"
+            >
+              <path
+                d="M1 6H21M21 6L16 1M21 6L16 11"
+                stroke="#E6E9ED"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </router-link>
         </div>
       </div>
     </div>
@@ -100,4 +103,17 @@ defineProps({
 
 <style>
 @import url('../assets/styles/PricingCard.css');
+
+.price-action-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.price-action-link:hover {
+  color: #71abeb;
+}
 </style>

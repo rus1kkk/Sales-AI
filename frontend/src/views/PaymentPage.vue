@@ -7,10 +7,10 @@
           <p class="product-count">1 товар</p>
           <div class="product-info">
             <div>
-              <h2 class="product-title">PRO</h2>
+              <h2 class="product-title">{{ planTitle }}</h2>
               <p class="product-desc">
                 Месячная подписка на услуги Sales AI<br />
-                Для активных отделов продаж
+                {{ planSubtitle }}
               </p>
             </div>
             <div class="product-price">
@@ -66,10 +66,23 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+import { useRoute } from 'vue-router'
 import { ValidationHelpers } from '@/utils/ValidationModule.js'
 import SuccessModal from '@/views/SuccessModal.vue'
 import FailModal from '@/views/FailModal.vue'
 import FloatingShapes from '@/components/FloatingShapes.vue'
+
+const route = useRoute()
+
+// Динамические данные тарифа
+const planTitle = route.query.plan || 'PRO'
+const planPrice = Number((route.query.price || 990).toString().replace(/[^\d]/g, ''))
+const planSubtitle =
+  planTitle === 'MAX'
+    ? 'В 10 раз больше возможностей, чем у Pro'
+    : planTitle === 'PRO'
+    ? 'Для активных отделов продаж'
+    : 'Попробуй автоматизацию продаж'
 
 const showSuccess = ref(false)
 const showFailure = ref(false)
@@ -85,8 +98,7 @@ const isPhoneValid = ref(true)
 const isEmailValid = ref(true)
 
 const quantity = ref(1)
-const pricePerUnit = 990
-const totalPrice = computed(() => quantity.value * pricePerUnit)
+const totalPrice = computed(() => quantity.value * planPrice)
 
 const increaseQuantity = () => quantity.value++
 const decreaseQuantity = () => {
