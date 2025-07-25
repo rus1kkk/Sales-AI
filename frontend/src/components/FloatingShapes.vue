@@ -32,6 +32,19 @@
       :src="historyFigure_1"
       alt="History Figure 1"
     />
+
+    <img
+      v-if="$route.name === 'ManagerPage'"
+      class="custom-shape top-right"
+      :src="generateFigure_2"
+      alt="Generate Figure 2"
+    />
+    <img
+      v-if="$route.name === 'ManagerPage'"
+      class="custom-shape bottom-left"
+      :src="historyFigure_1"
+      alt="History Figure 1"
+    />
     
     <img
       v-if="$route.name === 'HistoryPage'"

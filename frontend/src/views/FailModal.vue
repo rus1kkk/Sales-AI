@@ -1,69 +1,71 @@
 <template>
-  <div class="modal-backdrop" @click.self="close">
-    <div class="modal-window">
-      <button class="close-button" @click="close">×</button>
-      <h2>Оплата провалена!</h2>
-      <p>Попробуйте еще раз или обратитесь в поддержку платежной системы.</p>
-      <button class="action-button" @click="close">Закрыть</button>
+  <div class="modal-overlay">
+    <div class="modal fail-modal">
+      <button class="close-btn" @click="$emit('close')">×</button>
+      <h2 class="modal-title">Оплата провалена!</h2>
+      <p class="modal-text">
+        Попробуйте еще раз или обратитесь в поддержку платежной системы.
+      </p>
+      <button class="close-link" @click="$emit('close')">Закрыть</button>
     </div>
   </div>
 </template>
 
-<script setup>
-const emit = defineEmits(['close'])
-function close() {
-  emit('close')
-}
-</script>
-
 <style scoped>
-.modal-backdrop {
+.modal-overlay {
   position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.6);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
   display: flex;
-  align-items: center;
   justify-content: center;
-  z-index: 999;
+  align-items: center;
+  z-index: 9999;
 }
-.modal-window {
-  background: rgba(208, 72, 72, 0.9);
-  color: white;
-  padding: 2rem;
-  border-radius: 1.5rem;
+
+.modal {
+  background: rgba(255, 0, 0, 0.4); /* Красный фон для ошибки */
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  padding: 24px 32px;
+  max-width: 450px;
+  width: 100%;
   text-align: center;
-  max-width: 480px;
-  width: 90%;
+  color: #fff;
   position: relative;
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
 }
-.modal-window h2 {
-  margin: 0 0 0.5rem;
-}
-.modal-window p {
-  margin-bottom: 1.5rem;
-  font-size: 0.95rem;
-}
-.action-button {
-  background: rgba(255, 255, 255, 0.15);
-  color: white;
-  border: none;
-  padding: 0.5rem 1.2rem;
-  border-radius: 0.5rem;
-  cursor: pointer;
+
+.modal-title {
+  font-size: 20px;
   font-weight: bold;
+  margin-bottom: 8px;
 }
-.action-button:hover {
-  background: rgba(255, 255, 255, 0.25);
+
+.modal-text {
+  font-size: 14px;
+  margin-bottom: 16px;
 }
-.close-button {
+
+.close-btn {
   position: absolute;
-  right: 1rem;
-  top: 1rem;
-  background: transparent;
+  top: 12px;
+  right: 12px;
+  background: none;
   border: none;
-  font-size: 1.5rem;
-  color: white;
+  color: #fff;
+  font-size: 20px;
   cursor: pointer;
+}
+
+.close-link {
+  background: none;
+  border: none;
+  color: #fff;
+  text-decoration: underline;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 14px;
 }
 </style>

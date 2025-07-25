@@ -226,7 +226,6 @@
   background-color: #2563eb;
 }
 
-/* ------------------ АДАПТИВНОСТЬ ------------------ */
 
 @media (max-width: 1024px) {
   .payment-header {

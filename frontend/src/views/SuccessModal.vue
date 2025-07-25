@@ -1,47 +1,74 @@
 <template>
-  <div class="modal-backdrop" @click.self="close">
-    <div class="modal-window">
-      <h2>Спасибо за оплату!</h2>
-      <p>Мы получили ваш платёж. Подтверждение отправлено на почту.</p>
-      <button @click="close">Закрыть</button>
+  <div class="modal-overlay">
+    <div class="modal success-modal">
+      <button class="close-btn" @click="$emit('close')">×</button>
+      <h2 class="modal-title">Оплата прошла успешно!</h2>
+      <p class="modal-text">
+        Оформлена подписка по тарифу “PRO”. Срок действия: до 16.04.2025
+      </p>
+      <button class="close-link" @click="$emit('close')">Закрыть</button>
     </div>
   </div>
 </template>
 
-<script setup>
-defineProps(['visible'])
-const emit = defineEmits(['close'])
-
-function close() {
-  emit('close')
-}
-</script>
-
 <style scoped>
-.modal-backdrop {
+.modal-overlay {
   position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.6);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
   display: flex;
-  align-items: center;
   justify-content: center;
-  z-index: 50;
+  align-items: center;
+  z-index: 9999;
 }
-.modal-window {
-  background: white;
-  padding: 2rem;
-  border-radius: 1rem;
+
+.modal {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  padding: 24px 32px;
+  max-width: 450px;
+  width: 100%;
   text-align: center;
-  max-width: 400px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  color: #fff;
+  position: relative;
 }
-.modal-window button {
-  margin-top: 1rem;
-  background: #007bff;
-  color: white;
+
+.success-modal {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.modal-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.modal-text {
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+
+.close-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: none;
   border: none;
-  padding: 0.5rem 1.5rem;
-  border-radius: 0.5rem;
+  color: #fff;
+  font-size: 20px;
   cursor: pointer;
+}
+
+.close-link {
+  background: none;
+  border: none;
+  color: #5aa9ff;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 14px;
 }
 </style>

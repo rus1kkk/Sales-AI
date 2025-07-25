@@ -50,7 +50,12 @@ const routes = [
     path: '/payment',
   name: 'PaymentPage',
   component: PaymentPage,
-}
+  },
+  {
+  path: '/manager',
+  name: 'ManagerPage',
+  component: () => import('@/views/ManagerPage.vue')
+  }
 ]
 
 const router = createRouter({
