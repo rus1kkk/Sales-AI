@@ -9,6 +9,7 @@
           :item="item"
           @edit="handleEditClick"
           @delete="handleDeleteClick"
+          @info="handleInfoClick"
         />
       </div>
       <div class="button fade-up" style="animation-delay: 0.6s">
@@ -20,9 +21,10 @@
     v-model:isOpen="isModalOpen"
     v-model:value="currentItemName"
     :mode="modalMode"
-    :currentItemName="currentItemName"
+    :currentItem="currentItem"
     @submit="handleModalSubmit"
     @delete="handleModalDelete"
+    @info="handleModalInfo"
   />
 </template>
 
@@ -32,11 +34,29 @@ import Modal from '@/components/History/Modal.vue'
 import { ref } from 'vue'
 //временное решение без бэка
 const items = ref([
-  { id: 1, name: 'Зоомагазин', date: '01.07.2025', status: 'готово' },
-  { id: 2, name: 'Магазин детских игрушек', date: '02.07.2025', status: 'отправлено менеджеру' },
-  { id: 3, name: 'Упаковки "Цветной жираф"', date: '03.07.2025', status: 'ожидает генерацию' },
-  { id: 4, name: 'Кофейня', date: '04.07.2025', status: 'готово' },
-  { id: 5, name: 'Новый запрос', date: '05.07.2025', status: 'ожидает генерацию' },
+  { id: 1, name: 'Зоомагазин', date: '01.07.2025', status: 'готово', expirationDate: '01.07.2025' },
+  {
+    id: 2,
+    name: 'Магазин детских игрушек',
+    date: '02.07.2025',
+    status: 'отправлено менеджеру',
+    expirationDate: '02.07.2025',
+  },
+  {
+    id: 3,
+    name: 'Упаковки "Цветной жираф"',
+    date: '03.07.2025',
+    status: 'ожидает генерацию',
+    expirationDate: '03.07.2025',
+  },
+  { id: 4, name: 'Кофейня', date: '04.07.2025', status: 'готово', expirationDate: '04.07.2025' },
+  {
+    id: 5,
+    name: 'Новый запрос',
+    date: '05.07.2025',
+    status: 'ожидает генерацию',
+    expirationDate: '05.07.2025',
+  },
 ])
 
 const isModalOpen = ref(false)
@@ -58,6 +78,13 @@ const handleDeleteClick = (item) => {
   isModalOpen.value = true
 }
 
+const handleInfoClick = (item) => {
+  modalMode.value = 'info'
+  currentItem.value = item
+  currentItemName.value = item.name
+  isModalOpen.value = true
+}
+
 const handleModalSubmit = (newVal) => {
   //временное решение, без бэка
   const index = items.value.findIndex((item) => item.id === currentItem.value.id)
@@ -69,6 +96,10 @@ const handleModalSubmit = (newVal) => {
 const handleModalDelete = () => {
   //временное решение, без бэка
   items.value = items.value.filter((item) => item.id !== currentItem.value.id)
+}
+
+const handleModalInfo = () => {
+  console.log('Modal in info mode was triggered')
 }
 </script>
 
@@ -177,20 +208,33 @@ const handleModalDelete = () => {
   }
 }
 
-.fade-out {
-  opacity: 1;
-  animation: fadeOut 0.5s ease-out forwards;
+.fade {
+  opacity: 0;
+  animation: fade 0.5s ease-out forwards;
 }
 
-@keyframes fadeOut {
+@keyframes fade {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.fade-close {
+  opacity: 1;
+  animation: fade-close 0.5s ease-out forwards;
+}
+
+@keyframes fade-close {
   0% {
     opacity: 1;
-    transform: translateY(0px);
   }
 
   100% {
     opacity: 0;
-    transform: translateY(-40px);
   }
 }
 </style>

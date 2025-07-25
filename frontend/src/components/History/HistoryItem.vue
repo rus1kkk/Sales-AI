@@ -36,6 +36,7 @@
         height="20"
         viewBox="0 0 21 20"
         fill="none"
+        @click="openModalInfo(item)"
       >
         <path
           fill-rule="evenodd"
@@ -72,7 +73,7 @@ const props = defineProps({
   },
 })
 
-const emit = defineEmits(['edit, delete'])
+const emit = defineEmits(['edit', 'delete', 'info'])
 
 const openModalDelete = () => {
   emit('delete', props.item)
@@ -80,6 +81,10 @@ const openModalDelete = () => {
 
 const openModalUpdate = () => {
   emit('edit', props.item)
+}
+
+const openModalInfo = () => {
+  emit('info', props.item)
 }
 </script>
 

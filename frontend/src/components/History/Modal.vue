@@ -1,16 +1,23 @@
 <template>
   <div
     v-if="isOpen"
-    class="modal-overlay fade-up"
+    class="modal-overlay fade"
     @click.self="handleClose"
-    :class="{ 'fade-out': isClosing }"
-    style="animation-delay: 0.2s"
+    :class="{ 'fade-close': isClosing }"
   >
     <div class="modal-section" :class="{ 'modal-edit': mode === 'edit' }">
       <div class="modal-content">
         <!-- Заголовок и кнопка закрытия -->
         <div class="name-close-block">
-          <h2>{{ mode === 'edit' ? 'Изменение названия' : 'Удаление элемента' }}</h2>
+          <h2>
+            {{
+              mode === 'edit'
+                ? 'Изменение названия'
+                : mode === 'delete'
+                  ? 'Удаление элемента'
+                  : 'Информация'
+            }}
+          </h2>
           <svg
             class="close-img"
             @click="handleClose"
@@ -34,17 +41,38 @@
           <input type="text" v-model="localValue" required />
           <div class="buttons">
             <button type="button" @click="handleClose">Отменить</button>
-            <button type="submit">Принять</button>
+            <button type="submit" class="actient-color-button">Принять</button>
           </div>
         </form>
 
         <!-- Режим удаления -->
-        <form v-else @submit.prevent="handleDelete" class="delete-form">
-          <p class="delete-message">Вы уверены, что хотите удалить "{{ currentItemName }}"?</p>
+        <form v-if="mode === 'delete'" @submit.prevent="handleDelete" class="delete-form">
+          <p class="delete-message">Вы уверены, что хотите удалить "{{ currentItem?.name }}"?</p>
           <div class="buttons">
             <button type="button" @click="handleClose">Отменить</button>
-            <button type="submit" class="delete-btn">Удалить</button>
+            <button type="submit" class="delete-btn actient-color-button">Удалить</button>
           </div>
+        </form>
+
+        <!-- Режим просмотра информации -->
+        <form v-if="mode === 'info'" @submit.prevent="handleInfo" class="info-form">
+          <section class="info-section">
+            <h2>Дата создания:</h2>
+            <p>{{ currentItem?.date }}</p>
+          </section>
+          <section class="info-section">
+            <h2>Название:</h2>
+            <p>{{ currentItem?.name }}</p>
+          </section>
+          <section class="info-section">
+            <h2>Статус:</h2>
+            <p>{{ currentItem?.status }}</p>
+          </section>
+          <section class="info-section">
+            <h2>Действителен до:</h2>
+            <p>{{ currentItem?.expirationDate }}</p>
+          </section>
+          <button type="button" class="actient-color-button" @click="handleClose">Закрыть</button>
         </form>
       </div>
     </div>
@@ -60,12 +88,12 @@ const props = defineProps({
   mode: {
     type: String,
     default: 'edit',
-    validator: (value) => ['edit', 'delete'].includes(value),
+    validator: (value) => ['edit', 'delete', 'info'].includes(value),
   },
-  currentItemName: String,
+  currentItem: Object,
 })
 
-const emit = defineEmits(['update:isOpen', 'update:value', 'submit', 'delete'])
+const emit = defineEmits(['update:isOpen', 'update:value', 'submit', 'delete', 'info'])
 
 const localValue = ref(props.value)
 const isClosing = ref(false)
@@ -94,6 +122,11 @@ const handleDelete = () => {
   emit('delete')
   handleClose()
 }
+
+const handleInfo = () => {
+  emit('info')
+  handleClose()
+}
 </script>
 
 <style scoped>
@@ -111,6 +144,25 @@ const handleDelete = () => {
   z-index: 1000;
 }
 
+.info-section h2 {
+  color: rgba(168, 169, 175, 1);
+  font-weight: 500;
+  font-size: 16px;
+  white-space: nowrap;
+  margin-right: 5px;
+}
+
+.info-section {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.info-section p {
+  text-align: right;
+  word-wrap: break-word;
+}
+
 .modal-section {
   background-color: rgba(255, 255, 255, 0.15);
   border-radius: 60px;
@@ -125,7 +177,8 @@ const handleDelete = () => {
   gap: 25px;
 }
 
-.edit-form {
+.edit-form,
+.info-form {
   display: flex;
   flex-direction: column;
   gap: 25px;
@@ -155,7 +208,7 @@ input {
   backdrop-filter: blur(12px);
 }
 
-.modal-content h2 {
+.name-close-block h2 {
   display: inline-block;
   white-space: normal;
   word-break: break-word;
@@ -167,7 +220,8 @@ input {
   gap: 24px;
 }
 
-.modal-content button {
+button {
+  all: unset;
   font-family: 'Montserrat', sans-serif;
   background-color: transparent;
   border: none;
@@ -175,11 +229,7 @@ input {
   cursor: pointer;
 }
 
-.modal-content .buttons > button:first-child {
-  color: var(--white-color);
-}
-
-.modal-content .buttons > button:last-child {
+.actient-color-button {
   color: var(--actient-color);
 }
 
@@ -211,6 +261,13 @@ path:hover {
 
   .delete-message {
     text-align: center;
+  }
+}
+
+@media (max-width: 360px) {
+  .info-section h2,
+  .info-section p {
+    font-size: 12px;
   }
 }
 </style>
