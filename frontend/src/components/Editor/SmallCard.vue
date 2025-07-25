@@ -111,7 +111,7 @@ const clearCaption = () => {
         v-if="description"
         :src="trashlIcon"
         alt="Trash Icon"
-        class="input-icon clear-icon trash-icon"
+        class="clear-icon trash-icon"
         @click="clearDescription"
       />
     </div>
@@ -130,7 +130,7 @@ const clearCaption = () => {
           v-if="subtitle"
           :src="trashlIcon"
           alt="Trash Icon"
-          class="input-icon clear-icon trash-icon"
+          class="clear-icon trash-icon"
           @click="clearSubtitle"
         />
       </div>
@@ -144,13 +144,7 @@ const clearCaption = () => {
           class="editable-textarea item-textarea"
           rows="1"
         ></textarea>
-        <img :src="pencilIcon" alt="Pencil Icon" class="input-icon" />
-        <img
-          :src="trashlIcon"
-          alt="Trash Icon"
-          class="input-icon trash-icon"
-          @click="removeItem(index)"
-        />
+        <img :src="trashlIcon" alt="Trash Icon" class="trash-icon" @click="removeItem(index)" />
       </div>
 
       <!-- Поле для добавления нового пункта -->
@@ -180,7 +174,7 @@ const clearCaption = () => {
         v-if="caption"
         :src="trashlIcon"
         alt="Trash Icon"
-        class="input-icon clear-icon trash-icon"
+        class="clear-icon trash-icon"
         @click="clearCaption"
       />
     </div>
@@ -255,6 +249,11 @@ h3 {
   padding-bottom: 8px;
 }
 
+.item-edit {
+  gap: 16px;
+  align-items: center;
+}
+
 .editable-textarea {
   width: 100%;
   background: none;
@@ -262,7 +261,7 @@ h3 {
   color: white;
   border: none;
   font-family: Montserrat;
-  resize: vertical;
+  resize: none;
   min-height: auto;
   overflow: hidden;
 }
@@ -311,7 +310,7 @@ h3 {
   height: 18px;
   flex-shrink: 0;
   opacity: 0.7;
-  margin-top: 8px;
+  margin-top: 5.5px;
 
   transition: opacity 0.2s ease;
 }
@@ -326,7 +325,7 @@ h3 {
 }
 
 .blank {
-  width: 58px;
+  width: 24px;
 }
 
 @media (max-width: 1200px) {
