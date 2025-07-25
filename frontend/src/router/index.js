@@ -9,6 +9,9 @@ import LoginPage from '../views/LoginPage.vue'
 import PresentationPage from '../views/PresentationPage.vue'
 import ChatPage from '../views/ChatPage.vue'
 import EditorPage from '../views/EditorPage.vue'
+import NotificationsPage from '../views/NotificationsPage.vue'
+import PaymentPage from '../views/PaymentPage.vue'
+import TzPage from '../views/TzPage.vue'
 
 const routes = [
   {
@@ -48,6 +51,16 @@ const routes = [
     component: LoginPage,
   },
   {
+    path: '/payment',
+  name: 'PaymentPage',
+  component: PaymentPage,
+  },
+  {
+  path: '/manager',
+  name: 'ManagerPage',
+  component: () => import('@/views/ManagerPage.vue')
+    },
+  {
     path: '/presentation',
     name: 'PresentationPage',
     component: PresentationPage,
@@ -56,6 +69,16 @@ const routes = [
     path:'/edit',
     name: 'EditorPage',
     component:EditorPage,
+  },
+  {
+    path: '/notifications',
+    name: 'NotificationsPage',
+    component: NotificationsPage,
+  },
+  {
+    path: '/editTZ',
+    name: 'TzPage',
+    component: TzPage,
   }
 ]
 

@@ -1,0 +1,47 @@
+.notification-modal-block {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  padding: 36px;
+  border-radius: 60px;
+  gap: 24px;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(20px);
+}
+
+.datetime-task-name-block,
+.datetime-block,
+.info-block {
+  display: flex;
+  gap: 24px;
+}
+
+.notification-modal-block time {
+  font-size: 16px;
+  color: rgba(168, 169, 175, 1);
+}
+
+.notification-modal-block h2 {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--actient-color);
+  text-decoration: underline;
+}
+
+a {
+  all: unset;
+  cursor: pointer;
+}
+
+@media (max-width: 800px) {
+  .info-block {
+    flex-direction: column;
+    align-items: start;
+  }
+}
+@media (max-width: 570px) {
+  .datetime-task-name-block {
+    flex-direction: column;
+    gap: 0px;
+  }
+}
