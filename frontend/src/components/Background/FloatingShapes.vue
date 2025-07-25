@@ -20,13 +20,21 @@
       alt="Generate Figure 2"
     />
     <img
-      v-if="$route.name === 'profile' || $route.name === 'HistoryPage'"
+      v-if="
+        $route.name === 'profile' ||
+        $route.name === 'HistoryPage' ||
+        $route.name === 'NotificationsPage'
+      "
       class="custom-shape top-right"
       :src="sharedFigure_1"
       alt="Shared Figure 1"
     />
     <img
-      v-if="$route.name === 'profile' || $route.name === 'HistoryPage'"
+      v-if="
+        $route.name === 'profile' ||
+        $route.name === 'HistoryPage' ||
+        $route.name === 'NotificationsPage'
+      "
       class="custom-shape bottom-left chain"
       :src="sharedFigure_2"
       alt="Shared Figure 2"

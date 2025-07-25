@@ -49,7 +49,7 @@ import userPhoto from '@/assets/images/user-photo.png'
 import ModalInfo from '@/components/Profile/Modals/ModalInfo.vue'
 import authService from '@/services/authService.js';
 
-const currentUser = await authService.getMe();
+const currentUser = await authService.getMe()
 
 export default {
   name: 'ProfileView',

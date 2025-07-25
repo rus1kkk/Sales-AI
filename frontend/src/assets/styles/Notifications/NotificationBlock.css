@@ -1,0 +1,88 @@
+.notifications-section {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: center;
+  max-width: 1130px;
+  width: 90%;
+  margin-top: 30px;
+  overflow-x: hidden;
+}
+
+.notifications-section h1 {
+  font-size: 32px;
+  font-weight: 500;
+}
+
+.new-notifications-section,
+.read-notifications-section {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 100%;
+}
+
+.new-notifications-section h2,
+.read-notifications-section h2 {
+  font-size: 24px;
+  font-weight: 500;
+  color: rgba(168, 169, 175, 1);
+  text-align: center;
+}
+
+.notifications-block {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  overflow-y: auto;
+  max-height: 380px;
+}
+
+.notifications-block::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background: transparent;
+}
+.notifications-block::-webkit-scrollbar-track {
+  background: transparent;
+}
+.notifications-block::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.32);
+  border-radius: 4px;
+}
+
+.notifications-section hr {
+  min-height: 0.5px;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.2);
+  border: none;
+}
+
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-up {
+  opacity: 0;
+  animation: fadeUp 0.8s ease-out forwards;
+}
+
+@media (max-width: 768px) {
+  .notifications-section {
+    margin: 86px;
+  }
+}
+
+@media (max-width: 540px) {
+  .notifications-block {
+    max-height: 420px;
+  }
+}
