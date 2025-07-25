@@ -2,11 +2,16 @@
   <div class="presentation-content">
     <section class="cover">
       <CoverContent
-        v-model:title="Data.cover.title"
-        v-model:date="Data.cover.date"
-        v-model:fromSomeone="Data.cover.fromSomeone"
-        v-model:toSomeone="Data.cover.toSomeone"
-        v-model:images="Data.cover.images"
+        v-model:title="data.cover.title"
+        v-model:date="data.cover.date"
+        v-model:fromSomeone="data.cover.fromSomeone"
+        v-model:toSomeone="data.cover.toSomeone"
+        v-model:images="data.cover.images"
+        @update:title="$emit('update:data', { ...data, cover: { ...data.cover, title: $event } })"
+        @update:date="$emit('update:data', { ...data, cover: { ...data.cover, date: $event } })"
+        @update:fromSomeone="$emit('update:data', { ...data, cover: { ...data.cover, fromSomeone: $event } })"
+        @update:toSomeone="$emit('update:data', { ...data, cover: { ...data.cover, toSomeone: $event } })"
+        @update:images="$emit('update:data', { ...data, cover: { ...data.cover, images: $event } })"
       />
       <right-figure />
       <left-figure />
@@ -14,41 +19,61 @@
     <section class="problem-and-solution">
       <div class="problem-card">
         <SmallCard
-          v-model:title="Data.problem.title"
-          v-model:description="Data.problem.description"
-          v-model:subtitle="Data.problem.subtitle"
-          v-model:items="Data.problem.items"
-          v-model:caption="Data.problem.caption"
+          v-model:title="data.problem.title"
+          v-model:description="data.problem.description"
+          v-model:subtitle="data.problem.subtitle"
+          v-model:items="data.problem.items"
+          v-model:caption="data.problem.caption"
+          @update:title="$emit('update:data', { ...data, problem: { ...data.problem, title: $event } })"
+          @update:description="$emit('update:data', { ...data, problem: { ...data.problem, description: $event } })"
+          @update:subtitle="$emit('update:data', { ...data, problem: { ...data.problem, subtitle: $event } })"
+          @update:items="$emit('update:data', { ...data, problem: { ...data.problem, items: $event } })"
+          @update:caption="$emit('update:data', { ...data, problem: { ...data.problem, caption: $event } })"
         />
       </div>
       <div class="solution-card">
         <SmallCard
-          v-model:title="Data.solution.title"
-          v-model:description="Data.solution.description"
-          v-model:subtitle="Data.solution.subtitle"
-          v-model:items="Data.solution.items"
-          v-model:caption="Data.solution.caption"
+          v-model:title="data.solution.title"
+          v-model:description="data.solution.description"
+          v-model:subtitle="data.solution.subtitle"
+          v-model:items="data.solution.items"
+          v-model:caption="data.solution.caption"
+          @update:title="$emit('update:data', { ...data, solution: { ...data.solution, title: $event } })"
+          @update:description="$emit('update:data', { ...data, solution: { ...data.solution, description: $event } })"
+          @update:subtitle="$emit('update:data', { ...data, solution: { ...data.solution, subtitle: $event } })"
+          @update:items="$emit('update:data', { ...data, solution: { ...data.solution, items: $event } })"
+          @update:caption="$emit('update:data', { ...data, solution: { ...data.solution, caption: $event } })"
         />
       </div>
       <middle-figure />
     </section>
     <div class="product-card">
       <BigCard
-        v-model:title="Data.product.title"
-        v-model:subtitle="Data.product.subtitle"
-        v-model:items="Data.product.items"
-        v-model:images="Data.product.images"
-        v-model:caption="Data.product.caption"
+        v-model:title="data.product.title"
+        v-model:subtitle="data.product.subtitle"
+        v-model:items="data.product.items"
+        v-model:images="data.product.images"
+        v-model:caption="data.product.caption"
+        @update:title="$emit('update:data', { ...data, product: { ...data.product, title: $event } })"
+        @update:subtitle="$emit('update:data', { ...data, product: { ...data.product, subtitle: $event } })"
+        @update:items="$emit('update:data', { ...data, product: { ...data.product, items: $event } })"
+        @update:images="$emit('update:data', { ...data, product: { ...data.product, images: $event } })"
+        @update:caption="$emit('update:data', { ...data, product: { ...data.product, caption: $event } })"
       />
     </div>
     <section class="stages-of-work">
       <div class="work-card">
         <SmallCard
-          v-model:title="Data.stages.title"
-          v-model:description="Data.stages.description"
-          v-model:subtitle="Data.stages.subtitle"
-          v-model:items="Data.stages.items"
-          v-model:caption="Data.stages.caption"
+          v-model:title="data.stages.title"
+          v-model:description="data.stages.description"
+          v-model:subtitle="data.stages.subtitle"
+          v-model:items="data.stages.items"
+          v-model:caption="data.stages.caption"
+          @update:title="$emit('update:data', { ...data, stages: { ...data.stages, title: $event } })"
+          @update:description="$emit('update:data', { ...data, stages: { ...data.stages, description: $event } })"
+          @update:subtitle="$emit('update:data', { ...data, stages: { ...data.stages, subtitle: $event } })"
+          @update:items="$emit('update:data', { ...data, stages: { ...data.stages, items: $event } })"
+          @update:caption="$emit('update:data', { ...data, stages: { ...data.stages, caption: $event } })"
         />
         <calendar-figure />
       </div>
@@ -56,11 +81,16 @@
     <section class="price-of-work">
       <div class="price-card">
         <SmallCard
-          v-model:title="Data.price.title"
-          v-model:description="Data.price.description"
-          v-model:subtitle="Data.price.subtitle"
-          v-model:items="Data.price.items"
-          v-model:caption="Data.price.caption"
+          v-model:title="data.price.title"
+          v-model:description="data.price.description"
+          v-model:subtitle="data.price.subtitle"
+          v-model:items="data.price.items"
+          v-model:caption="data.price.caption"
+          @update:title="$emit('update:data', { ...data, price: { ...data.price, title: $event } })"
+          @update:description="$emit('update:data', { ...data, price: { ...data.price, description: $event } })"
+          @update:subtitle="$emit('update:data', { ...data, price: { ...data.price, subtitle: $event } })"
+          @update:items="$emit('update:data', { ...data, price: { ...data.price, items: $event } })"
+          @update:caption="$emit('update:data', { ...data, price: { ...data.price, caption: $event } })"
         />
         <coin-figure />
       </div>
@@ -68,17 +98,25 @@
     <section class="who-will-do-it">
       <div class="do-it">
         <BigCard
-          v-model:title="Data.team.title"
-          v-model:subtitle="Data.team.subtitle"
-          v-model:items="Data.team.items"
-          v-model:images="Data.team.images"
-          v-model:caption="Data.team.caption"
+          v-model:title="data.team.title"
+          v-model:subtitle="data.team.subtitle"
+          v-model:items="data.team.items"
+          v-model:images="data.team.images"
+          v-model:caption="data.team.caption"
+          @update:title="$emit('update:data', { ...data, team: { ...data.team, title: $event } })"
+          @update:subtitle="$emit('update:data', { ...data, team: { ...data.team, subtitle: $event } })"
+          @update:items="$emit('update:data', { ...data, team: { ...data.team, items: $event } })"
+          @update:images="$emit('update:data', { ...data, team: { ...data.team, images: $event } })"
+          @update:caption="$emit('update:data', { ...data, team: { ...data.team, caption: $event } })"
         />
       </div>
     </section>
     <section class="cases-section">
       <div class="cases-block">
-        <CaseContent v-model:items="Data.cases.items" />
+        <CaseContent
+          v-model:items="data.cases.items"
+          @update:items="$emit('update:data', { ...data, cases: { ...data.cases, items: $event } })"
+        />
         <svg
           class="blur"
           xmlns="http://www.w3.org/2000/svg"
@@ -125,11 +163,16 @@
     </section>
     <section class="next-steps">
       <BigCard
-        v-model:title="Data.nextSteps.title"
-        v-model:subtitle="Data.nextSteps.subtitle"
-        v-model:items="Data.nextSteps.items"
-        v-model:images="Data.nextSteps.images"
-        v-model:caption="Data.nextSteps.caption"
+        v-model:title="data.nextSteps.title"
+        v-model:subtitle="data.nextSteps.subtitle"
+        v-model:items="data.nextSteps.items"
+        v-model:images="data.nextSteps.images"
+        v-model:caption="data.nextSteps.caption"
+        @update:title="$emit('update:data', { ...data, nextSteps: { ...data.nextSteps, title: $event } })"
+        @update:subtitle="$emit('update:data', { ...data, nextSteps: { ...data.nextSteps, subtitle: $event } })"
+        @update:items="$emit('update:data', { ...data, nextSteps: { ...data.nextSteps, items: $event } })"
+        @update:images="$emit('update:data', { ...data, nextSteps: { ...data.nextSteps, images: $event } })"
+        @update:caption="$emit('update:data', { ...data, nextSteps: { ...data.nextSteps, caption: $event } })"
       />
     </section>
   </div>
@@ -145,125 +188,16 @@ import LeftFigure from './Figures/LeftFigure.vue'
 import MiddleFigure from './Figures/MiddleFigure.vue'
 import CalendarFigure from './Figures/CalendarFigure.vue'
 import CoinFigure from './Figures/CoinFigure.vue'
-import { reactive } from 'vue'
-// Данные для компонентов
-const Data = reactive({
-  cover: {
-    title: 'Разработка сайта для магазина спортивной обуви',
-    date: 'Июль 2025',
-    fromSomeone: 'Русские сайты',
-    toSomeone: 'Лучшая обувь РФ',
-    images: ['presentation/photo1.png', 'presentation/photo2.png', 'presentation/photo3.png'],
-  },
 
-  problem: {
-    title: 'Проблема',
-    description:
-      'Сейчас многие покупают обувь через интернет — особенно молодёжь. Если у магазина нет нормального сайта, он теряет часть клиентов.',
-    subtitle: 'Основные проблемы без сайта:',
-    items: [
-      'Зависимость от Avito маркетплейсов или Instagram',
-      'Сложно рассказать про ассортимент',
-      'Нет возможности отслеживать заказы и анализировать продажи',
-    ],
-    caption: 'Мы предлагаем решение, которое уберёт эти ограничения.',
-  },
-
-  solution: {
-    title: 'Решение',
-    description: 'Мы сделаем сайт, с которым вам будет удобно продавать:',
-    items: [
-      'Каталог с фильтрами (размер, бренд, цена)',
-      'Удобная корзина и оформление заказа',
-      'Мобильная версия — всё работает на телефонах',
-      'Быстрая работа и понятный дизайн',
-      'Готов к подключению онлайн-оплаты и CRM',
-    ],
-    caption: 'Всё просто: зашёл, нашёл, купил. И вам удобно управлять.',
-  },
-
-  product: {
-    title: 'Что дает такой продукт?',
-    items: [
-      'Помогает продавать в любое время, даже ночью',
-      'Доверие выше, чем к аккаунтам в соцсетях',
-      'Можно запускать рекламу и отслеживать, что работает',
-      'Готов к подключению онлайн-оплаты и CRM',
-      'Экономит время — меньше ручной обработки заказов',
-    ],
-    caption: 'Это уже не просто сайт — это полноценный инструмент продаж.',
-  },
-
-  stages: {
-    title: 'Этапы работы',
-    items: [
-      'Обсудим ваши задачи и товары',
-      'Удобная корзина и оформление заказа',
-      'Мобильная версия — всё работает на телефонах',
-      'Быстрая работа и понятный дизайн',
-      'Готов к подключению онлайн-оплаты и CRM',
-    ],
-    caption: 'Всё просто: зашёл, нашёл, купил. И вам удобно управлять.',
-  },
-
-  price: {
-    title: 'Стоимость',
-    description:
-      'Стоимость зависит от объёма каталога и нужных функций. Примерная цена: от 120 000 до 180 000 ₽',
-    subtitle: 'В стоимость входит:',
-    items: [
-      'Дизайн',
-      'Адаптация под телефон',
-      'Установка и базовая настройка',
-      'Подключение корзины, фильтров, доставки',
-    ],
-    caption: 'Оплата поэтапно, договор и всё официально.',
-  },
-
-  team: {
-    title: 'Кто будет делать?',
-    subtitle: 'Над проектом будут работать:',
-    items: [
-      'Дизайнер',
-      'Frontend и backend-разработчик',
-      'Cпециалист по UX',
-      'Mенеджер, который всегда на связи',
-      'Экономит время — меньше ручной обработки заказов',
-    ],
-    images: [
-      { src: 'presentation/avatar2.png', alt: 'Фото команды' },
-      { src: 'presentation/avatar1.png', alt: 'Дизайнер' },
-      { src: 'presentation/avatar3.png', alt: 'Разработчик' },
-      { src: 'presentation/avatar4.png', alt: 'Разработчик' },
-      { src: 'presentation/avatar5.png', alt: 'Разработчик' },
-    ],
-    caption:
-      'Мы работали с интернет-магазинами и знаем, как сделать так, чтобы сайт приносил продажи.',
-  },
-
-  cases: {
-    items: [
-      {
-        src: 'presentation/case_1.png',
-        alt: 'Кейс интернет-магазина обуви',
-        title: 'Проект для обувного магазина',
-      },
-      'presentation/case_2.png',
-      'presentation/case_3.png',
-    ],
-  },
-
-  nextSteps: {
-    title: 'Следующие шаги',
-    items: [
-      'Свяжитесь с нами удобным способом',
-      'Обсудим детали проекта',
-      'Подпишем договор и начинаем работу',
-    ],
-    caption:
-      'Мы объясним каждый этап, покажем макет, поможем после запуска. Всё будет понятно, без сложных слов — просто нормальный рабочий сайт под ваш магазин.',
+defineProps({
+  data: {
+    type: Object,
+    required: true,
   },
 })
+
+defineEmits(['update:data'])
+
 </script>
 
 <style scoped>
