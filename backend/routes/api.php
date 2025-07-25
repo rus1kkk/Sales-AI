@@ -8,6 +8,7 @@ use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ImageGenerationController;
+use App\Http\Controllers\PresentationController;
 
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
@@ -35,3 +36,4 @@ Route::get('/messages/{chatId}', [MessageController::class, 'index']); //TODO: Ð
 Route::post('/messages', [MessageController::class, 'store']);
 Route::post('/messages/with-ai', [MessageController::class, 'storeWithAIResponse']);
 
+Route::get('/presentation/{chatId}', [PresentationController::class, 'show']);
